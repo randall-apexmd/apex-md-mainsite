@@ -51,13 +51,33 @@ Two ways forward, and they can be combined:
    unbuilt path is served from WordPress instead of 404ing. This lets you cut
    over the root domain now and migrate page by page.
 
+## CTA routing — done, with two guesses to check
+
+Every CTA now goes to the real intake form. The category vocabulary was read
+off the live site by crawling all 68 sitemap URLs on 2026-09-09; the only
+categories that exist are `weight-loss`, `trt`, `bloodwork`, `hrt` and
+`microdosing`.
+
+| Page | Sends to | |
+|---|---|---|
+| Testosterone | `form.apexmd.com/?categoryId=trt` | confirmed |
+| GLP-1 Weight Loss | `form.apexmd.com/?categoryId=weight-loss` | confirmed |
+| Men's Optimal Health | `form.apexmd.com/?categoryId=bloodwork` | **guessed** |
+| Women's Optimal Health | `form.apexmd.com/?categoryId=bloodwork` | **guessed** |
+| Homepage, Apex AI, Genetics | `form.apexmd.com/` | no category |
+
+The two guesses: both pages sell the $199 "Optimization Jumpstart" (labs +
+clinician read), which is why they point at `bloodwork`. Women's could
+reasonably be `hrt` instead. Genetics has no matching category on the live
+form at all, so it gets the generic entry rather than a wrong one.
+
+Fix any of these in one place — the `CTA` table at the top of
+`_build/build.py` — then rebuild.
+
+Patient Login goes to `ehr.apexmd.com/login` on every page.
+
 ## Also unfinished
 
-- **`/get-started` does not exist.** Every CTA on all seven pages points at
-  it. Until that page (or a redirect to the real intake flow) exists, the
-  conversion path is broken — this matters more than any of the 404s above.
-- `/patient-login` likewise. It probably wants to redirect to
-  `ehr.apexmd.com/login`.
 - **11 images were never supplied** — 9 on Men's Optimal Health, 2 on GLP-1.
   They render as dashed "image needed" boxes so they are impossible to miss.
 - **Copy has not cleared compliance.** The handoffs flag this themselves:
@@ -77,7 +97,8 @@ Two ways forward, and they can be combined:
    `.vercel.app` noindex header in `vercel.json` keeps previews out of Google;
    a custom subdomain will **not** be covered, so add a noindex there or keep
    it on the Vercel URL.
-3. Build `/get-started` and decide on the WordPress fallback.
+3. Decide on the WordPress fallback for the 58 unbuilt URLs, and check
+   the two guessed CTA categories above.
 4. **Lower the TTL on the apexmd.com A record to 300s at least 24h before
    cutting over.** This is what makes the rollback fast.
 5. Change the A record. Watch for the Vercel certificate to issue — a few

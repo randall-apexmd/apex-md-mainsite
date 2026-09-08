@@ -42,6 +42,43 @@ PAGES = {
 }
 
 
+# Where each page's CTAs send people.
+#
+# Read off the live WordPress site on 2026-09-09 by crawling all 68 sitemap
+# URLs — these are the intake categories that actually exist, not invented
+# ones. Verified live: form.apexmd.com/, ?categoryId=trt and
+# ehr.apexmd.com/login all return 200.
+#
+# The category vocabulary in use is exactly: weight-loss, trt, bloodwork,
+# hrt, microdosing (plus per-product ?productid= links, and a partner
+# subdomain form10fitness.apexmd.com). There is no genetics category.
+#
+# CONFIRMED — the live page for this product uses this exact URL:
+#   testosterone    ?categoryId=trt        (live /testosterone-apexmd/)
+#   glp-1-program   ?categoryId=weight-loss (live /glp-1-program/)
+#
+# INFERRED — flagged in CUTOVER.md, change here if wrong. Men's and Women's
+# Optimal Health are structurally the same page and both sell the $199
+# "Optimization Jumpstart" (labs + clinician read), so they point at
+# bloodwork. Women's could arguably be hrt instead.
+#
+# UNMAPPED — sent to the generic form with no category preselected rather
+# than guessed into the wrong one. Better a visitor picks their own category
+# than lands in someone else's.
+FORM = 'https://form.apexmd.com/'
+LOGIN = 'https://ehr.apexmd.com/login'
+
+CTA = {
+    'index':                 FORM,
+    'apex-md-ai':            FORM,
+    'genetics':              FORM,
+    'testosterone':          FORM + '?categoryId=trt',
+    'glp-1-program':         FORM + '?categoryId=weight-loss',
+    'mens-optimal-health':   FORM + '?categoryId=bloodwork',
+    'womens-optimal-health': FORM + '?categoryId=bloodwork',
+}
+
+
 # Title and description for the pages whose handoff shipped none (the three
 # .dc.html canvas exports carry no <title>, and two others no description).
 # Every string below is lifted from that page's own hero copy — nothing here
@@ -196,6 +233,8 @@ def clean_design_tool(body):
 
 def chrome(part, active, slug):
     html = read(os.path.join(PARTS, part))
+    html = html.replace('/get-started', CTA.get(slug, FORM))
+    html = html.replace('/patient-login', LOGIN)
     # the note at the top of each part is for whoever edits it, not for the
     # wire — and it contains a {{ }} token that the template sweep would eat
     html = re.sub(r'<!--.*?-->', '', html, flags=re.S).lstrip()
@@ -206,15 +245,20 @@ def chrome(part, active, slug):
     return html
 
 
-def relink(body):
-    """Point every CTA at an apexmd.com route.
+def relink(body, slug):
+    """Point navigation at apexmd.com routes and CTAs at the real intake form.
 
-    The handoffs disagree: Men's and Women's send 39 links to a Rupa Health
-    storefront, Weight Loss to formmac.apexmd.com, and Homepage, Testosterone,
-    Genetics and Apex AI use bare `href="#"` placeholders. Per Blake, all of it
-    resolves to apexmd.com routes; absolute apexmd.com URLs become relative so
-    the staging deploy does not bounce visitors to production.
+    The handoffs disagree wildly: Men's and Women's send 39 links to a Rupa
+    Health storefront, Weight Loss to the partner subdomain
+    formmac.apexmd.com, and Homepage, Testosterone, Genetics and Apex AI use
+    bare `href="#"` placeholders that go nowhere.
+
+    All of it resolves to two places: in-site navigation becomes a relative
+    apexmd.com path (so a staging deploy does not bounce visitors to
+    production), and anything that was a call to action becomes this page's
+    entry in CTA above.
     """
+    cta = CTA.get(slug, FORM)
     counts = {'absolute': 0, 'rupa': 0, 'placeholder': 0}
 
     body, n = re.subn(r'href="https://apexmd\.com/?', 'href="/', body)
@@ -225,13 +269,17 @@ def relink(body):
     # as a runtime default, so an href-only rewrite leaves a live off-site CTA
     # that only fires once the component renders.
     body, n = re.subn(
-        r'https://(?:labs\.rupahealth\.com|formmac\.apexmd\.com)[^"\'\s<>]*',
-        '/get-started', body)
+        r'https://(?:labs\.rupahealth\.com|form[a-z0-9-]*\.apexmd\.com)[^"\'\s<>]*',
+        cta, body)
     counts['rupa'] = n
 
     # bare placeholders, but not real in-page anchors like href="#faq"
-    body, n = re.subn(r'href="#"', 'href="/get-started"', body)
+    body, n = re.subn(r'href="#"', 'href="%s"' % cta, body)
     counts['placeholder'] = n
+
+    # the two routes that live outside this site
+    body = body.replace('href="/get-started"', 'href="%s"' % cta)
+    body = body.replace('href="/patient-login"', 'href="%s"' % LOGIN)
 
     return body, counts
 
@@ -377,7 +425,7 @@ def build(slug):
     body = cssx.normalise(body, slug)
     body, tool = clean_design_tool(body)
 
-    body, links = relink(body)
+    body, links = relink(body, slug)
     body, repathed = rewrite_assets(body, slug)
 
     # the Apex AI handoff wraps its content in its own <main>; the shell

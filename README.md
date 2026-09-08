@@ -37,12 +37,13 @@ them:
   inline style (`_build/cssx.py`)
 - generates that mobile layer: collapses grids, unblocks the `min-width:1200px`
   desktop-only wrappers, wraps flex rows, scales oversized type and padding
-- points every CTA at an apexmd.com route
+- points every CTA at the real intake form, using the category vocabulary
+  read off the live site (`weight-loss`, `trt`, `bloodwork`, `hrt`)
 - resizes and re-encodes the imagery to WebP — 337 MB down to 20 MB
 
 ## Status
 
 All seven pages build and render at desktop and mobile. Before this can be the
-live apexmd.com, read `CUTOVER.md` — in short: `/get-started` does not exist
-yet, 58 live WordPress URLs have no destination here, and the copy has not
-cleared compliance.
+live apexmd.com, read `CUTOVER.md` — in short: 58 live WordPress URLs have no
+destination here yet, two CTA categories are guesses worth checking, and the
+copy has not cleared compliance.
