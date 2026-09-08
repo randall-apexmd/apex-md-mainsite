@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Apex MD — The Future of Personalized Health</title>
+<meta name="description" content="Physician-guided wellness solutions and products powered by Apex MD AI, which analyzes your data, health questions, and delivers personalized insights so you can live better longer.">
+<link rel="canonical" href="https://apexmd.com/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Apex MD">
+<meta property="og:title" content="Apex MD — The Future of Personalized Health">
+<meta property="og:description" content="Physician-guided wellness solutions and products powered by Apex MD AI, which analyzes your data, health questions, and delivers personalized insights so you can live better longer.">
+<meta property="og:url" content="https://apexmd.com/">
+<meta property="og:image" content="https://apexmd.com/assets/og/index.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Apex MD — The Future of Personalized Health">
+<meta name="twitter:description" content="Physician-guided wellness solutions and products powered by Apex MD AI, which analyzes your data, health questions, and delivers personalized insights so you can live better longer.">
+<meta name="twitter:image" content="https://apexmd.com/assets/og/index.jpg">
+<meta name="theme-color" content="#d30704">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;600;800&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/apex.css">
+<link rel="stylesheet" href="/assets/css/index.css">
+<style>
+html, body { margin: 0; padding: 0; background: #ffffff; }
+.diag-grid { align-items: center; }
+  .flip { perspective: 1200px; cursor: pointer; outline: none; }
+  .flip-inner { position: relative; width: 100%; aspect-ratio: 287 / 320; transition: transform 0.6s cubic-bezier(.2,.7,.2,1); transform-style: preserve-3d; }
+  .flip.flipped .flip-inner { transform: rotateY(180deg); }
+  .flip-face { position: absolute; inset: 0; -webkit-backface-visibility: hidden; backface-visibility: hidden; border-radius: 14px; overflow: hidden; box-shadow: 0 8px 24px rgba(0,0,0,0.10); }
+  .flip-back { transform: rotateY(180deg); background: #ffffff; color: #17140f; border: 3px solid #d30704; display: flex; flex-direction: column; justify-content: flex-start; padding: 26px; }
+  .flip:focus-visible .flip-face { box-shadow: 0 0 0 3px #d30704; }
+.nav-drop-menu a:hover { background: #f4f1ef; opacity: 1; }
+  .nav-drop:hover > a svg path { stroke: #d30704; }
+  .nav-drop:hover .nav-drop-menu { opacity: 1 !important; visibility: visible !important; }
+/* Hamburger toggle — hidden on desktop */
+  .mnav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 8px; color: #17140f; line-height: 0; }
+
+  /* ===================== MOBILE ===================== */
+  @media (max-width: 860px) {
+    /* let the fixed-width shell shrink */
+    [style*="min-width: 1280px"] { min-width: 0 !important; }
+
+    /* shrink the 48px gutters on every centered container / section */
+    [style*="max-width: 1440px"] { padding-left: 20px !important; padding-right: 20px !important; }
+
+    /* collapse every multi-column grid to a single column */
+    [style*="grid-template-columns:"] { grid-template-columns: 1fr !important; }
+
+    /* drop vertical dividers that look wrong once stacked */
+    [style*="border-left: 1px solid"] { border-left: none !important; }
+
+    /* tame oversized headings */
+    h1 { font-size: 36px !important; line-height: 1.1 !important; }
+    h2 { font-size: 28px !important; line-height: 1.18 !important; white-space: normal !important; }
+
+    /* images that intentionally overflow on desktop */
+    [style*="width: 108%"] { width: 100% !important; margin-left: 0 !important; }
+
+    /* ---- HERO ---- */
+    [style*="min-height: 560px"] { min-height: 0 !important; }
+    [style*="radial-gradient(ellipse"] { display: none !important; }
+    img[src*="woman-hero"] { display: none !important; }
+    #how aside { position: static !important; width: 100% !important; max-width: 360px !important; margin: 26px auto 0 !important; top: auto !important; right: auto !important; }
+    #how [style*="padding-top: 42px"] { padding-top: 20px !important; }
+    #how [style*="gap: 26px"] { flex-wrap: wrap !important; }
+
+    /* ---- NAV ---- */
+    .mnav-toggle { display: inline-flex; align-items: center; }
+    header nav#primary-nav {
+      display: none; position: absolute; top: 100%; left: 0; right: 0;
+      flex-direction: column; align-items: flex-start; gap: 4px;
+      background: #ffffff; padding: 14px 20px 18px;
+      box-shadow: 0 20px 46px rgba(0,0,0,0.14); border-radius: 0 0 16px 16px; z-index: 60;
+    }
+    header nav#primary-nav.open { display: flex; }
+    header nav#primary-nav > a { padding: 10px 4px; width: 100%; }
+    .nav-drop { width: 100%; position: static !important; }
+    .nav-drop-menu {
+      position: static !important; transform: none !important;
+      opacity: 1 !important; visibility: visible !important;
+      box-shadow: none !important; margin: 0 0 6px 10px !important; padding: 0 !important; min-width: 0 !important;
+    }
+    .nav-drop-menu a { padding: 8px 12px !important; font-size: 14px !important; }
+
+    /* ---- FOOTER ---- */
+    footer [style*="justify-content: space-between"] { flex-direction: column !important; align-items: center !important; text-align: center !important; gap: 20px !important; }
+    footer nav { flex-wrap: wrap !important; justify-content: center !important; gap: 14px 20px !important; }
+  }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="hdr" data-header>
+  <a class="hdr-logo" href="/" aria-label="Apex MD home">
+    <span class="hdr-logo-a">APEX</span><span class="hdr-logo-b">MD</span>
+  </a>
+
+  <nav class="hdr-nav" aria-label="Primary">
+    <a href="/about-us" data-nav="about-us">About</a>
+    <a href="/concierge" data-nav="concierge">Concierge</a>
+
+    <div class="hdr-drop">
+      <button type="button" class="hdr-drop-btn" data-nav="programs"
+              aria-expanded="false" aria-controls="nav-programs">
+        Programs<svg class="hdr-caret" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </button>
+      <div class="hdr-menu" id="nav-programs">
+        <a href="/mens-optimal-health">Men&rsquo;s Optimal Health</a>
+        <a href="/womens-optimal-health">Women&rsquo;s Optimal Health</a>
+        <a href="/glp-1-program">GLP-1 Weight Loss</a>
+        <a href="/microdosing">GLP-1 Microdosing</a>
+        <a href="/testosterone">Testosterone</a>
+        <a href="/hormone-therapy">Hormone Therapy</a>
+      </div>
+    </div>
+
+    <div class="hdr-drop">
+      <button type="button" class="hdr-drop-btn" data-nav="products"
+              aria-expanded="false" aria-controls="nav-products">
+        Products<svg class="hdr-caret" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </button>
+      <div class="hdr-menu" id="nav-products">
+        <a href="/peptides">Peptides</a>
+        <a href="/bloodwork">Bloodwork</a>
+        <a href="/genetics">Genetics</a>
+        <a href="/advanced-diagnostics">Advanced Diagnostics</a>
+        <a href="/supplements">Supplements</a>
+      </div>
+    </div>
+
+    <a href="/apex-md-ai" data-nav="apex-md-ai">Apex MD AI</a>
+    <a href="/partner" data-nav="partner">Partner</a>
+    <a href="/contact" data-nav="contact">Contact</a>
+  </nav>
+
+  <div class="hdr-end">
+    <a class="hdr-login" href="/patient-login">Patient Login</a>
+    <a class="btn btn-red hdr-cta" href="/get-started">Get Started</a>
+    <button type="button" class="hdr-burger" data-drawer-open
+            aria-expanded="false" aria-controls="nav-drawer" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<div class="drawer" id="nav-drawer" hidden>
+  <div class="drawer-top">
+    <a class="hdr-logo" href="/" aria-label="Apex MD home">
+      <span class="hdr-logo-a">APEX</span><span class="hdr-logo-b">MD</span>
+    </a>
+    <button type="button" class="drawer-x" data-drawer-close aria-label="Close menu">&times;</button>
+  </div>
+  <nav class="drawer-nav" aria-label="Mobile">
+    <a href="/about-us">About</a>
+    <a href="/concierge">Concierge</a>
+    <details>
+      <summary>Programs</summary>
+      <a href="/mens-optimal-health">Men&rsquo;s Optimal Health</a>
+      <a href="/womens-optimal-health">Women&rsquo;s Optimal Health</a>
+      <a href="/glp-1-program">GLP-1 Weight Loss</a>
+      <a href="/microdosing">GLP-1 Microdosing</a>
+      <a href="/testosterone">Testosterone</a>
+      <a href="/hormone-therapy">Hormone Therapy</a>
+    </details>
+    <details>
+      <summary>Products</summary>
+      <a href="/peptides">Peptides</a>
+      <a href="/bloodwork">Bloodwork</a>
+      <a href="/genetics">Genetics</a>
+      <a href="/advanced-diagnostics">Advanced Diagnostics</a>
+      <a href="/supplements">Supplements</a>
+    </details>
+    <a href="/apex-md-ai">Apex MD AI</a>
+    <a href="/partner">Partner</a>
+    <a href="/contact">Contact</a>
+    <a href="/patient-login">Patient Login</a>
+  </nav>
+  <a class="btn btn-red drawer-cta" href="/get-started">Get Started</a>
+</div>
+
+<main id="main">
+<template id="__bundler_thumbnail">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+    <rect width="100" height="100" fill="#17140f"/>
+    <text x="50" y="46" font-family="Archivo, Arial, sans-serif" font-size="20" font-weight="800" fill="#ffffff" text-anchor="middle">APEX</text>
+    <text x="50" y="66" font-family="Archivo, Arial, sans-serif" font-size="20" font-weight="800" fill="#d30704" text-anchor="middle">MD</text>
+  </svg>
+</template>
+<div class="x5069baf">
+
+  <!-- ============ NAV ============ -->
+  
+
+  <!-- ============ HERO ============ -->
+  <section id="how" data-screen-label="Hero" class="xaf00c1b">
+    <div class="x576ede5">
+      <!-- soft gym-toned backdrop behind the woman -->
+      <div class="x22da906"></div>
+
+      <!-- left copy -->
+      <div class="x37cfca8">
+        <div class="x4860474">
+          <span class="xc9c9113">NEW</span>
+          <span class="xdcaa5e8">Apex MD AI</span>
+        </div>
+        <h1 class="x1211c07">The Future of <span class="xb46b598">Personalized</span> Health is Here.</h1>
+        <p class="x4416888">Physician guided wellness solutions and products powered by Apex MD AI that analyzes your data, health questions, and delivers personalized insights to help you live better longer.</p>
+        <div class="xb4ff912">
+          <div class="xa9754d0"><span class="x2bbb50e"></span>Trusted by over 300,000 people</div>
+          <div class="xa9754d0"><span class="x2bbb50e"></span>Trusted By The World&rsquo;s Most Elite</div>
+          <div class="xa9754d0"><span class="x2bbb50e"></span>20+ Years In Business</div>
+          <div class="xa9754d0"><span class="x2bbb50e"></span>97% Approval Rating</div>
+        </div>
+        <div class="xf160ef2">
+          <div class="x9b52827">As Featured In:</div>
+          <div class="x25aeb38">
+            <img src="/assets/images/index/logo-nbc.webp" alt="NBC" class="x72ca36a" loading="eager" decoding="async" fetchpriority="high">
+            <img src="/assets/images/index/logo-forbes.webp" alt="Forbes" class="xcb866fd" loading="lazy" decoding="async">
+            <img src="/assets/images/index/logo-abc.svg" alt="ABC" class="x316afbc" loading="lazy" decoding="async">
+            <img src="/assets/images/index/logo-ap.webp" alt="AP" class="x51c3317" loading="lazy" decoding="async">
+            <img src="/assets/images/index/logo-nyt.webp" alt="The New York Times" class="x60fb4fd" loading="lazy" decoding="async">
+          </div>
+        </div>
+      </div>
+
+      <!-- woman cutout: top of her hair visible, anchored to hero bottom -->
+      <img src="/assets/images/index/woman-hero-sm.webp" alt="Apex MD member checking her health data" class="xdeb4d4e" loading="lazy" decoding="async">
+
+      <!-- AI chat panel -->
+      
+      <aside class="x53ad574">
+        <div class="x9ec69fa">
+          <img src="/assets/images/index/logo-white.webp" alt="" class="xfc5b70c" loading="lazy" decoding="async">
+          <span class="xfe496b8">Apex MD AI</span>
+        </div>
+        <div class="xbe74f6f">Hi Sarah! I analyzed your latest data. Here&rsquo;s what stands out:</div>
+        <div class="xbe77cfb">
+          <span class="xd7ad372"></span>
+          Your sleep quality improved by 23% this week.
+        </div>
+        <div class="xbe77cfb">
+          <span class="x618ec69"></span>
+          Your body fat decreased 2.4% since last month.
+        </div>
+        <div class="xbe77cfb">
+          <span class="x618ec69"></span>
+          Your recovery score is optimal for strength training.
+        </div>
+        <div class="xbe74f6f">Would you like recommendations to optimize your results?</div>
+        <div class="xdbfb9d3">Yes, show me my plan.</div>
+        <div class="xd765a64">
+          Ask me anything...
+          <span class="x7970869">&#10148;</span>
+        </div>
+      </aside>
+      
+    </div>
+  </section>
+
+  <!-- ============ EVERYTHING YOU NEED CARDS ============ -->
+  <section id="programs" data-screen-label="Everything You Need" class="x42c4321">
+    <h2 class="xe426ca2">Everything You Need. <span class="xb46b598">One Source. One System. One Management Team.</span></h2>
+    <div class="xfe8b829">
+      <a href="#physician-care" class="x5f56e07">
+        <span class="x1e0d693"><img src="/assets/images/index/doctor-cutout-v2.webp" alt="Physician Care" class="x8a5cfcb" loading="lazy" decoding="async"></span>
+        <span class="xe6f2b69">Physician Care</span>
+        <span class="xda44c2d">Learn More →</span>
+      </a>
+      <a href="#peptides" class="x450bb1a">
+        <img src="/assets/images/index/card-peptides-v2.webp" alt="Peptides" class="x539d8dd" loading="lazy" decoding="async">
+        <span class="xe6f2b69">GLP-1&rsquo;s</span>
+        <span class="xda44c2d">Learn More →</span>
+      </a>
+      <a href="#mens-testosterone" class="x450bb1a">
+        <img src="/assets/images/index/card-mens-t-v2.webp" alt="Men's Testosterone" class="x4bef4b2" loading="lazy" decoding="async">
+        <span class="xe6f2b69">Men&rsquo;s Testosterone</span>
+        <span class="xda44c2d">Learn More →</span>
+      </a>
+      <a href="#womens-hormone" class="x450bb1a">
+        <img src="/assets/images/index/card-womens-h-v2.webp" alt="Women's Hormone Therapy" class="x89d97bc" loading="lazy" decoding="async">
+        <span class="xe6f2b69">Women&rsquo;s Hormone</span>
+        <span class="xda44c2d">Learn More →</span>
+      </a>
+      <a href="#bloodwork" class="x450bb1a">
+        <img src="/assets/images/index/card-bloodwork-v10.webp" alt="Bloodwork" class="x8bbcc4b" loading="lazy" decoding="async">
+        <span class="xe6f2b69">Bloodwork</span>
+        <span class="xda44c2d">Learn More →</span>
+      </a>
+      <a href="#fitness-tracking" class="x450bb1a">
+        <img src="/assets/images/index/card-fitness-v4.webp" alt="Health &amp; Fitness Tracking" class="x3a3ac0f" loading="lazy" decoding="async">
+        <span class="xe6f2b69">Peptides</span>
+        <span class="xda44c2d">Learn More →</span>
+      </a>
+      <a href="#advanced-diagnostics" class="x450bb1a">
+        <img src="/assets/images/index/card-ai-brain-v7.webp" alt="Advanced Medical AI Technology" class="xad73084" loading="lazy" decoding="async">
+        <span class="xe6f2b69">Advanced Medical AI</span>
+        <span class="xda44c2d">Learn More →</span>
+      </a>
+    </div>
+
+    <!-- red CTA banner -->
+    <div class="x73ae9cd">
+      <img src="/assets/images/index/logo-white.webp" alt="" class="x0e7c91b" loading="lazy" decoding="async">
+      <div class="x97445a8">
+        <div class="xc2b8d5f">Ready to Transform Your Health?</div>
+        <div class="xc2bcdeb">Join thousands who are already using Apex MD AI to live healthier, longer lives. Your personalized health journey starts today.</div>
+      </div>
+      <div class="xcbd4158">
+        <a href="#assessment" class="x7dc796c">Speak To An Agent <span>&#8594;</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ AI SUMMARY / ALL IN ONE PLACE ============ -->
+  <section id="solutions" data-screen-label="Your Health All in One Place" class="x6d14989">
+    <div class="x35c2d29">
+      <div>
+        <div class="xcd25a72">Your Entire Health Story</div>
+        <h2 class="xa1eb658">Your Health.<br>All in <span class="xb46b598">One Place.</span></h2>
+        <p class="x37565ab">Your medical records, treatments, workouts, nutrition, sleep, and activity level are all tracked in one place and analyzed by <strong>Apex MD AI</strong>&mdash;so you and your doctor always have the full picture.</p>
+        <div class="xace7ece"></div>
+        <div class="x7197a0b">
+          <div class="x8033093">
+            <img src="/assets/images/index/icon-story.webp" alt="" class="x533be6d" loading="lazy" decoding="async">
+            <div><div class="xdd5a856">Apex MD AI Tells Your Story</div><div class="x18a3398">Our interactive AI reviews ALL your data and tells your physician your story for the most personalized treatment.</div></div>
+          </div>
+          <div class="x8033093">
+            <img src="/assets/images/index/icon-chat.webp" alt="" class="x533be6d" loading="lazy" decoding="async">
+            <div><div class="xdd5a856">Ask. Get Answers. Take Action.</div><div class="x18a3398">Interact with Apex MD AI to ask questions and get actionable programs&mdash;powered by ALL your data.</div></div>
+          </div>
+          <div class="x8033093">
+            <img src="/assets/images/index/icon-person.webp" alt="" class="x533be6d" loading="lazy" decoding="async">
+            <div><div class="xdd5a856">Smarter Care. Better Results.</div><div class="x18a3398">One complete system. One connected team. One you&mdash;healthier for life.</div></div>
+          </div>
+        </div>
+        <a href="#start" class="xeee0b4c">Learn More about Apex MD AI</a>
+      </div>
+      <div class="xfa14802">
+        <img src="/assets/images/index/health-phone.webp" alt="Apex MD app dashboard showing health analysis, health score, biological age, biomarkers, sleep, daily activity and workouts" class="x84a23ea" loading="lazy" decoding="async">
+      </div>
+      <div class="x7ecbcd2">
+        <img src="/assets/images/index/health-cards.webp" alt="Apex MD AI health metrics: triglycerides, sleep quality, caloric burn, active minutes, body fat percent, and before/after progress" class="x8975d5a" loading="lazy" decoding="async">
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PHYSICIAN LED FAT LOSS ============ -->
+  <section data-screen-label="Physician Led GLP-1 Fat Loss" class="xa59e70d">
+    <h2 class="x44235a0">Physician Led <span class="xb46b598">GLP-1 Fat Loss Program</span></h2>
+    <div class="xcbd1d52">
+      <div class="x7d3dc2c">
+        <div>
+          <div class="xd709ebe">
+            <span class="x3a93def"></span>
+            <span class="x47887dc">Backed by Science. Built For You</span>
+          </div>
+          <h3 class="x35737ec">Most fat-loss programs quietly <span class="xb46b598">cost you your muscle.</span></h3>
+          <div class="x0842301">
+            <div class="x593dc15">
+              <span class="x3f4708d">
+                <svg width="52" height="52" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M26 3L45 11V25C45 37 37 45 26 49C15 45 7 37 7 25V11L26 3Z" fill="#d30704"/><path d="M18 26.5L23.5 32L35 20.5" stroke="#ffffff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              <div class="xf4f788c">This program is built to <span class="xb46b598">protect it.</span></div>
+            </div>
+            <div class="x0367496"><span class="x509ef67">from </span><span class="x4d2c0fb">$299</span><span class="x509ef67"> per month</span></div>
+            <a href="#programs" class="x8e79b6d">Learn More <span class="x20e850d">&#8594;</span></a>
+          </div>
+        </div>
+        <div class="x29fcfed">
+          <img src="/assets/images/index/fatloss-beforeafter.webp" alt="Before and after: preserved lean muscle while losing fat" class="x654daf7" loading="lazy" decoding="async">
+          <div class="xc64de25">
+            <div class="x030e9a4">
+              <span class="x3d38f80">
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11 3V18M11 18L5 12M11 18L17 12" stroke="#17140f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              <div class="xe4165c2"><div class="x344fa54">LOST <span class="xb46b598">24 LBS</span></div><div class="x344fa54">OF FAT</div></div>
+            </div>
+            <div class="xda266f8">
+              <span class="x3d38f80">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 16L9 11L12.5 14.5L19 8" stroke="#17140f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 8H19V13" stroke="#17140f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              <div class="xe4165c2"><div class="x344fa54">GAINED <span class="xb46b598">3 LBS</span></div><div class="x344fa54">OF <span class="xb46b598">LEAN MUSCLE</span></div></div>
+            </div>
+            <div class="xda266f8">
+              <span class="x3d38f80">
+                <svg width="26" height="26" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 15H27" stroke="#17140f" stroke-width="2" stroke-linecap="round"/><rect x="3" y="10.5" width="4" height="9" rx="1.5" stroke="#17140f" stroke-width="2"/><rect x="23" y="10.5" width="4" height="9" rx="1.5" stroke="#17140f" stroke-width="2"/><rect x="7.5" y="8" width="3.5" height="14" rx="1.5" stroke="#17140f" stroke-width="2"/><rect x="19" y="8" width="3.5" height="14" rx="1.5" stroke="#17140f" stroke-width="2"/></svg>
+              </span>
+              <div class="xe4165c2"><div class="x18bbf29">STRONGER</div><div class="x344fa54">THAN EVER</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ HISTORY OF EXCELLENCE ============ -->
+  <section id="about" data-screen-label="History of Excellence" class="xd702e3e">
+    <div class="x84ac51f">
+      <div class="xdce463d">
+        <img src="/assets/images/index/doctor-bowen.webp" alt="Dr. Jim Bowen, Chief Medical Officer of Apex MD" class="x8975d5a" loading="lazy" decoding="async">
+        <div class="xe1e58ba"><div class="xda0d1f3">
+          <div class="x52de281">Leadership. Innovation. Results.</div>
+          <h2 class="x4a757cc">Apex MD<br><span class="xb46b598">History of Excellence</span></h2>
+          <p class="xa60cbef">Apex MD&rsquo;s Chief Medical Officer Dr. Jim Bowen oversees all 1,000 Apex MD physicians and is the lead programmer of Apex MD AI.</p>
+          <ul class="xc88d6e8">
+            <li class="x36efbb8"><span class="xa7bd338"></span>#1 Rated Longevity Physician in Florida</li>
+            <li class="x36efbb8"><span class="xa7bd338"></span>Helped Build the #1 Longevity Clinic in the World</li>
+            <li class="x36efbb8"><span class="xa7bd338"></span>Mayo Clinic Award-Winning Physician</li>
+            <li class="x36efbb8"><span class="xa7bd338"></span>Current American Cancer Society Board Member</li>
+            <li class="x36efbb8"><span class="xa7bd338"></span>Former Chief of Medical Staff of the United States Navy</li>
+            <li class="x36efbb8"><span class="xa7bd338"></span>Wrote the Protocols for the US Navy SEALs</li>
+            <li class="x36efbb8"><span class="xa7bd338"></span>Personally Served the Royal Family of the UAE</li>
+            <li class="x36efbb8"><span class="xa7bd338"></span>40 Years of Medical Practice</li>
+          </ul>
+        </div></div>
+      </div>
+      <div class="xe1cb7bf">
+        <div class="xa9c6664">
+          <img src="/assets/images/index/hoe-icon-years-t.webp" alt="" class="xc3f43c4" loading="lazy" decoding="async">
+          <div class="x10b1381">20+</div>
+          <div class="x266b9d4">YEARS</div>
+          <div class="xa00d496">of Medical Wellness and Fitness Optimization</div>
+        </div>
+        <div class="x8130a13">
+          <img src="/assets/images/index/hoe-icon-rated-t.webp" alt="" class="xc3f43c4" loading="lazy" decoding="async">
+          <div class="x61a3f44">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <div class="x266b9d4">TOP RATED</div>
+          <div class="xa00d496">Medical Practice</div>
+        </div>
+        <div class="x8130a13">
+          <img src="/assets/images/index/hoe-icon-served-t.webp" alt="" class="xc3f43c4" loading="lazy" decoding="async">
+          <div class="x10b1381">300,000+</div>
+          <div class="x266b9d4">PEOPLE SERVED</div>
+          <div class="xa00d496">Nationwide and Growing</div>
+        </div>
+        <div class="x8130a13">
+          <img src="/assets/images/index/hoe-icon-heart-t.webp" alt="" class="xc3f43c4" loading="lazy" decoding="async">
+          <div class="x10b1381">97%</div>
+          <div class="x266b9d4">SATISFACTION RATE</div>
+          <div class="xa00d496">From Our Patients</div>
+        </div>
+      </div>
+      <div class="xc37e356">
+        <div class="xf9ab884">Apex specialists, systems and methods have been used by:</div>
+        <img src="/assets/images/index/logo-strip.webp" alt="The White House, Mayo Clinic, New York Yankees, US Olympic Team, Dallas Cowboys, Olympia, PGA Tour, Texas Rangers, US Navy Seals, Texas Health Resources" class="xafaf76b" loading="lazy" decoding="async">
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ BLOODWORK ============ -->
+  <section id="bloodwork" data-screen-label="Bloodwork GPS" class="x0b4d1ab">
+    <div class="x1c426c3">
+      <div class="xf3cc3c9">
+        <div class="xcb39384"><span class="xe60be56"></span> Advanced Diagnostics</div>
+        <h2 class="x746978e">Don&rsquo;t Guess, <span class="xb46b598">Know What Your Body Needs</span></h2>
+        <div class="x22283ae"></div>
+        <p class="x0e36831">Apex MD bloodwork removes the guess work for what your body needs to be optimized. Our target labs first approach fast tracks your results and prevents wasted time.</p>
+        <div class="x81d8a0d">
+          <div class="xafa07cf">
+            <img src="/assets/images/index/bw-icon-savetime.webp" alt="" class="x0b9edfc" loading="lazy" decoding="async">
+            <div><div class="xa9bdd90">SAVE TIME AND MONEY</div><div class="xff047c3">Don&rsquo;t waste time and money taking supplements or peptides that don&rsquo;t meet the needs of your body.</div></div>
+          </div>
+          <div class="xafa07cf">
+            <img src="/assets/images/index/bw-icon-target.webp" alt="" class="x0b9edfc" loading="lazy" decoding="async">
+            <div><div class="xa9bdd90">TARGETED STRATEGY</div><div class="xff047c3">We identify root causes and build a personalized plan just for you.</div></div>
+          </div>
+          <div class="xafa07cf">
+            <img src="/assets/images/index/bw-icon-insights.webp" alt="" class="x0b9edfc" loading="lazy" decoding="async">
+            <div><div class="xa9bdd90">DATA-DRIVEN INSIGHTS</div><div class="xff047c3">Cutting-edge analysis turns complex data into clear, actionable insights.</div></div>
+          </div>
+          <div class="xafa07cf">
+            <img src="/assets/images/index/bw-icon-pin.webp" alt="" class="x0b9edfc" loading="lazy" decoding="async">
+            <div><div class="xa9bdd90">OPTIMAL HEALTH: YOUR DESTINATION</div><div class="xff047c3">From where you are now to where you want to be&mdash;we guide your journey.</div></div>
+          </div>
+        </div>
+      </div>
+      <img src="/assets/images/index/diag-dashboard-v3-sm.webp" alt="Apex MD Health Analysis dashboard on tablet and phone with blood work vials and product line: health score, biological age, biomarkers, and recommendations" class="xf95ab3e" loading="lazy" decoding="async">
+    </div>
+    <div class="x4fd5a04">
+      <a href="#portal" class="xf915346">Start with Basic Labs &amp; Physician Consult <span class="xb9199e2">&#8594;</span></a>
+      <a href="#portal" class="xf915346">Start with Advanced Labs &amp; Physician Consult <span class="xb9199e2">&#8594;</span></a>
+    </div>
+  </section>
+
+  <!-- ============ TRANSFORMATIONS ============ -->
+  
+  <section data-screen-label="Transformations" class="x77cb7d9">
+    <div class="x84ac51f">
+      <div class="x0fa4b7b">Real People. Real Results.</div>
+      <h2 class="xd4e3464">Health Transformations <span class="xb46b598">That Inspire</span></h2>
+      <p class="x4cd5fc2">Our personalized medical wellness and fitness optimization programs deliver life-changing results. See how Apex MD helps people live healthier, stronger, and more confident lives.</p>
+      <div class="x2b4973b">
+        <img src="/assets/images/index/transform-1.webp" alt="Before and after transformation" class="xd223814" loading="lazy" decoding="async">
+        <img src="/assets/images/index/transform-2.webp" alt="Before and after transformation" class="xd223814" loading="lazy" decoding="async">
+        <img src="/assets/images/index/transform-3.webp" alt="Before and after transformation" class="xd223814" loading="lazy" decoding="async">
+        <img src="/assets/images/index/transform-4-v2.webp" alt="Before and after transformation" class="xd223814" loading="lazy" decoding="async">
+        <img src="/assets/images/index/transform-5.webp" alt="Before and after transformation" class="xd223814" loading="lazy" decoding="async">
+      </div>
+      <div class="xad2dbc8">
+        <span class="x4b3747e">&#8249;</span>
+        <div class="xb591dec">
+          <span class="xe0a6270">&#9733;</span>
+          <span><strong>You could be next.</strong> Start your transformation today!</span>
+        </div>
+        <span class="x4b3747e">&#8250;</span>
+      </div>
+      <div class="x21028a7">
+        <span class="x0e3eb73"></span>
+        <span class="x647f0dd"></span>
+        <span class="x647f0dd"></span>
+        <span class="x647f0dd"></span>
+        <span class="x647f0dd"></span>
+      </div>
+      
+    </div>
+  </section>
+  
+
+  <!-- ============ VIRTUAL PHYSICIAN VISITS ============ -->
+  <section data-screen-label="Virtual Physician Visits" class="xc14a4e9">
+    <div class="x738ee9d">
+      <!-- left card -->
+      <div class="x77ad647">
+        <img src="/assets/images/index/telehealth-woman-laptop.webp" alt="Woman on a secure video visit with her Apex MD physician; overlay reads Personalized care. From anywhere." class="x8975d5a" loading="lazy" decoding="async">
+        <div class="x88c3e53">
+          <div class="x9103d56">Your Virtual Visit Includes</div>
+          <div class="x49a3beb">
+            <div class="x9ef2ccb">
+              <span class="x2fee2db">&#9879;</span>
+              <div><div class="x52113a2">Review Your Data</div><div class="x8202db8">Labs, activity, sleep &amp; more</div></div>
+            </div>
+            <div class="x9ef2ccb">
+              <span class="x2fee2db">&#8767;</span>
+              <div><div class="x52113a2">Expert Guidance</div><div class="x8202db8">Physician + AI insights</div></div>
+            </div>
+            <div class="x9ef2ccb">
+              <span class="x2fee2db">&#9790;</span>
+              <div><div class="x52113a2">Personalized Plan</div><div class="x8202db8">Tailored to your goals</div></div>
+            </div>
+            <div class="x9ef2ccb">
+              <span class="x2f60c79">&#10022;</span>
+              <div><div class="x52113a2">Treatment &amp; Next Steps</div><div class="x8202db8">Supplements, meds &amp; follow-up</div></div>
+            </div>
+          </div>
+          <a href="#start" class="xd608f13">
+            <span class="xc6fbc5a"><span class="x6a91051">&#10022;</span><span><span class="x0b228fb">Better outcomes. Together.</span><span class="x9fe776d">Real conversations. Real results.</span></span></span>
+            <span class="xb9199e2">&#8594;</span>
+          </a>
+        </div>
+      </div>
+      <!-- right copy -->
+      <div class="x54dca8b">
+        <div class="x6d10e61"><span class="x5e0faad">&#10084;</span> Virtual Physician Visits</div>
+        <h2 class="x38273a7">Expert Care,<br><span class="xe186c60">Wherever You Are.</span></h2>
+        <p class="xb7f1f99">Connect with your Apex MD physician for secure video visits &mdash; powered by your complete health data and Apex MD AI insights.</p>
+        <p class="x55d5d36">Together, you&rsquo;ll review your results, optimize your plan, and <strong class="x207a7d1">take action</strong> &mdash; all from the comfort of home.</p>
+        <a href="#start" class="x5dcbaab">Learn About Apex MD Concierge <span class="xb9199e2">&#8594;</span></a>
+        <div class="x219b9ce">
+          <div class="x3a3d011">
+            <span class="x2fee2db">&#128737;</span>
+            <div><div class="xa2f1442">Personalized Care</div><div class="xd10fa09">More personalized = better results</div></div>
+          </div>
+          <div class="xee992d0">
+            <span class="x2fee2db">&#128197;</span>
+            <div><div class="xa2f1442">Easy Scheduling</div><div class="xd10fa09">Book, reschedule or message us</div></div>
+          </div>
+          <div class="x3a3d011">
+            <span class="x2fee2db">&#128202;</span>
+            <div><div class="xa2f1442">Data-Driven</div><div class="xd10fa09">Every visit informed by your data</div></div>
+          </div>
+          <div class="xee992d0">
+            <span class="x2fee2db">&#10084;</span>
+            <div><div class="xa2f1442">Ongoing Support</div><div class="xd10fa09">Your care team is with you every step of the way</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WHOLE HEALTH IN YOUR POCKET ============ -->
+  <section data-screen-label="Whole Health In Your Pocket" class="xe5a8f11">
+    <div class="x84ac51f">
+      <div class="xe1314c5"><span class="x0d5be05">&#9670;</span> Everything In One Place</div>
+      <h2 class="x1766fbf">Your whole health,<br>in your <span class="xb46b598">pocket</span></h2>
+      <p class="xfdc2c8b">Dashboard, health analysis, biomarkers, progress photos, genetics, and AI chat &mdash; the entire Apex MD portal syncs across web and mobile so your plan travels with you.</p>
+      <img src="/assets/images/index/phone-collage-3-sm.webp" alt="Apex MD portal across five phones: health dashboard, welcome overview with progress photos, AI health analysis, biomarkers panel, and genetics summary" class="x58d0193" loading="lazy" decoding="async">
+    </div>
+  </section>
+
+  <!-- ============ ADVANCED DIAGNOSTICS ============ -->
+  <section id="advanced-diagnostics" data-screen-label="Advanced Diagnostics" class="x86df2de">
+    <div class="xe09b708">
+      <div class="x4b0447a">
+        <div class="xcb39384"><span class="xe60be56"></span> Advanced Diagnostics</div>
+        <h2 class="x4d7ce58">Advanced Diagnostics, <span class="xb46b598">All Tracked in Your Apex MD Portal</span></h2>
+        <div class="x22283ae"></div>
+        <p class="x0e36831">We go beyond basic testing to uncover what&rsquo;s happening under the surface&mdash;so you can take control of your health with clarity and confidence.</p>
+        <div class="x81d8a0d">
+          <div class="xafa07cf">
+            <span class="x6ede6ca"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#d30704" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3c0 4.5 10 5.5 10 9s-10 4.5-10 9"/><path d="M17 3c0 4.5-10 5.5-10 9s10 4.5 10 9"/><path d="M8.5 6h7M8.5 18h7M7.5 9.5h9M7.5 14.5h9"/></svg></span>
+            <div><div class="xa9bdd90">GENETICS TESTING</div><div class="xff047c3">Understand your DNA to personalize prevention, wellness, and treatment.</div></div>
+          </div>
+          <div class="xafa07cf">
+            <span class="x6ede6ca"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#d30704" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M12 4.5v-1.5M12 21v-1.5M4.5 12h-1.5M21 12h-1.5M6.7 6.7l-1.1-1.1M18.4 18.4l-1.1-1.1M6.7 17.3l-1.1 1.1M18.4 5.6l-1.1 1.1"/></svg></span>
+            <div><div class="xa9bdd90">MICROBIOME TESTING</div><div class="xff047c3">Analyze your gut health and microbiome balance to optimize digestion and immunity.</div></div>
+          </div>
+          <div class="xafa07cf">
+            <span class="x6ede6ca"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#d30704" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7.5V12l3 2"/></svg></span>
+            <div><div class="xa9bdd90">BIOLOGICAL AGE TESTING</div><div class="xff047c3">Measure how fast you&rsquo;re truly aging at the cellular level and slow it down.</div></div>
+          </div>
+          <div class="xafa07cf">
+            <span class="x6ede6ca"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#d30704" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 3.5a5 5 0 0 1 0 7L8 17a3.5 3.5 0 0 1-5-5l6.5-6.5a5 5 0 0 1 5-2z"/><path d="M9 9l4.5 4.5"/></svg></span>
+            <div><div class="xa9bdd90">MICRONUTRIENT TESTING</div><div class="xff047c3">Pinpoint vitamin and mineral deficiencies to fine-tune your supplementation.</div></div>
+          </div>
+        </div>
+        <a href="#diagnostics" class="xed985ef">See Advanced Diagnostics</a>
+      </div>
+      <div class="diag-grid x9dc0693">
+        <div class="flip" role="button" tabindex="0" aria-label="Genetics Testing: tap to learn more">
+          <div class="flip-inner">
+            <div class="flip-face flip-front"><img src="/assets/images/index/diag-genetics-v2.webp" alt="Genetics Testing" class="xbd76eb0" loading="lazy" decoding="async"></div>
+            <div class="flip-face flip-back">
+              <div class="xf9fcb4b">Genetics Testing</div>
+              <div class="x3579709">Decode your DNA to uncover inherited risks and tailor prevention, nutrition, and treatment to your unique genetic blueprint.</div>
+              <div class="x7faa90a">&larr; Tap to flip back</div>
+            </div>
+          </div>
+        </div>
+        <div class="flip" role="button" tabindex="0" aria-label="Microbiome Testing: tap to learn more">
+          <div class="flip-inner">
+            <div class="flip-face flip-front"><img src="/assets/images/index/diag-microbiome-v2.webp" alt="Microbiome Testing" class="xbd76eb0" loading="lazy" decoding="async"></div>
+            <div class="flip-face flip-back">
+              <div class="xf9fcb4b">Microbiome Testing</div>
+              <div class="x3579709">A deep look at your gut ecosystem to optimize digestion, immunity, and nutrient absorption with targeted protocols.</div>
+              <div class="x7faa90a">&larr; Tap to flip back</div>
+            </div>
+          </div>
+        </div>
+        <div class="flip" role="button" tabindex="0" aria-label="Biological Age Testing: tap to learn more">
+          <div class="flip-inner">
+            <div class="flip-face flip-front"><img src="/assets/images/index/diag-bioage-v4.webp" alt="Biological Age Testing" class="xbd76eb0" loading="lazy" decoding="async"></div>
+            <div class="flip-face flip-back">
+              <div class="xf9fcb4b">Biological Age Testing</div>
+              <div class="x3579709">Measure how fast you&rsquo;re truly aging at the cellular level and get a personalized plan to turn back the clock.</div>
+              <div class="x7faa90a">&larr; Tap to flip back</div>
+            </div>
+          </div>
+        </div>
+        <div class="flip" role="button" tabindex="0" aria-label="Micronutrient Testing: tap to learn more">
+          <div class="flip-inner">
+            <div class="flip-face flip-front"><img src="/assets/images/index/diag-micronutrient-v2.webp" alt="Micronutrient Testing" class="xbd76eb0" loading="lazy" decoding="async"></div>
+            <div class="flip-face flip-back">
+              <div class="xf9fcb4b">Micronutrient Testing</div>
+              <div class="x3579709">Pinpoint the vitamin and mineral deficiencies driving fatigue, poor recovery, and low energy&mdash;then correct them precisely.</div>
+              <div class="x7faa90a">&larr; Tap to flip back</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+      </section>
+
+  <!-- ============ FOOTER ============ -->
+  
+
+</div>
+
+<script>
+  // Scroll-reveal: fade + rise each section as it enters the viewport
+  (function(){
+    var targets = document.querySelectorAll('section, footer');
+    targets.forEach(function(el){
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(38px)';
+      el.style.transition = 'opacity 0.7s cubic-bezier(.16,.7,.3,1), transform 0.7s cubic-bezier(.16,.7,.3,1)';
+      el.style.willChange = 'opacity, transform';
+    });
+    var reveal = function(el){
+      el.style.opacity = '1';
+      el.style.transform = 'translateY(0)';
+    };
+    if (!('IntersectionObserver' in window)) {
+      targets.forEach(reveal);
+    } else {
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if (e.isIntersecting) { reveal(e.target); io.unobserve(e.target); }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+      targets.forEach(function(el){ io.observe(el); });
+      // Reveal anything already in view on load
+      window.requestAnimationFrame(function(){
+        targets.forEach(function(el){
+          var r = el.getBoundingClientRect();
+          if (r.top < window.innerHeight * 0.9) { reveal(el); io.unobserve(el); }
+        });
+      });
+    }
+  })();
+
+  document.querySelectorAll('.flip').forEach(function(c){
+    var toggle = function(){ c.classList.toggle('flipped'); };
+    c.addEventListener('click', toggle);
+    c.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); toggle(); } });
+  });
+
+  // Mobile nav toggle
+  (function(){
+    var btn = document.querySelector('.mnav-toggle');
+    var nav = document.getElementById('primary-nav');
+    if (!btn || !nav) return;
+    btn.addEventListener('click', function(){
+      var open = nav.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    // close after tapping any link
+    nav.addEventListener('click', function(e){
+      if (e.target.closest('a')) { nav.classList.remove('open'); btn.setAttribute('aria-expanded','false'); }
+    });
+  })();
+
+  /* ===================== FREE HEALTH ASSESSMENT QUIZ ===================== */
+  (function(){
+    var RED = '#d30704', DARK = '#17140f', GREY = '#6a6a70', LINE = '#e6e4e2';
+    var data = { first:'', last:'', email:'', phone:'', street:'', city:'', st:'', zip:'',
+                 sex:'', age:'', ft:'', inch:'', weight:'', bmi:0, goals:[], symptoms:[],
+                 activity:'', support:'', labs:'', insurance:'' };
+    var step = 0;
+    // steps: 0 name,1 contact,2 body,3 activity,4 goals,5 symptoms,6 labs,7 insurance,8 support  (9 = results)
+    var TOTAL = 9;
+
+    var GOALS = ['Lose weight','Build muscle & strength','Boost energy & vitality',
+      'Balance my hormones','Better sleep','Longevity & healthspan',
+      'Better labs & biomarkers','Anti-aging: skin & hair'];
+    var SYMPTOMS = ['Fatigue / low energy','Weight gain','Low libido','Brain fog',
+      'Poor sleep','Mood swings','Loss of strength','Joint aches','Hot flashes / night sweats'];
+    var ACTIVITY = ['Sedentary \u2014 little to no exercise','Lightly active \u2014 1\u20132 days/week',
+      'Active \u2014 3\u20134 days/week','Very active \u2014 5+ days/week'];
+    var LABS = ['Within the last 60 days','More than 60 days ago','I\u2019ve never had labs done'];
+    var SUPPORT = ['Work with a physician team','Move forward on my own'];
+    var INSURANCE = ['Yes, I have health insurance','No / not sure'];
+
+    var CATALOG = {
+      'Concierge Care':{tag:'Concierge',href:'#concierge',price:'from $399/mo',blurb:'A dedicated physician, an extensive blood panel, and every therapy coordinated into one plan.'},
+      'Optimal Health':{tag:'Program',href:'#programs',price:'$149',blurb:'Foundational labs plus a physician consult to establish your baseline and starting plan.'},
+      'GLP-1 Weight Loss':{tag:'Program',href:'#products',price:'',blurb:'Physician-prescribed GLP-1 therapy for steady, sustainable fat loss.'},
+      'Zero Cost Weight Loss Program':{tag:'Program',href:'#programs',price:'$0 with insurance',blurb:'A medically supervised weight-loss program covered by most insurance plans \u2014 often at zero cost to you.'},
+      'Testosterone':{tag:'Therapy',href:'#mens-testosterone',price:'',blurb:'Optimize testosterone for strength, drive, and daily energy.'},
+      'Peptides':{tag:'Therapy',href:'#peptides',price:'',blurb:'Targeted peptides for recovery, vitality, and performance.'},
+      'Hormone Therapy':{tag:'Therapy',href:'#womens-hormone',price:'',blurb:'Balance estrogen & progesterone to feel like yourself again.'},
+      'Bloodwork':{tag:'Diagnostic',href:'#bloodwork',price:'',blurb:'Comprehensive labs to map your baseline biomarkers.'},
+      'Genetics':{tag:'Diagnostic',href:'#advanced-diagnostics',price:'',blurb:'DNA insights that personalize your entire protocol.'},
+      'Advanced Diagnostics':{tag:'Diagnostic',href:'#advanced-diagnostics',price:'',blurb:'Deep diagnostics for your complete health picture.'},
+      'Supplements':{tag:'Products',href:'#products',price:'',blurb:'Pharmaceutical-grade supplements matched to your labs.'}
+    };
+
+    function calcBMI(){
+      var totalIn = (parseFloat(data.ft)||0)*12 + (parseFloat(data.inch)||0);
+      var w = parseFloat(data.weight)||0;
+      data.bmi = (totalIn>0 && w>0) ? Math.round((703*w/(totalIn*totalIn))*10)/10 : 0;
+      return data.bmi;
+    }
+    function bmiClass(b){ if(!b) return ''; if(b<18.5) return 'Underweight'; if(b<25) return 'Healthy'; if(b<30) return 'Overweight'; return 'Obese'; }
+
+    function has(a,v){ return a.indexOf(v)>=0; }
+    function labsStale(){ return data.labs !== 'Within the last 60 days'; }
+    function wantsSupport(){ return data.support === 'Work with a physician team'; }
+
+    function hasInsurance(){ return data.insurance === 'Yes, I have health insurance'; }
+
+    // top self-guided product for the "on my own" path, per the routing rules
+    function primaryOnOwn(){
+      var g=data.goals, sy=data.symptoms;
+      var lowLib = has(sy,'Low libido'), lowEng = has(sy,'Fatigue / low energy');
+      if(data.bmi>30 && hasInsurance()) return 'Zero Cost Weight Loss Program';
+      if(data.sex==='Male' && lowLib && lowEng) return 'Testosterone';
+      if(data.sex==='Female' && lowLib && lowEng) return 'Hormone Therapy';
+      if(has(g,'Lose weight') || has(sy,'Weight gain') || data.bmi>=30) return 'GLP-1 Weight Loss';
+      if(data.sex==='Male' && (lowLib||has(sy,'Loss of strength'))) return 'Testosterone';
+      if(data.sex==='Female' && (has(sy,'Mood swings')||has(sy,'Hot flashes / night sweats'))) return 'Hormone Therapy';
+      return null;
+    }
+
+    function recommend(){
+      var s = {}; var add=function(k,n){ s[k]=(s[k]||0)+n; };
+      var g=data.goals, sy=data.symptoms, bmi=data.bmi;
+      if(has(g,'Lose weight')||has(sy,'Weight gain')||bmi>=27){ add('GLP-1 Weight Loss',3); }
+      if(bmi>30 && hasInsurance()){ add('Zero Cost Weight Loss Program',5); }
+      if(has(g,'Build muscle & strength')||has(sy,'Loss of strength')){ add('Testosterone',3); add('Peptides',2); }
+      if(has(g,'Boost energy & vitality')||has(sy,'Fatigue / low energy')||has(sy,'Brain fog')){ add('Peptides',2); add('Bloodwork',2); add('Supplements',1); }
+      if(has(g,'Balance my hormones')||has(sy,'Low libido')||has(sy,'Mood swings')||has(sy,'Hot flashes / night sweats')){ if(data.sex==='Female'){ add('Hormone Therapy',3);} else if(data.sex==='Male'){ add('Testosterone',3);} else { add('Hormone Therapy',2); add('Testosterone',2);} }
+      if(has(g,'Longevity & healthspan')||has(g,'Better labs & biomarkers')){ add('Bloodwork',2); add('Genetics',2); add('Advanced Diagnostics',2); add('Supplements',1); }
+      if(has(g,'Better sleep')||has(sy,'Poor sleep')){ add('Supplements',2); add('Bloodwork',1); }
+      if(has(g,'Anti-aging: skin & hair')){ add('Peptides',2); add('Supplements',1); }
+      if(has(sy,'Joint aches')){ add('Peptides',1); }
+      if(Object.keys(s).length===0){ add('Bloodwork',2); add('Supplements',1); }
+      return Object.keys(s).sort(function(a,b){ return s[b]-s[a]; });
+    }
+
+    // ---------- build shell ----------
+    var ov = document.createElement('div');
+    ov.id = 'apex-quiz';
+    ov.style.cssText = 'position:fixed;inset:0;z-index:9999;display:none;align-items:flex-start;justify-content:center;background:rgba(15,15,17,0.62);backdrop-filter:blur(3px);overflow-y:auto;padding:38px 18px;';
+    ov.innerHTML =
+      '<div id="aq-card" class="x0351347">'
+      + '<button id="aq-close" aria-label="Close" class="x63d32bd">&times;</button>'
+      + '<div class="x0a9a5ff"><div id="aq-prog" class="xb354418"></div></div>'
+      + '<div class="xb1110b8">'
+        + '<img src="/assets/images/index/logo-dark.webp" alt="Apex MD" class="x31012be" loading="lazy" decoding="async">'
+        + '<span id="aq-eyebrow" class="x4eac374">Free Health Assessment</span>'
+      + '</div>'
+      + '<div id="aq-body" class="x85b235f"></div>'
+      + '<div id="aq-nav" class="x4535830">'
+        + '<button id="aq-back" class="x79a4541">&larr; Back</button>'
+        + '<button id="aq-next" class="x5d3f6d0">Continue</button>'
+      + '</div>'
+      + '</div>';
+    document.body.appendChild(ov);
+
+    var body = ov.querySelector('#aq-body'),
+        prog = ov.querySelector('#aq-prog'),
+        backBtn = ov.querySelector('#aq-back'),
+        nextBtn = ov.querySelector('#aq-next'),
+        navBar = ov.querySelector('#aq-nav'),
+        card = ov.querySelector('#aq-card');
+
+    function fieldCSS(){ return 'width:100%;box-sizing:border-box;padding:13px 15px;border:1.5px solid '+LINE+';border-radius:12px;font-family:inherit;font-size:15px;color:'+DARK+';outline:none;background:#fff;'; }
+    function labelCSS(){ return 'display:block;font-size:13px;font-weight:600;color:'+DARK+';margin:0 0 7px;'; }
+    function h(title, sub){ return '<h2 class="x132137b">'+title+'</h2>'+(sub?'<p class="x91dc810">'+sub+'</p>':'<div class="x946a990"></div>'); }
+    function inp(label,key,ph,type,style){ return '<div><label>'+label+'</label><input data-k="'+key+'" type="'+(type||'text')+'" placeholder="'+(ph||'')+'" value="'+(data[key]||'')+'"></div>'; }
+    function chip(val, sel){ return '<button type="button" class="aq-chip x54c5f4f" data-v="'+val+'">'+val+'</button>'; }
+
+    function renderStep(){
+      calcBMI();
+      var html='';
+      if(step===0){
+        html = h('Let\u2019s get started','A few quick questions so your Apex MD physician team can build a plan around you \u2014 takes about 2 minutes.')
+          + '<div class="x49a3beb">'
+          + inp('First name','first','Jordan') + inp('Last name','last','Ellis') + '</div>';
+      } else if(step===1){
+        html = h('How can we reach you?','Your consult details and results are sent here. 100% private & HIPAA-secure.')
+          + '<div class="x49a3beb">'
+          + inp('Email','email','you@email.com','email') + inp('Phone','phone','(555) 555-1234','tel') + '</div>'
+          + '<div class="xd6f2af6">'+inp('Street address','street','123 Wellness Ave')+'</div>'
+          + '<div class="x4c630c1">'
+          + inp('City','city','Dallas') + inp('State','st','TX') + inp('ZIP','zip','75201') + '</div>';
+      } else if(step===2){
+        html = h('Your body metrics','We\u2019ll calculate your BMI to help match the right program.')
+          + '<label>Biological sex</label>'
+          + '<div id="aq-sex" class="xc981360">'
+            + chip('Male', data.sex==='Male') + chip('Female', data.sex==='Female') + chip('Prefer not to say', data.sex==='Prefer not to say') + '</div>'
+          + '<div class="x013e14c">'
+          + inp('Age','age','42','number')
+          + inp('Height (ft)','ft','5','number')
+          + inp('(in)','inch','10','number')
+          + inp('Weight (lbs)','weight','185','number') + '</div>'
+          + '<div id="aq-bmi" class="xa26bda7"></div>';
+      } else if(step===3){
+        html = h('How active are you?','Pick the option that best describes a typical week.')
+          + '<div class="xee962e5">'
+          + '<div id="aq-single">' + ACTIVITY.map(function(a){return chip(a, data.activity===a);}).join('') + '</div></div>';
+      } else if(step===4){
+        html = h('What are your health goals?','Select all that apply.')
+          + '<div class="x8aed95a">'
+          + GOALS.map(function(g){return chip(g, data.goals.indexOf(g)>=0);}).join('') + '</div>';
+      } else if(step===5){
+        html = h('Any symptoms you\u2019re experiencing?','Select all that apply \u2014 this helps your physician prioritize.')
+          + '<div class="x8aed95a">'
+          + SYMPTOMS.map(function(s){return chip(s, data.symptoms.indexOf(s)>=0);}).join('') + '</div>';
+      } else if(step===6){
+        html = h('When did you last have labs done?','Recent bloodwork lets us skip steps \u2014 otherwise we\u2019ll get you started with the right panel.')
+          + '<div id="aq-single" class="xee962e5">'
+          + LABS.map(function(l){return chip(l, data.labs===l);}).join('') + '</div>';
+      } else if(step===7){
+        html = h('Do you have health insurance?','Some of our programs \u2014 like the Zero Cost Weight Loss Program \u2014 are covered by most insurance plans.')
+          + '<div id="aq-single" class="xee962e5">'
+          + INSURANCE.map(function(i){return chip(i, data.insurance===i);}).join('') + '</div>';
+      } else if(step===8){
+        html = h('How would you like to move forward?','This shapes the plan we build for you.')
+          + '<div id="aq-single" class="xee962e5">'
+          + '<button type="button" class="aq-chip xe0a8305" data-v="'+SUPPORT[0]+'"><div class="x5cd4ce9">Work with a physician team</div><div class="x28fc6cf">A dedicated doctor guides your whole journey \u2014 Concierge Care.</div></button>'
+          + '<button type="button" class="aq-chip xa8b0802" data-v="'+SUPPORT[1]+'"><div class="x95e8d67">Move forward on my own</div><div class="x28fc6cf">Shop physician-approved products and programs directly.</div></button>'
+          + '</div>';
+      } else if(step===9){
+        html = renderResults();
+      }
+      body.innerHTML = html;
+      wire();
+      // progress + nav
+      var pct = step<=TOTAL ? Math.round((step/(TOTAL))*100) : 100;
+      prog.style.width = pct+'%';
+      navBar.style.display = (step===9) ? 'none' : 'flex';
+      backBtn.style.visibility = step===0 ? 'hidden' : 'visible';
+      nextBtn.textContent = step===8 ? 'See my plan \u2192' : 'Continue';
+      if(step===2) updateBMI();
+      card.scrollTop = 0; ov.scrollTop = 0;
+    }
+
+    function updateBMI(){
+      var el = body.querySelector('#aq-bmi'); if(!el) return;
+      calcBMI();
+      if(!data.bmi){ el.innerHTML=''; return; }
+      var cls = bmiClass(data.bmi);
+      var color = data.bmi>=30?RED:(data.bmi>=25?'#C77700':'#1F8A5B');
+      el.innerHTML = '<div class="x0027d9a">'
+        + '<div class="x540a27a">'+data.bmi+'</div>'
+        + '<div><div class="xf8a7966">Your BMI</div>'
+        + '<div class="xdbc8d9a">'+cls+'</div></div></div>';
+    }
+
+    function wire(){
+      body.querySelectorAll('input[data-k]').forEach(function(i){
+        i.addEventListener('input', function(){ data[i.getAttribute('data-k')] = i.value; if(step===2) updateBMI(); });
+      });
+      var sexWrap = body.querySelector('#aq-sex');
+      if(sexWrap){ sexWrap.querySelectorAll('.aq-chip').forEach(function(c){ c.addEventListener('click',function(){ data.sex=c.getAttribute('data-v'); renderStep(); }); }); }
+      // single-select steps: activity(3), labs(6), insurance(7), support(8)
+      if(step===3||step===6||step===7||step===8){
+        var key = step===3?'activity':(step===6?'labs':(step===7?'insurance':'support'));
+        body.querySelectorAll('#aq-single .aq-chip').forEach(function(c){ c.addEventListener('click',function(){ data[key]=c.getAttribute('data-v'); renderStep(); }); });
+      }
+      if(step===4||step===5){
+        var arr = step===4?data.goals:data.symptoms;
+        body.querySelectorAll('.aq-chip').forEach(function(c){ c.addEventListener('click',function(){
+          var v=c.getAttribute('data-v'); var ix=arr.indexOf(v);
+          if(ix>=0) arr.splice(ix,1); else arr.push(v);
+          var sel=arr.indexOf(v)>=0;
+          c.style.borderColor=sel?RED:LINE; c.style.background=sel?'rgba(224,36,36,0.06)':'#fff'; c.style.color=sel?RED:DARK;
+        }); });
+      }
+    }
+
+    function renderResults(){
+      var ranked = recommend();
+      var name = data.first ? (', '+data.first) : '';
+      var bmiChip = data.bmi ? '<span class="x253a469">BMI '+data.bmi+' \u00b7 '+bmiClass(data.bmi)+'</span>' : '';
+
+      function heroBig(eyebrow, title, priceStr, blurb, bullets, ctaText, href){
+        return '<div class="x621a095">'
+          + '<div class="x6b429f9"><div class="x656672c">'+eyebrow+'</div>'+(priceStr?'<div class="x3fe729d">'+priceStr+'</div>':'')+'</div>'
+          + '<div class="xf43b0e0">'+title+'</div>'
+          + '<p class="xdc50c62">'+blurb+'</p>'
+          + (bullets&&bullets.length?'<div class="x97f09a7">'+bullets.map(function(b){return '<span>\u2713 '+b+'</span>';}).join('')+'</div>':'')
+          + '<a href="'+href+'" class="aq-go xb5266a2">'+ctaText+' \u2192</a>'
+          + '</div>';
+      }
+      function prodCard(k){ var c=CATALOG[k]; return ''
+        + '<a href="'+c.href+'" class="aq-go xc164f2d">'
+        + '<div class="xa1aac2d"><span class="x49ccdcd">'+k+'</span><span class="x203cc20">'+c.tag+'</span></div>'
+        + '<div class="xbeab998">'+c.blurb+'</div></a>'; }
+      function optionCard(k, featured){ var c=CATALOG[k]; return ''
+        + '<a href="'+c.href+'" class="aq-go x4db0dda">'
+        + '<div class="x075b9cf"><span class="xee5749f">'+k+'</span>'+(featured?'<span class="x0643eb1">Best fit</span>':'')+'</div>'
+        + '<div class="xd126f49">'+c.price+'</div>'
+        + '<div class="x4a8c0f0">'+c.blurb+'</div>'
+        + '<div class="x2faeec5">'+(featured?'Start here':'Explore')+' \u2192</div></a>'; }
+
+      var head = '<div class="xbd4e515">'
+        + '<h2 class="x44ebddb">Your plan is ready'+name+'</h2>'+bmiChip+'</div>';
+      var disclaimer = '<p class="x2b7209b">This assessment is for informational purposes and is not a medical diagnosis. A licensed Apex MD physician will review your intake before any treatment.</p>';
+
+      var out = '<div class="xa5ca015">' + head;
+
+      if(wantsSupport()){
+        // ---- Concierge path ----
+        out += '<p class="x91dc810">You told us you\u2019d like a physician on your journey \u2014 here\u2019s the guided path our doctors recommend.</p>'
+          + heroBig('Your recommended path','Apex MD Concierge Care','from $399/mo',
+              'A dedicated physician who owns your full plan end-to-end \u2014 starting with an extensive blood panel and coordinating every therapy and diagnostic below into one protocol, with direct-to-doctor messaging and quarterly re-optimization.',
+              ['Dedicated physician','Extensive blood panel','All therapies coordinated','Unlimited messaging'],
+              'Book my Concierge consult','#concierge')
+          + (data.bmi>30 && hasInsurance() ? '<a href="#programs" class="aq-go x8b8ad54"><div><div class="x49ccdcd">You may qualify for the Zero Cost Weight Loss Program</div><div class="xe27e19c">BMI over 30 + insurance \u2014 covered by most plans at $0.</div></div><span class="x354cda1">See if you qualify \u2192</span></a>' : '')
+          + '<div class="x9703ea3">Built into your plan</div>'
+          + '<div class="x8aed95a">'+ranked.slice(0,4).map(prodCard).join('')+'</div>'
+          + '<div class="x2b6362f">'
+            + '<a href="#concierge" class="aq-go xf409f09">Start my Concierge plan</a></div>';
+      } else {
+        // ---- On my own path ----
+        var primary = primaryOnOwn();
+        var stale = labsStale();
+        var subline = primary
+          ? 'Based on your goals and symptoms, here\u2019s the best self-guided starting point for you.'
+          : 'Here\u2019s where our physicians recommend you begin.';
+        out += '<p class="x91dc810">'+subline+'</p>';
+
+        if(primary){
+          var pc = CATALOG[primary];
+          if(primary==='Zero Cost Weight Loss Program'){
+            out += heroBig('You may qualify at $0', primary, '$0 with insurance',
+              'Because your BMI is over 30 and you have insurance, you likely qualify for our medically supervised Zero Cost Weight Loss Program \u2014 physician-prescribed treatment covered by most plans, often at no cost to you.',
+              ['Insurance-covered','Physician supervised','GLP-1 options included'],
+              'See if you qualify for the Zero Cost Weight Loss Program', pc.href);
+          } else {
+            out += heroBig('Recommended for you', primary, '', pc.blurb + ' You can purchase and start directly.', null, 'Explore '+primary, pc.href);
+          }
+        }
+
+        if(stale){
+          out += '<div class="xae8dc72">Start with current labs</div>'
+            + '<p class="x455d5fd">Your last bloodwork isn\u2019t recent \u2014 fresh labs make sure you\u2019re on exactly the right protocol. Two ways to start:</p>'
+            + '<div class="x4d20d52">'
+            + optionCard('Optimal Health', true) + optionCard('Concierge Care', false) + '</div>';
+        }
+
+        var rest = ranked.filter(function(k){ return k!==primary; }).slice(0, primary?4:5);
+        if(rest.length){
+          out += '<div class="x9703ea3">'+(primary?'Also matched to you':'Matched to you')+'</div>'
+            + '<div class="x8aed95a">'+rest.map(prodCard).join('')+'</div>';
+        }
+
+        out += '<div class="x2b6362f">'
+          + '<a href="#products" class="aq-go xf409f09">Shop my recommendations</a>'
+          + '<button id="aq-concierge" class="xeedf5ab">Change your mind? Work with a physician team instead \u2192</button>'
+          + '</div>';
+      }
+
+      out += disclaimer + '</div>';
+      return out;
+    }
+
+    function valid(){
+      if(step===0){ if(!data.first.trim()){ alert('Please enter your first name.'); return false; } }
+      if(step===1){ if(!data.phone.trim() && !data.email.trim()){ alert('Please add a phone or email so we can reach you.'); return false; } }
+      if(step===2){ if(!data.weight || !data.ft){ alert('Please add your height and weight for BMI.'); return false; } }
+      if(step===3){ if(!data.activity){ alert('Please pick your activity level.'); return false; } }
+      if(step===4){ if(data.goals.length===0){ alert('Pick at least one goal.'); return false; } }
+      if(step===6){ if(!data.labs){ alert('Please tell us when you last had labs.'); return false; } }
+      if(step===7){ if(!data.insurance){ alert('Please let us know if you have insurance.'); return false; } }
+      if(step===8){ if(!data.support){ alert('Please choose how you\u2019d like to move forward.'); return false; } }
+      return true;
+    }
+
+    nextBtn.addEventListener('click', function(){ if(!valid()) return; if(step<9){ step++; renderStep(); } });
+    backBtn.addEventListener('click', function(){ if(step>0){ step--; renderStep(); } });
+
+    function open(){ step=0; renderStep(); ov.style.display='flex'; document.body.style.overflow='hidden'; }
+    function close(){ ov.style.display='none'; document.body.style.overflow=''; }
+    ov.querySelector('#aq-close').addEventListener('click', close);
+    ov.addEventListener('click', function(e){ if(e.target===ov) close(); });
+    document.addEventListener('keydown', function(e){ if(e.key==='Escape' && ov.style.display==='flex') close(); });
+    // results interactions
+    ov.addEventListener('click', function(e){
+      if(e.target.closest('#aq-concierge')){ data.support='Work with a physician team'; renderStep(); return; }
+      var a=e.target.closest('.aq-go'); if(a){ close(); }
+    });
+
+    // open triggers
+    document.querySelectorAll('a[href="#start"], a[href="#assessment"]').forEach(function(a){
+      a.addEventListener('click', function(e){ e.preventDefault(); open(); });
+    });
+  })();
+</script>
+</main>
+<footer class="ftr">
+  <div class="ftr-grid">
+    <div class="ftr-brand">
+      <div class="hdr-logo">
+        <span class="hdr-logo-a ftr-logo-a">APEX</span><span class="hdr-logo-b ftr-logo-b">MD</span>
+      </div>
+      <p class="ftr-tag">The future of personalized health.</p>
+      <a class="btn btn-red" href="/get-started">Get Started</a>
+    </div>
+
+    <div class="ftr-col">
+      <div class="ftr-head">Programs</div>
+      <a href="/mens-optimal-health">Men&rsquo;s Optimal Health</a>
+      <a href="/womens-optimal-health">Women&rsquo;s Optimal Health</a>
+      <a href="/glp-1-program">GLP-1 Weight Loss</a>
+      <a href="/microdosing">GLP-1 Microdosing</a>
+      <a href="/testosterone">Testosterone</a>
+      <a href="/hormone-therapy">Hormone Therapy</a>
+    </div>
+
+    <div class="ftr-col">
+      <div class="ftr-head">Products</div>
+      <a href="/peptides">Peptides</a>
+      <a href="/bloodwork">Bloodwork</a>
+      <a href="/genetics">Genetics</a>
+      <a href="/advanced-diagnostics">Advanced Diagnostics</a>
+      <a href="/supplements">Supplements</a>
+    </div>
+
+    <div class="ftr-col">
+      <div class="ftr-head">Company</div>
+      <a href="/about-us">About</a>
+      <a href="/concierge">Concierge Care</a>
+      <a href="/apex-md-ai">Apex MD AI</a>
+      <a href="/partner">Partner</a>
+      <a href="/contact">Contact Us</a>
+    </div>
+  </div>
+
+  <div class="ftr-base">
+    <div class="ftr-trust">
+      <span>LegitScript certified</span><span>Made in USA</span><span>HIPAA compliant</span><span>Secure</span>
+    </div>
+    <div class="ftr-legal">
+      <span>&copy; 2026 Apex MD. All rights reserved.</span>
+      <a href="/privacy-policy">Privacy Policy</a>
+      <a href="/terms-and-conditions">Terms of Service</a>
+    </div>
+  </div>
+</footer>
+
+<script src="/assets/js/apex.js" defer></script>
+</body>
+</html>

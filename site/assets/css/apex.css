@@ -1,0 +1,290 @@
+/* Apex MD — house stylesheet.
+   Hand-authored. Tokens mirror _build/style.py; keep the two in step.
+   Per-page rules are generated into assets/css/<page>.css by _build/cssx.py. */
+
+:root {
+  --red:        #d30704;
+  --red-dark:   #a80503;
+  --red-bright: #ff5a4d;
+  --red-tint:   #fdeeee;
+  --pink:       #c2185b;   /* scoped: Women's Optimal Health */
+  --pink-dark:  #971146;
+
+  --ink:        #17140f;
+  --body:       #5f5952;
+  --muted:      #7d766c;
+  --ink-soft:   #33302b;
+  --bg:         #ffffff;
+  --bg-alt:     #faf8f6;
+  --rule:       #e4dfd9;
+
+  --font-ui:    Archivo, 'Helvetica Neue', Arial, sans-serif;
+  --font-mono:  'JetBrains Mono', ui-monospace, monospace;
+  --font-serif: 'Playfair Display', Georgia, serif;
+
+  --max:        1400px;
+  --gutter:     clamp(20px, 3.4vw, 48px);
+  --radius:     14px;
+  --header-h:   76px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; padding: 0; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-ui);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;          /* desktop comps bleed decorative art off-canvas */
+}
+
+a { color: var(--red); text-decoration: none; }
+a:hover { color: var(--red-dark); }
+h1, h2, h3, h4 { line-height: 1.03; letter-spacing: -0.02em; }
+img { max-width: 100%; }
+::selection { background: var(--red); color: #fff; }
+
+:focus-visible { outline: 3px solid var(--red); outline-offset: 2px; }
+
+.skip {
+  position: absolute; left: -9999px; top: 0; z-index: 200;
+  background: var(--ink); color: #fff; padding: 12px 18px;
+  font: 600 14px/1 var(--font-ui);
+}
+.skip:focus { left: 0; color: #fff; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* --------------------------------------------- unfilled image placeholder
+
+   The Men's Optimal Health and Weight Loss handoffs left <image-slot>
+   elements where an image was intended but never supplied. build.py turns
+   each into one of these, captioned with its intended subject, so a missing
+   image reads as unfinished rather than as an empty gap nobody notices.
+   When the real image lands, replace the element with an <img>. */
+
+.img-todo {
+  display: flex; align-items: center; justify-content: center;
+  min-height: 120px; padding: 16px;
+  border: 2px dashed var(--red);
+  background: var(--red-tint);
+}
+.img-todo::after {
+  content: 'image needed: ' attr(data-todo);
+  font: 600 12px/1.4 var(--font-mono);
+  letter-spacing: .06em; text-transform: uppercase;
+  color: var(--red); text-align: center;
+}
+
+/* ------------------------------------------------------------ buttons */
+
+.btn {
+  display: inline-block;
+  font: 900 13px/1 var(--font-ui);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  padding: 14px 24px;
+  white-space: nowrap;
+  transition: background .15s ease;
+}
+.btn-red { background: var(--red); color: #fff; }
+.btn-red:hover { background: var(--red-dark); color: #fff; }
+
+/* ------------------------------------------------------------- header */
+
+.hdr {
+  position: sticky; top: 0; z-index: 60;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: clamp(16px, 2.4vw, 40px);
+  height: var(--header-h);
+  padding: 0 var(--gutter);
+  background: var(--bg);
+  border-bottom: 2px solid var(--rule);
+}
+
+.hdr-logo { display: flex; align-items: baseline; gap: 8px; flex: none; color: var(--ink); }
+.hdr-logo:hover { color: var(--ink); }
+.hdr-logo-a { font-size: 24px; font-weight: 900; letter-spacing: -.03em; }
+.hdr-logo-b { font-size: 24px; font-weight: 400; letter-spacing: -.03em; color: var(--red); }
+
+.hdr-nav {
+  display: flex; align-items: center; min-width: 0;
+  gap: clamp(9px, 1.5vw, 26px);
+  font: 900 clamp(10.5px, 1.02vw, 13px)/1 var(--font-ui);
+  letter-spacing: .02em; text-transform: uppercase;
+  white-space: nowrap;
+}
+.hdr-nav > a, .hdr-drop-btn { color: var(--ink); }
+.hdr-nav > a:hover, .hdr-drop-btn:hover { color: var(--red); }
+
+/* the active section, stamped per page by build.py */
+.hdr-nav [data-nav].is-active {
+  color: var(--red);
+  padding-bottom: 3px;
+  border-bottom: 2px solid var(--red);
+}
+
+.hdr-drop { position: relative; }
+.hdr-drop-btn {
+  display: flex; align-items: center; gap: 6px;
+  background: none; border: 0; cursor: pointer;
+  font: inherit; color: var(--ink);
+  text-transform: inherit; letter-spacing: inherit;
+}
+.hdr-caret { width: 9px; height: 6px; transition: transform .18s ease; }
+.hdr-drop-btn[aria-expanded="true"] .hdr-caret { transform: rotate(180deg); }
+
+.hdr-menu {
+  position: absolute; top: calc(100% + 14px); left: 50%;
+  transform: translate(-50%, -6px);
+  display: flex; flex-direction: column; gap: 2px;
+  min-width: 232px; padding: 12px;
+  background: #fff;
+  border: 1px solid var(--rule);
+  box-shadow: 0 18px 46px rgba(0, 0, 0, .14);
+  opacity: 0; visibility: hidden;
+  transition: opacity .18s ease, transform .18s ease, visibility .18s;
+}
+.hdr-drop:hover .hdr-menu,
+.hdr-drop:focus-within .hdr-menu,
+.hdr-drop-btn[aria-expanded="true"] + .hdr-menu {
+  opacity: 1; visibility: visible; transform: translate(-50%, 0);
+}
+.hdr-menu a {
+  padding: 9px 12px;
+  font: 600 14px/1.2 var(--font-ui);
+  letter-spacing: 0; text-transform: none;
+  color: var(--ink-soft);
+}
+.hdr-menu a:hover { background: var(--red-tint); color: var(--red); }
+
+.hdr-end { display: flex; align-items: center; gap: 18px; flex: none; }
+.hdr-login {
+  font: 900 12px/1 var(--font-ui);
+  letter-spacing: .06em; text-transform: uppercase;
+  color: var(--ink);
+}
+.hdr-login:hover { color: var(--red); }
+
+.hdr-burger {
+  display: none;
+  flex-direction: column; gap: 5px;
+  background: none; border: 0; cursor: pointer;
+  padding: 8px 4px;
+}
+.hdr-burger span { display: block; width: 24px; height: 2px; background: var(--ink); }
+
+/* ------------------------------------------------------- mobile drawer */
+
+.drawer {
+  position: fixed; inset: 0; z-index: 90;
+  display: flex; flex-direction: column;
+  padding: 0 var(--gutter) 32px;
+  background: var(--bg);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.drawer[hidden] { display: none; }
+
+.drawer-top {
+  display: flex; align-items: center; justify-content: space-between;
+  height: var(--header-h);
+  border-bottom: 2px solid var(--rule);
+  margin-bottom: 8px;
+}
+.drawer-x {
+  background: none; border: 0; cursor: pointer;
+  font-size: 34px; line-height: 1; color: var(--ink);
+  padding: 0 4px;
+}
+
+.drawer-nav { display: flex; flex-direction: column; }
+.drawer-nav > a, .drawer-nav summary {
+  display: block; padding: 15px 0;
+  border-bottom: 1px solid var(--rule);
+  font: 800 16px/1.2 var(--font-ui);
+  color: var(--ink);
+  cursor: pointer;
+}
+.drawer-nav summary { list-style: none; }
+.drawer-nav summary::-webkit-details-marker { display: none; }
+.drawer-nav summary::after { content: ' +'; color: var(--red); }
+.drawer-nav details[open] summary::after { content: ' –'; }
+.drawer-nav details a {
+  display: block; padding: 12px 0 12px 16px;
+  font: 500 15px/1.2 var(--font-ui);
+  color: var(--body);
+  border-bottom: 1px solid var(--rule);
+}
+.drawer-cta { margin-top: 24px; text-align: center; padding: 17px 24px; }
+
+body.nav-open { overflow: hidden; }
+
+/* ------------------------------------------------------------- footer */
+
+.ftr { background: var(--bg); padding: 72px var(--gutter) 40px; }
+
+.ftr-grid {
+  max-width: var(--max); margin: 0 auto;
+  display: grid; grid-template-columns: 1.2fr 1fr 1fr 1fr; gap: 48px;
+  padding-bottom: 56px;
+  border-bottom: 2px solid var(--rule);
+}
+.ftr-brand { display: flex; flex-direction: column; gap: 16px; align-items: flex-start; }
+.ftr-logo-a, .ftr-logo-b { font-size: 28px; }
+.ftr-tag { font-size: 15px; color: var(--muted); }
+
+.ftr-col { display: flex; flex-direction: column; gap: 11px; }
+.ftr-head {
+  margin-bottom: 4px;
+  font: 800 12px/1 var(--font-mono);
+  letter-spacing: .16em; text-transform: uppercase;
+  color: var(--muted);
+}
+.ftr-col a { font-size: 15px; color: var(--ink-soft); }
+.ftr-col a:hover { color: var(--red); }
+
+.ftr-base {
+  max-width: var(--max); margin: 0 auto; padding-top: 28px;
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 32px; flex-wrap: wrap;
+}
+.ftr-trust {
+  display: flex; gap: 22px; flex-wrap: wrap;
+  font: 800 11px/1.4 var(--font-mono);
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--muted);
+}
+.ftr-legal { display: flex; gap: 22px; flex-wrap: wrap; font-size: 13px; color: var(--muted); }
+.ftr-legal a { color: var(--muted); }
+.ftr-legal a:hover { color: var(--red); }
+
+/* -------------------------------------------------------- breakpoints */
+
+@media (max-width: 1024px) {
+  .hdr-login { display: none; }
+  .ftr-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+}
+
+@media (max-width: 760px) {
+  :root { --header-h: 64px; }
+
+  .hdr-nav, .hdr-cta { display: none; }
+  .hdr-burger { display: flex; }
+  .hdr-logo-a, .hdr-logo-b { font-size: 21px; }
+
+  .ftr { padding: 44px var(--gutter) 32px; }
+  .ftr-grid { grid-template-columns: 1fr; gap: 32px; padding-bottom: 32px; }
+  .ftr-base { padding-top: 22px; gap: 18px; }
+  .ftr-legal { gap: 14px; font-size: 12px; }
+}

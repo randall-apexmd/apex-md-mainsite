@@ -1,0 +1,8 @@
+.DS_Store
+**/.DS_Store
+Thumbs.db
+
+# Design handoffs from the Drive download. ~560 MB of unoptimised PNGs plus
+# two base64-inlined HTML files. Reference material for _build, never shipped
+# and never committed — the canonical copy lives in Google Drive.
+_src/
