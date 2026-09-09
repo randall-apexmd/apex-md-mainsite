@@ -62,14 +62,19 @@ categories that exist are `weight-loss`, `trt`, `bloodwork`, `hrt` and
 |---|---|---|
 | Testosterone | `form.apexmd.com/?categoryId=trt` | confirmed |
 | GLP-1 Weight Loss | `form.apexmd.com/?categoryId=weight-loss` | confirmed |
-| Men's Optimal Health | `form.apexmd.com/?categoryId=bloodwork` | **guessed** |
-| Women's Optimal Health | `form.apexmd.com/?categoryId=bloodwork` | **guessed** |
-| Homepage, Apex AI, Genetics | `form.apexmd.com/` | no category |
+| Men's Optimal Health | `form.apexmd.com/?categoryId=bloodwork` | confirmed |
+| Women's Optimal Health | `form.apexmd.com/?categoryId=bloodwork` | confirmed |
+| Genetics | `form.apexmd.com/?categoryId=bloodwork` | Blake's call |
+| Homepage, Apex AI | `form.apexmd.com/` | no category |
 
-The two guesses: both pages sell the $199 "Optimization Jumpstart" (labs +
-clinician read), which is why they point at `bloodwork`. Women's could
-reasonably be `hrt` instead. Genetics has no matching category on the live
-form at all, so it gets the generic entry rather than a wrong one.
+Genetics has no category of its own on the live form; `bloodwork` is the
+closest fit, since it is a lab-ordered test either way.
+
+**Open:** the Genetics page sells two SKUs — Lifestyle Genetics ($499) and
+Peptide Genetics ($399) — as separate buttons, and both now land on the same
+link. The visitor's choice of product is lost. The live site uses
+`?productid=` for exactly this (see `/peptides/` and `/microdosing/`); if
+those two SKUs have productid values, the buttons should be split.
 
 Fix any of these in one place — the `CTA` table at the top of
 `_build/build.py` — then rebuild.

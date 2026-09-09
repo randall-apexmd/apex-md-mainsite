@@ -62,6 +62,13 @@ PAGES = {
 # "Optimization Jumpstart" (labs + clinician read), so they point at
 # bloodwork. Women's could arguably be hrt instead.
 #
+# Genetics has no category of its own on the live form. Blake directed it to
+# bloodwork, which is the closest fit — it is a lab-ordered test either way.
+# Note this flattens two distinct SKUs onto one link: the page sells Lifestyle
+# Genetics ($499) and Peptide Genetics ($399) as separate buttons, and both
+# now land on the same uncategorised-by-product intake. If those SKUs have
+# ?productid= values, put them here and split the two buttons.
+#
 # UNMAPPED — sent to the generic form with no category preselected rather
 # than guessed into the wrong one. Better a visitor picks their own category
 # than lands in someone else's.
@@ -71,7 +78,7 @@ LOGIN = 'https://ehr.apexmd.com/login'
 CTA = {
     'index':                 FORM,
     'apex-md-ai':            FORM,
-    'genetics':              FORM,
+    'genetics':              FORM + '?categoryId=bloodwork',
     'testosterone':          FORM + '?categoryId=trt',
     'glp-1-program':         FORM + '?categoryId=weight-loss',
     'mens-optimal-health':   FORM + '?categoryId=bloodwork',
