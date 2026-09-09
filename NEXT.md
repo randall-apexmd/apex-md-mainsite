@@ -6,11 +6,12 @@ and pushed.
 
 ## Pick up here
 
-### 1. The twelve dead nav links
+### 1. The eleven dead nav links
 
-The header and footer link twelve routes that do not exist yet:
+`/concierge` is now built. The header and footer still link eleven routes
+that do not exist:
 
-    /about-us   /advanced-diagnostics   /bloodwork   /concierge
+    /about-us   /advanced-diagnostics   /bloodwork
     /contact    /hormone-therapy        /microdosing /partner
     /peptides   /privacy-policy         /supplements /terms-and-conditions
 
@@ -75,7 +76,14 @@ The live site runs Google Tag Manager container **GTM-WJWTXMJ4**. None of the
 seven rebuilt pages carry any tag. If the same container should follow the
 rebuild, add it to `SHELL` in `_build/build.py` so every page gets it.
 
-### 4. Two smaller things
+### 4. Concierge — one thing left open
+
+The page's "Longevity briefing" newsletter modal is `<form id="lbForm">` with
+no action and no handler: it collects an email and drops it. Either wire it to
+the mailing list or remove the modal. Same class of problem as the homepage
+health-assessment quiz, which also submits nowhere.
+
+### 5. Two smaller things
 
 - **Genetics sells two SKUs** — Lifestyle ($499) and Peptide ($399) — and both
   buttons now go to the same link, losing which product the visitor chose. The

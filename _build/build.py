@@ -12,7 +12,9 @@ site/<slug>.html.
 Generated pages are disposable. Edit parts/, style.py, or the handoff — never
 a file in site/.
 """
+import base64
 import datetime
+import hashlib
 import os
 import re
 import shutil
@@ -39,6 +41,7 @@ PAGES = {
     'womens-optimal-health': ('womens-health', 'index.html',                 'programs'),
     'glp-1-program':         ('weight-loss',   'index.dc.html',              'programs'),
     'apex-md-ai':            ('apex-ai',       'Apex MD AI Landing.dc.html', 'apex-md-ai'),
+    'concierge':             ('concierge',     'index.html',                 'concierge'),
 }
 
 
@@ -79,6 +82,7 @@ CTA = {
     'index':                 FORM,
     'apex-md-ai':            FORM,
     'genetics':              FORM + '?categoryId=bloodwork',
+    'concierge':             FORM + '?categoryId=bloodwork',
     'testosterone':          FORM + '?categoryId=trt',
     'glp-1-program':         FORM + '?categoryId=weight-loss',
     'mens-optimal-health':   FORM + '?categoryId=bloodwork',
@@ -291,6 +295,44 @@ def relink(body, slug):
     return body, counts
 
 
+def extract_data_uris(body, handoff):
+    """Pull base64-inlined images out into real files.
+
+    The Concierge handoff embeds all of its images as `data:` URIs, which is
+    why that file is 2.8 MB. An inline image cannot be cached, cannot be
+    lazy-loaded, cannot be resized by the image pipeline, and costs a third
+    more bytes than the binary it encodes. Written out as files they go
+    through the same resize/WebP pass as everything else.
+
+    Named by content hash, so a repeated image is stored once and re-running
+    the build is stable.
+    """
+    out_dir = os.path.join(SRC, handoff, 'assets')
+    pat = re.compile(r'data:image/([a-zA-Z0-9.+-]+);base64,([A-Za-z0-9+/=\s]+)')
+    seen, count = {}, [0]
+
+    def repl(m):
+        fmt, data = m.group(1).lower(), re.sub(r'\s+', '', m.group(2))
+        try:
+            raw = base64.b64decode(data, validate=True)
+        except Exception:                                    # noqa: BLE001
+            return m.group(0)
+        digest = hashlib.sha1(raw).hexdigest()[:12]
+        if digest not in seen:
+            ext = {'jpeg': 'jpg', 'svg+xml': 'svg'}.get(fmt, fmt)
+            name = 'inline-%s.%s' % (digest, ext)
+            os.makedirs(out_dir, exist_ok=True)
+            path = os.path.join(out_dir, name)
+            if not os.path.exists(path):
+                with open(path, 'wb') as fh:
+                    fh.write(raw)
+            seen[digest] = name
+            count[0] += 1
+        return 'assets/' + seen[digest]
+
+    return pat.sub(repl, body), count[0]
+
+
 def rewrite_assets(body, slug):
     """Repoint the handoff's relative asset paths at the built site.
 
@@ -433,6 +475,7 @@ def build(slug):
     body, tool = clean_design_tool(body)
 
     body, links = relink(body, slug)
+    body, inlined = extract_data_uris(body, handoff)
     body, repathed = rewrite_assets(body, slug)
 
     # the Apex AI handoff wraps its content in its own <main>; the shell
@@ -456,7 +499,7 @@ def build(slug):
         title=page_title,
         desc=page_desc.replace('"', '&quot;'),
         url_path='/' if slug == 'index' else '/' + slug,
-        fonts=S.GOOGLE_FONTS,
+        fonts=S.GOOGLE_FONTS + S.EXTRA_FONTS.get(slug, ''),
         slug=slug,
         page_css=pcss,
         header=chrome('header.html', active, slug),
@@ -481,6 +524,8 @@ def build(slug):
           % (slug, hoisted, st['classes'], dropped, sum(links.values()),
              len(mapping), images.human(before), images.human(after),
              saved, st['mobile']))
+    if inlined:
+        print('    %d base64 image(s) extracted to files' % inlined)
     if tool['image-slot']:
         print('    %d unfilled image placeholder(s) — shown as dashed boxes'
               % tool['image-slot'])

@@ -63,6 +63,8 @@ NORMALISE = {
     '#e8232a': RED,     # Weight Loss
     '#e11d2a': RED,     # Apex AI
     '#e01e1e': RED,     # Apex AI (second red in the same file)
+    '#d60604': RED,     # Concierge — 2 hex points off the house red, which
+    '#f0413f': RED,     # reads as a rendering fault rather than a choice
     '#b91c1c': RED_DARK,
     '#b01818': RED_DARK,
     # near-black grounds -> house ink
@@ -80,6 +82,15 @@ NORMALISE = {
     # outlier font stacks -> Archivo
     'Poppins': 'Archivo',
     'Plus Jakarta Sans': 'Archivo',
+}
+
+# Fonts a single page needs on top of the house stack. Concierge sets its
+# display italics in Fraunces; Blake asked for that page to stay as it is, so
+# the face is kept and loaded only where it is used rather than folded onto
+# Playfair for the sake of uniformity.
+EXTRA_FONTS = {
+    'concierge': '&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;'
+                 '0,9..144,700;1,9..144,400;1,9..144,600',
 }
 
 # Women's Optimal Health keeps its pink as a deliberate section accent, so its
