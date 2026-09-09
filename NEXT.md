@@ -70,20 +70,53 @@ returns only 63 words of body text; the content is rendered client-side, so
 Both want a plain typographic template with the shared chrome — no design
 work, just readable long-form text.
 
-### 3. Analytics
+### 3. Performance — done, with one thing left
+
+A full pass on 2026-09-09. Site imagery went 337 MB (raw handoffs) -> 20 MB
+-> **11 MB**, and the homepage stopped pulling its whole image set on first
+paint.
+
+Two bugs were behind most of it:
+
+- `optimize.py` never stamped width/height on any image. It builds the file
+  path with `os.path.join(SITE, src)` where src is root-absolute
+  (`/assets/...`), and join discards everything before an absolute component,
+  so every lookup pointed outside the project, Image.open raised, and a bare
+  `except` swallowed it. Without intrinsic sizes the browser cannot reserve
+  space, so every lazy image sat inside the load threshold at once: the
+  homepage fetched 47 images / 1.9 MB before a single scroll. It now fetches
+  one. This was also the whole source of the page's layout shift.
+- Images were resized to a flat 2048px cap regardless of how large they are
+  actually painted. Icons shipped at 1536px to be drawn at 48px; the NBC
+  wordmark at 2048px to be drawn at 41px. `_build/display-widths.json` now
+  holds the real painted width of all 288 images, measured in a browser at
+  1440px and 375px (the larger of the two), and images.py targets 2x that
+  with a 200px floor.
+
+**Left to do:** `display-widths.json` is a measurement snapshot, not something
+the build derives. Add or restyle a page and its images fall back to the
+2048px cap — correct, just heavier than needed. Re-measure when the layout
+changes materially.
+
+Also worth knowing: a handful of images are painted larger than the file they
+came from, so they are upscaled and soft. The build never upscales, so these
+need better source art, not a build change. Worst is
+`testosterone/gym-bg.webp` — a 576px file painted at 792px.
+
+### 4. Analytics
 
 The live site runs Google Tag Manager container **GTM-WJWTXMJ4**. None of the
 seven rebuilt pages carry any tag. If the same container should follow the
 rebuild, add it to `SHELL` in `_build/build.py` so every page gets it.
 
-### 4. Concierge — one thing left open
+### 5. Concierge — one thing left open
 
 The page's "Longevity briefing" newsletter modal is `<form id="lbForm">` with
 no action and no handler: it collects an email and drops it. Either wire it to
 the mailing list or remove the modal. Same class of problem as the homepage
 health-assessment quiz, which also submits nowhere.
 
-### 5. Two smaller things
+### 6. Two smaller things
 
 - **Genetics sells two SKUs** — Lifestyle ($499) and Peptide ($399) — and both
   buttons now go to the same link, losing which product the visitor chose. The

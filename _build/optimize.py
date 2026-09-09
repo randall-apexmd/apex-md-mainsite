@@ -25,12 +25,27 @@ SITE = os.path.join(ROOT, 'site')
 
 _dims = {}
 def dims(src):
+    """Intrinsic size of an image, by its src as written in the HTML.
+
+    The src is root-absolute (`/assets/images/...`). os.path.join discards
+    everything before an absolute component, so join(SITE, src) silently
+    returned a path outside the project, Image.open raised, the bare except
+    swallowed it, and every image shipped without width/height.
+
+    That is not a cosmetic loss. With no intrinsic size the browser cannot
+    reserve space: the page collapses at parse time, every lazy image lands
+    inside the load threshold at once, and the homepage pulled its whole
+    1.9 MB of imagery on first paint instead of the ~200 KB above the fold.
+    It is also the entire source of the page's layout shift.
+    """
     if src not in _dims:
-        p = os.path.join(SITE, src)
+        rel = src.split('?')[0].split('#')[0].lstrip('/')
+        path = os.path.join(SITE, rel)
         try:
-            with Image.open(p) as im:
+            with Image.open(path) as im:
                 _dims[src] = im.size
-        except Exception:
+        except (OSError, ValueError) as exc:
+            print('      no dimensions for %s (%s)' % (rel, exc.__class__.__name__))
             _dims[src] = None
     return _dims[src]
 

@@ -55,6 +55,16 @@ img { max-width: 100%; }
 
 :focus-visible { outline: 3px solid var(--apex-red); outline-offset: 2px; }
 
+/* Visible to assistive tech and search engines, not on screen. Used where a
+   page's headline exists only inside a baked hero image. */
+.vh {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0; border: 0;
+  clip: rect(0 0 0 0); clip-path: inset(50%);
+  overflow: hidden; white-space: nowrap;
+}
+
 .skip {
   position: absolute; left: -9999px; top: 0; z-index: 200;
   background: var(--apex-ink); color: #fff; padding: 12px 18px;

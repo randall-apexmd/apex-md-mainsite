@@ -90,6 +90,16 @@ CTA = {
 }
 
 
+# A page whose headline lives only inside a hero image has no <h1> at all —
+# search engines and screen readers both see an untitled page. Apex MD AI is
+# the only one: its "One Platform. Complete Clarity." is baked into hero.jpg.
+# The text is the image's own, so this adds nothing the page does not already
+# say; it just makes it readable.
+HEADING = {
+    'apex-md-ai': 'Apex MD AI — One Platform. Complete Clarity.',
+}
+
+
 # Title and description for the pages whose handoff shipped none (the three
 # .dc.html canvas exports carry no <title>, and two others no description).
 # Every string below is lifted from that page's own hero copy — nothing here
@@ -384,7 +394,8 @@ def copy_assets(handoff, slug, referenced):
 
         os.makedirs(dst_dir, exist_ok=True)
         try:
-            out, b, a = images.optimise(src, dst_dir, name)
+            key = '%s/%s' % (slug, os.path.splitext(name)[0] + '.webp')
+            out, b, a = images.optimise(src, dst_dir, name, key)
         except Exception as exc:                      # noqa: BLE001
             print('    could not optimise %s (%s) — copying as-is' % (name, exc))
             shutil.copy2(src, os.path.join(dst_dir, name))
@@ -502,7 +513,9 @@ def build(slug):
         fonts=S.GOOGLE_FONTS + S.EXTRA_FONTS.get(slug, ''),
         slug=slug,
         page_css=pcss,
-        header=chrome('header.html', active, slug),
+        header=chrome('header.html', active, slug)
+               + ('\n<h1 class="vh">%s</h1>' % HEADING[slug]
+                  if slug in HEADING else ''),
         footer=chrome('footer.html', None, slug),
         body=body.strip(),
     )

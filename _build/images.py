@@ -17,12 +17,33 @@ Two passes per file:
 Filenames change extension, so build.py rewrites the page's references to
 match. Re-runs are cheap: an output newer than its source is left alone.
 """
+import json
 import os
 
 from PIL import Image
 
+BUILD = os.path.dirname(os.path.abspath(__file__))
+
 MAX_EDGE = 2048
 QUALITY = 82
+
+# How wide each image is actually painted, keyed "<slug>/<file>". Measured in
+# a real browser at 1440px and 375px and kept as the larger of the two, so an
+# image that is small on desktop but full-bleed on a phone is still sized for
+# the phone. Regenerate by re-measuring; the build falls back to MAX_EDGE for
+# anything absent, so a stale entry costs bytes but never quality.
+try:
+    with open(os.path.join(BUILD, 'display-widths.json')) as _fh:
+        DISPLAY = json.load(_fh)
+except (OSError, ValueError):
+    DISPLAY = {}
+
+# 2x the painted width covers retina. The floor is deliberate headroom: a few
+# images are painted larger in states this measurement never entered (a modal,
+# a hover, a wider monitor), and 200px of slack is far cheaper than a visibly
+# soft image.
+RETINA = 2
+FLOOR = 200
 
 # Anything already small and hand-tuned is left exactly as it is.
 SKIP_EXT = {'.svg', '.ico', '.webp'}
@@ -36,7 +57,15 @@ def _has_alpha(im):
     return im.mode == 'P' and 'transparency' in im.info
 
 
-def optimise(src, dst_dir, name):
+def target_edge(key):
+    """Longest edge to render for this image, in pixels."""
+    shown = DISPLAY.get(key)
+    if not shown:
+        return MAX_EDGE
+    return int(min(MAX_EDGE, max(FLOOR, shown * RETINA)))
+
+
+def optimise(src, dst_dir, name, key=None):
     """Write an optimised copy into dst_dir. Returns (filename, before, after)."""
     stem, ext = os.path.splitext(name)
     ext = ext.lower()
@@ -60,9 +89,10 @@ def optimise(src, dst_dir, name):
         keep_alpha = _has_alpha(im)
         im = im.convert('RGBA' if keep_alpha else 'RGB')
 
+        edge = target_edge(key) if key else MAX_EDGE
         w, h = im.size
-        if max(w, h) > MAX_EDGE:
-            scale = MAX_EDGE / float(max(w, h))
+        if max(w, h) > edge:
+            scale = edge / float(max(w, h))
             im = im.resize((max(1, round(w * scale)), max(1, round(h * scale))),
                            Image.LANCZOS)
 
