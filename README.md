@@ -3,6 +3,11 @@
 Static site for Apex MD. Vercel serves `site/` as-is — no build step in the
 deploy, no framework, no npm.
 
+`vercel.json` lives at the repo root (not in `site/`) and sets
+`outputDirectory: "site"`. Vercel only reads a root-level `vercel.json`, so
+keeping it here means the project needs no dashboard configuration — leave
+Root Directory empty and everything resolves.
+
     python3 _build/build.py          # rebuild every page into site/
     python3 _build/build.py genetics # or just one
     python3 _build/branding.py       # favicons + social preview images
