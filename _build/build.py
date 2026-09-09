@@ -515,6 +515,7 @@ def build(slug):
             html = html.replace('/assets/images/%s/%s' % (slug, old),
                                 '/assets/images/%s/%s' % (slug, new_name))
 
+    html = version_assets(html)
     write(os.path.join(SITE, slug + '.html'), html)
 
     st = ex.stats()
@@ -533,6 +534,33 @@ def build(slug):
         print('    %d referenced asset(s) not in the handoff: %s'
               % (len(missing), ', '.join(sorted(missing)[:6])))
     return st
+
+
+def asset_version(rel):
+    """Short content hash for an asset under site/, or None if missing."""
+    path = os.path.join(SITE, rel.lstrip('/'))
+    if not os.path.isfile(path):
+        return None
+    with open(path, 'rb') as fh:
+        return hashlib.sha1(fh.read()).hexdigest()[:8]
+
+
+def version_assets(html):
+    """Stamp ?v=<content hash> on every stylesheet and script this page loads.
+
+    vercel.json serves /assets/ with `max-age=31536000, immutable`, which is
+    correct only if the URL changes when the bytes do. It did not: the files
+    have stable names, so a returning browser held the previous stylesheet for
+    a year and rendered the header logo at its intrinsic 499x102 instead of
+    the 34px the CSS asks for. Versioning the URL is what makes the immutable
+    header honest.
+    """
+    def sub(m):
+        attr, path = m.group(1), m.group(2)
+        v = asset_version(path)
+        return '%s="%s?v=%s"' % (attr, path, v) if v else m.group(0)
+
+    return re.sub(r'\b(href|src)="(/assets/(?:css|js)/[^"?]+)"', sub, html)
 
 
 def sitemap():
@@ -578,6 +606,15 @@ def main(argv):
         except ImportError:
             print('optimize.py needs Pillow — skipping <img> pass')
             print('  pip3 install Pillow')
+
+    nf = os.path.join(SITE, '404.html')
+    if os.path.isfile(nf):
+        src = read(nf)
+        stamped = version_assets(re.sub(r'(/assets/(?:css|js)/[^"?]+)\?v=[0-9a-f]+',
+                                        r'\1', src))
+        if stamped != src:
+            write(nf, stamped)
+            print('404.html — asset versions stamped')
 
     print('sitemap.xml — %d urls' % sitemap())
 
