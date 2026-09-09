@@ -506,6 +506,7 @@
   .x10dd440{grid-template-columns:repeat(2, 1fr)}
   .x5388904{padding:54px 33px 49px}
   .x1382a03{margin-bottom:27px}
+  .x7da1773{grid-template-columns:repeat(auto-fit,minmax(min(100%, 380px),1fr))}
   .x42abcce{padding:52px 33px 54px}
   .x2f7d960{padding-right:33px}
   .x5caca1f{padding:0 27px}
@@ -520,7 +521,7 @@
   .xac24fdd{padding:0 33px}
   .x2cac77c{padding:23px 33px 0}
   .x30f846f{padding:39px 33px 27px;gap:30px}
-  .x11ac7d7{padding:0 33px 27px}
+  .x11ac7d7{padding:0 33px 27px;grid-template-columns:repeat(auto-fit,minmax(min(100%, 420px),1fr))}
   .x246733c{padding:54px 33px}
   .x39c4411{gap:35px}
   .x3050b8d{margin-top:30px;padding-top:27px;gap:30px}
@@ -558,11 +559,13 @@
   .xc085056{flex-wrap:wrap}
   .x6e2df92{white-space:normal}
   .x0999bfe{white-space:normal}
+  .xd55be12{width:100%;max-width:100%}
   .x5388904{padding:34px 20px 30px}
   .x1382a03{margin-bottom:17px}
   .xc6fbc5a{flex-wrap:wrap}
   .x2629453{flex-wrap:wrap}
   .xd178361{white-space:normal}
+  .x7da1773{grid-template-columns:repeat(auto-fit,minmax(min(100%, 380px),1fr))}
   .x10e6ca8{flex-wrap:wrap}
   .xb7d1796{flex-wrap:wrap}
   .x75232d0{flex-wrap:wrap}
@@ -614,7 +617,7 @@
   .x1533806{flex-wrap:wrap}
   .x597737f{flex-wrap:wrap}
   .x3375558{flex-wrap:wrap}
-  .x11ac7d7{padding:0 20px 17px}
+  .x11ac7d7{padding:0 20px 17px;grid-template-columns:repeat(auto-fit,minmax(min(100%, 420px),1fr))}
   .x0fe3748{flex-wrap:wrap}
   .x246733c{padding:34px 20px}
   .x39c4411{grid-template-columns:1fr;gap:22px}
@@ -641,6 +644,7 @@
   .x6aa6bf0{flex-wrap:wrap}
   .x780fb47{padding:37px 20px 0}
   .x92731bf{gap:22px}
+  .x888e870{margin:-4px 0 -2px}
   .x681ddff{flex-wrap:wrap}
   .x6f39fd0{flex-wrap:wrap}
   .x43ae6b3{grid-template-columns:1fr}
@@ -652,7 +656,9 @@
   .x1530ba9{flex-wrap:wrap;white-space:normal}
   .x93348da{flex-wrap:wrap;white-space:normal}
   .x0ebeb8e{margin-top:46px}
+  .xac706e8{width:100%;max-width:100%}
   .x3fd6227{flex-wrap:wrap}
+  .xc6a3504{max-width:100%}
   .x9e8d60d{gap:17px;margin-bottom:18px}
   .x9023cab{flex-wrap:wrap}
   .xf5315b1{flex-wrap:wrap}

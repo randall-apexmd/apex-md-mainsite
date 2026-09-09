@@ -112,10 +112,13 @@ img { max-width: 100%; }
   border-bottom: 2px solid var(--rule);
 }
 
-.hdr-logo { display: flex; align-items: baseline; gap: 8px; flex: none; color: var(--ink); }
-.hdr-logo:hover { color: var(--ink); }
-.hdr-logo-a { font-size: 24px; font-weight: 900; letter-spacing: -.03em; }
-.hdr-logo-b { font-size: 24px; font-weight: 400; letter-spacing: -.03em; color: var(--red); }
+.hdr-logo { display: flex; align-items: center; flex: none; }
+
+/* The real lockup, shipped at 3x (499x102) and drawn at 34px tall. The
+   intrinsic width/height attributes are on the tag so the header does not
+   reflow as it loads. */
+.brand-logo { display: block; height: 34px; width: auto; }
+.brand-logo-ftr { height: 40px; }
 
 .hdr-nav {
   display: flex; align-items: center; min-width: 0;
@@ -241,7 +244,6 @@ body.nav-open { overflow: hidden; }
   border-bottom: 2px solid var(--rule);
 }
 .ftr-brand { display: flex; flex-direction: column; gap: 16px; align-items: flex-start; }
-.ftr-logo-a, .ftr-logo-b { font-size: 28px; }
 .ftr-tag { font-size: 15px; color: var(--muted); }
 
 .ftr-col { display: flex; flex-direction: column; gap: 11px; }
@@ -281,7 +283,8 @@ body.nav-open { overflow: hidden; }
 
   .hdr-nav, .hdr-cta { display: none; }
   .hdr-burger { display: flex; }
-  .hdr-logo-a, .hdr-logo-b { font-size: 21px; }
+  .brand-logo { height: 28px; }
+  .brand-logo-ftr { height: 34px; }
 
   .ftr { padding: 44px var(--gutter) 32px; }
   .ftr-grid { grid-template-columns: 1fr; gap: 32px; padding-bottom: 32px; }

@@ -104,6 +104,12 @@ def normalise(css, page):
 
 _PX = re.compile(r'^-?[\d.]+px$')
 
+# Widest a fixed pixel dimension may be before it is forced fluid. 340 leaves
+# room inside a 375px phone once the page gutter is taken off; 900 is the
+# equivalent for the tablet breakpoint.
+MOBILE_SAFE = 340
+TABLET_SAFE = 900
+
 def _scale_px(value, factor, floor=0):
     """Scale every bare px length in a shorthand, leaving other units alone."""
     parts = split_values(value)
@@ -131,7 +137,19 @@ def _collapse_grid(value, columns):
     """
     v = value.strip()
     low = v.lower()
-    if 'auto-fit' in low or 'auto-fill' in low or 'subgrid' in low:
+    if 'subgrid' in low:
+        return None
+
+    if 'auto-fit' in low or 'auto-fill' in low:
+        # These reflow the column COUNT on their own, which is why they look
+        # safe — but `minmax(420px, 1fr)` still forces every column to be at
+        # least 420px, so on a 375px phone the track is wider than the screen
+        # and the row is clipped. `min(100%, 420px)` keeps the intended floor
+        # on a wide viewport and yields to the container on a narrow one.
+        m = re.search(r'minmax\(\s*([\d.]+)px\s*,', v, re.I)
+        if m and float(m.group(1)) > MOBILE_SAFE:
+            return re.sub(r'minmax\(\s*([\d.]+)px\s*,',
+                          r'minmax(min(100%, \1px),', v, flags=re.I)
         return None
 
     m = re.match(r'^repeat\(\s*(\d+)\s*,(.+)\)$', v, re.I)
@@ -180,8 +198,73 @@ def mobile_rules(decls):
             # and Genetics. Anything that wide is a comp artefact, not a layout
             # intent, so drop it on both smaller breakpoints.
             v = value.strip()
-            if _PX.match(v) and float(v[:-2]) >= 900:
-                tablet.append((prop, 'auto'))
+            if _PX.match(v):
+                n = float(v[:-2])
+                if n >= 900:
+                    tablet.append((prop, 'auto'))
+                    mobile.append((prop, 'auto'))
+                elif n > MOBILE_SAFE:
+                    # narrower, but still wider than a phone — it would push
+                    # the layout sideways and get clipped by the body
+                    mobile.append((prop, 'auto'))
+
+        elif prop == 'width':
+            # Two separate problems share this property.
+            #
+            # A hard pixel width wider than the viewport: the comps were drawn
+            # at 1440px, so cards and panels carry widths like 420px that a
+            # 375px phone cannot show. They do not scroll (the body clips
+            # them) — they get cut off, which is worse, because nothing
+            # signals that content is missing.
+            #
+            # And a percentage over 100%, which is the handoffs' deliberate
+            # full-bleed device: `width:150%` with `max-width:none` and a
+            # negative margin, so a hero image spills past its column. That
+            # reads as generous on a desktop and as broken on a phone.
+            v = value.strip()
+            if _PX.match(v):
+                n = float(v[:-2])
+                if n > MOBILE_SAFE:
+                    mobile.append((prop, '100%'))
+                    mobile.append(('max-width', '100%'))
+                if n > TABLET_SAFE:
+                    tablet.append((prop, '100%'))
+                    tablet.append(('max-width', '100%'))
+            elif v.endswith('%'):
+                try:
+                    if float(v[:-1]) > 100:
+                        mobile.append((prop, '100%'))
+                        mobile.append(('max-width', '100%'))
+                except ValueError:
+                    pass
+
+        elif prop == 'max-width' and value.strip().lower() == 'none':
+            # only ever paired with an over-100% width above; on its own it is
+            # harmless, and 100% is the initial-ish behaviour anyway
+            mobile.append((prop, '100%'))
+
+        elif prop in ('margin', 'margin-left', 'margin-right'):
+            # negative horizontal margins are the other half of the bleed
+            # trick, and they push content under the phone's bezel
+            parts = split_values(value)
+            if any(_PX.match(x) and float(x[:-2]) < 0 for x in parts) or \
+               any(x.endswith('%') and x.startswith('-') for x in parts):
+                if prop == 'margin' and len(parts) >= 2:
+                    # keep the vertical rhythm, drop only the horizontal bleed
+                    top = parts[0]
+                    bottom = parts[2] if len(parts) >= 3 else parts[0]
+                    mobile.append((prop, '%s 0 %s' % (top, bottom)))
+                else:
+                    mobile.append((prop, '0'))
+
+        elif prop == 'height':
+            # once a fixed width becomes 100% the matching fixed height
+            # distorts the image, so let it follow the aspect ratio
+            v = value.strip()
+            if _PX.match(v) and any(
+                    p == 'width' and _PX.match(x.strip())
+                    and float(x.strip()[:-2]) > MOBILE_SAFE
+                    for p, x in decls):
                 mobile.append((prop, 'auto'))
 
         elif prop in ('padding', 'padding-top', 'padding-bottom',
@@ -205,6 +288,14 @@ def mobile_rules(decls):
                     tablet.append((prop, f'{max(24, round(n * 0.78)):g}px'))
                     mobile.append((prop, f'{max(20, round(n * 0.58)):g}px'))
 
+        elif prop == 'transform' and 'scale(' in value.lower():
+            # a scale() over 1 is a zoom-crop paired with object-fit:cover.
+            # It only stays inside the layout while the container clips it;
+            # several here do not, so the image spills past the screen edge.
+            m = re.search(r'scale\(\s*([\d.]+)', value, re.I)
+            if m and float(m.group(1)) > 1:
+                mobile.append((prop, 'none'))
+
         elif prop == 'white-space' and value.strip().lower() == 'nowrap':
             mobile.append((prop, 'normal'))
 
@@ -213,7 +304,15 @@ def mobile_rules(decls):
             # position them absolutely against a desktop-width parent.
             pass
 
-    return tablet, mobile
+    return _dedupe(tablet), _dedupe(mobile)
+
+
+def _dedupe(decls):
+    """Last value wins per property, original order kept."""
+    seen = {}
+    for prop, value in decls:
+        seen[prop] = value
+    return list(seen.items())
 
 
 # ------------------------------------------------------------- extraction

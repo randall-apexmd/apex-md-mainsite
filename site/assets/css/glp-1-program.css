@@ -319,6 +319,7 @@
   .x1dd1fe1{margin-bottom:22px}
   .xf96a727{font-size:26px}
   .xbf0f489{grid-template-columns:repeat(1, 1fr)}
+  .x5834a7d{margin:-44px 0 0}
   .xab235ab{padding:17px 20px}
   .xf3971e9{flex-wrap:wrap}
   .x578f23e{flex-wrap:wrap}
@@ -369,7 +370,7 @@
   .xef94d16{grid-template-columns:repeat(1, 1fr)}
   .x7297eba{flex-wrap:wrap}
   .x2e003b4{font-size:26px}
-  .xb9a0cc2{flex-wrap:wrap}
+  .xb9a0cc2{flex-wrap:wrap;margin:0}
   .x61bf961{flex-wrap:wrap}
   .x640bbac{flex-wrap:wrap}
   .x28002cb{margin-top:18px}
@@ -382,8 +383,9 @@
   .x2990be9{padding:37px 10px}
   .xe57d6c0{font-size:30px}
   .xd6a5795{grid-template-columns:repeat(1, 1fr)}
-  .x67336bc{flex-wrap:wrap}
+  .x67336bc{flex-wrap:wrap;margin:16px 0 -34px}
   .x9c570c5{padding:20px 10px 0}
+  .xc84a350{margin:0 0 0}
   .xb85b6a2{gap:17px}
   .xc6fbc5a{flex-wrap:wrap}
   .x72859fb{padding:17px 10px 10px}
