@@ -84,4 +84,33 @@
   document.addEventListener('click', function (e) {
     if (!e.target.closest || !e.target.closest('.hdr-drop')) closeAll();
   });
+
+  // ----------------------------------------------------------- carousels
+  // The GLP-1 handoff's testimonial carousel had its arrows wired by the
+  // design tool's runtime. build.py turns those bindings into data hooks;
+  // this scrolls the track one card per click.
+  Array.prototype.forEach.call(
+    document.querySelectorAll('[data-carousel-track]'),
+    function (track) {
+      // the arrows sit beside the track, a level or two up
+      var root = track.parentElement;
+      for (var i = 0; i < 3 && root &&
+           !root.querySelector('[data-carousel-prev],[data-carousel-next]'); i++) {
+        root = root.parentElement;
+      }
+      if (!root) return;
+
+      function step(dir) {
+        var card = track.firstElementChild;
+        var gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+        var w = card ? card.getBoundingClientRect().width + gap : track.clientWidth * 0.8;
+        track.scrollBy({ left: dir * w, behavior: 'smooth' });
+      }
+
+      var prev = root.querySelector('[data-carousel-prev]');
+      var next = root.querySelector('[data-carousel-next]');
+      if (prev) prev.addEventListener('click', function () { step(-1); });
+      if (next) next.addEventListener('click', function () { step(1); });
+    }
+  );
 })();

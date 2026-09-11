@@ -4,6 +4,60 @@ Live preview: **https://apex-md-mainsite-kz2h.vercel.app**
 All seven pages build, deploy and render at desktop and mobile. Repo is clean
 and pushed.
 
+## Visual scrub — 2026-09-11
+
+Every page was screenshotted full-length at 1440px and 390px and run through
+an automated defect scan (covered text, stretched images, invisible text,
+overflow). The tools are in `_build/qa/`; rerun them after any layout change.
+
+**Fixed.** All of these were bugs in `_build/`, not in the designs:
+
+- GLP-1 and Apex AI had lost their accent colour. The canvas exports use
+  `{{ accent }}` as a live template binding (62 times on Apex AI), and the
+  build deleted those tokens instead of resolving them — blank buttons,
+  icons that drew nothing, a whole section white on white. They now resolve
+  from each file's declared defaults. The GLP-1 carousel arrows are wired.
+- 28 images were drawn at the wrong shape. The width/height attributes added
+  in the performance pass let the height win wherever a design sizes an
+  image by width alone. Fixed with `height:auto` in apex.css.
+- Phone layouts:
+  - Bullet dots and check icons had dropped onto their own line above their
+    text. Flex rows now only wrap when they hold a link, a button, or three
+    or more items.
+  - Genetics ran 113px past the screen edge.
+  - Content was covered by images on Women's (twice), on Apex AI, and in the
+    Genetics comparison table.
+  - The GLP-1 timeline badges sat on top of their headings.
+  - Logo strips and the homepage CTA card were clipped instead of wrapping.
+  - The Men's and Women's bottom bar was 164px tall, a fifth of the screen.
+    It is now 69px.
+  - Concierge's phone header showed the desktop CTA.
+
+**Open, and not a build problem.** Each needs an asset or a decision:
+
+- **Genetics has 4 grey image placeholders** left in the handoff: "Man
+  reviewing results", "Member reading results on a tablet", "Member checking
+  her action steps on her phone", and "Shield and padlock".
+- **Men's and Women's carry a second header strip** ("HSA / FSA eligible · no
+  membership required · Patient Login") under the shared header. It
+  duplicates Patient Login and is a tall two-line block on phones. Merge the
+  HSA line into the page, or drop the strip.
+- **GLP-1's Tirzepatide comparison table is an image** (`tirz-comparison`).
+  On a phone it shrinks to ~350px and cannot be read. It needs to be an HTML
+  table or have a phone-specific image.
+- **Apex AI's hero is one baked image.** On a phone its headline renders at
+  about 12px. It needs a phone hero, or a text hero over the art.
+- **Testosterone's "wrong form of testosterone" card** has its copy baked into
+  the photo, and the phone crop cuts it off.
+- **The "Apex specialists … have been used by" strip** (homepage,
+  Testosterone, Men's, Women's) is a single image of about 12 logos. At
+  phone width each logo is ~15px.
+- **Concierge lays out 2 doctor cards in a 3-column grid**, leaving an empty
+  third slot on desktop.
+- **Phone pages are long.** Women's is 41,676px on a phone, because every
+  card grid stacks one card per row. Symptom and benefit cards could go two
+  across on phones. This is a design call, not a defect.
+
 ## Pick up here
 
 ### 1. The eleven dead nav links

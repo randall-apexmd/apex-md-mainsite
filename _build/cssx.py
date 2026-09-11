@@ -19,7 +19,11 @@ declaration actually present on the element — nothing is guessed:
 
   * a multi-column `grid-template-columns` collapses 4+->2 at tablet and ->1fr
     at mobile (an `auto-fit`/`minmax` track already reflows, so it is left be)
-  * `flex-wrap:nowrap` becomes `wrap`
+  * a flex row that holds a link or button may wrap (gated with :has(), so
+    an icon beside its label is left alone)
+  * a fixed-height flex/grid row may grow, but not below its design height
+  * items placed explicitly into a grid (`grid-column: 2`) are released, so
+    a collapsed grid stacks them instead of opening implicit columns
   * a `min-width` of 900px or more is dropped — this is the `min-width:1200px`
     page wrapper that the Testosterone and Genetics handoffs use, and it alone
     prevents those pages from ever rendering on a phone
@@ -157,29 +161,66 @@ def _collapse_grid(value, columns):
         n = int(m.group(1))
         if n <= columns:
             return None
-        return f'repeat({columns}, 1fr)'
+        return f'repeat({columns}, minmax(0, 1fr))'
 
     tracks = split_values(v)
+    if columns == 1 and len(tracks) == 1 and tracks[0].lower() in ('1fr', 'auto'):
+        # already one column, but a bare 1fr/auto track has the same
+        # min-content floor as the multi-column case below
+        return 'minmax(0, 1fr)'
     if len(tracks) <= columns or len(tracks) <= 1:
         return None
-    return ' '.join(['1fr'] * columns) if columns > 1 else '1fr'
+    # minmax(0, 1fr), not a bare 1fr: a bare 1fr track never shrinks below
+    # its widest child's min-content, so one wide element anywhere in the
+    # column pushes every section in it past the screen edge.
+    if columns > 1:
+        return f'repeat({columns}, minmax(0, 1fr))'
+    return 'minmax(0, 1fr)'
 
 
 def mobile_rules(decls):
-    """Return (tablet, mobile) declaration lists for one extracted class."""
+    """Return (tablet, mobile, wrap) for one extracted class.
+
+    `wrap` flags a flex row that may wrap on a phone. It is emitted as its own
+    :has()-gated rule by stylesheet(), not as a plain declaration — see there.
+    """
     tablet, mobile = [], []
     props = {p for p, _ in decls}
 
     # A flex row with no declared wrap keeps `nowrap` (the CSS initial value)
     # and squeezes its children instead of breaking the line — on a phone that
-    # turns a "Get Started Today" button into three stacked words. Wrapping is
-    # a no-op when the children already fit, so this is safe to apply broadly;
-    # `flex-direction:column` is already stacked and needs nothing.
+    # turned a "Get Started Today" button into three stacked words.
+    #
+    # Wrapping every such row was the first fix, and it was wrong: most flex
+    # rows are an icon beside its label, and with wrap on, a label wider than
+    # the leftover space drops to its own line under the icon. Every bullet
+    # dot and check mark on the phone layouts ended up alone above its text.
+    # So the flag is raised here and the rule is gated on the row actually
+    # holding a link or button (see stylesheet()).
     is_row = any(p == 'display' and 'flex' in v.lower() for p, v in decls)
     is_col = any(p == 'flex-direction' and 'column' in v.lower()
                  for p, v in decls)
-    if is_row and not is_col and 'flex-wrap' not in props:
-        mobile.append(('flex-wrap', 'wrap'))
+    is_box = any(p == 'display' and ('flex' in v.lower() or 'grid' in v.lower())
+                 for p, v in decls)
+    nowrap = any(p == 'flex-wrap' and v.strip().lower() == 'nowrap'
+                 for p, v in decls)
+    # Never a marquee (an animated track) or a slider (a row that clips its
+    # own overflow): wrapping either stacks its slides into a column.
+    moving = any(p.startswith('animation') or
+                 (p.startswith('overflow') and
+                  any(k in v.lower() for k in ('auto', 'scroll', 'hidden')))
+                 for p, v in decls)
+    wrap = (is_row and not is_col and not moving
+            and ('flex-wrap' not in props or nowrap))
+
+    # A grid with no column template still has one implicit `auto` track,
+    # and it sizes to the widest child's min-content. On Genetics that is the
+    # whole page wrapper: one unwrappable row in the Peptide section set the
+    # track to 503px, and every section below it ran 113px past the screen.
+    is_grid = any(p == 'display' and 'grid' in v.lower() for p, v in decls)
+    if is_grid and not any(p.startswith('grid-template') or p in ('grid', 'grid-auto-flow')
+                           for p in props):
+        mobile.append(('grid-template-columns', 'minmax(0, 1fr)'))
 
     for prop, value in decls:
         if prop == 'grid-template-columns':
@@ -190,8 +231,20 @@ def mobile_rules(decls):
             if m:
                 mobile.append((prop, m))
 
-        elif prop == 'flex-wrap' and value.strip().lower() == 'nowrap':
-            mobile.append((prop, 'wrap'))
+        elif prop in ('grid-column', 'grid-row', 'grid-area',
+                      'grid-column-start', 'grid-column-end',
+                      'grid-row-start', 'grid-row-end'):
+            # Collapsing a grid to one column does not move the items the
+            # design placed explicitly (`grid-column: 2`, `grid-row: 1`).
+            # Each one opens an implicit track of its own, so the section
+            # stays side by side at phone width — the homepage's "Save time
+            # and money" list was squeezed into a 60px strip beside its
+            # image. Release them so they stack in source order. At tablet
+            # the grids collapse to two columns, so only placements past
+            # line 2 need releasing there.
+            mobile.append((prop, 'auto'))
+            if any(int(n) >= 3 for n in re.findall(r'(?<![-\d])(\d+)', value)):
+                tablet.append((prop, 'auto'))
 
         elif prop == 'min-width':
             # the desktop-only page wrapper: `min-width:1200px` on Testosterone
@@ -266,6 +319,12 @@ def mobile_rules(decls):
                     and float(x.strip()[:-2]) > MOBILE_SAFE
                     for p, x in decls):
                 mobile.append((prop, 'auto'))
+            elif _PX.match(v) and float(v[:-2]) >= 60 and is_box:
+                # A fixed-height flex or grid row stacks its cells on a phone
+                # and they spill into the row below — the Genetics comparison
+                # table pins each row at 132px. Let it grow, never shrink.
+                mobile.append((prop, 'auto'))
+                mobile.append(('min-height', v))
 
         elif prop in ('padding', 'padding-top', 'padding-bottom',
                       'padding-left', 'padding-right', 'gap',
@@ -304,7 +363,7 @@ def mobile_rules(decls):
             # position them absolutely against a desktop-width parent.
             pass
 
-    return _dedupe(tablet), _dedupe(mobile)
+    return _dedupe(tablet), _dedupe(mobile), wrap
 
 
 def _dedupe(decls):
@@ -375,11 +434,19 @@ class Extractor:
 
         tablet, mobile = [], []
         for n in self.order:
-            t, m = mobile_rules(self.rules[n])
+            t, m, wrap = mobile_rules(self.rules[n])
             if t:
                 tablet.append(block(n, t, '  '))
             if m:
                 mobile.append(block(n, m, '  '))
+            if wrap:
+                # Rows that hold a link or button (a CTA beside its price
+                # note), or three or more items (a logo strip, a chip row, a
+                # card's icon/text/button). A two-item row is nearly always
+                # an icon beside its label: that should stay side by side,
+                # with the label shrinking and wrapping its own text.
+                mobile.append(f'  .{n}:has(>a,>button),.{n}:has(>:nth-child(3))'
+                              f'{{flex-wrap:wrap}}')
 
         out = [f'/* {self.page} — generated by _build/cssx.py. Do not edit. */']
         out += base
@@ -400,7 +467,8 @@ class Extractor:
 
     def stats(self):
         t = sum(1 for n in self.order if mobile_rules(self.rules[n])[0])
-        m = sum(1 for n in self.order if mobile_rules(self.rules[n])[1])
+        m = sum(1 for n in self.order
+                if mobile_rules(self.rules[n])[1] or mobile_rules(self.rules[n])[2])
         return {'classes': len(self.order), 'hover': len(self.hover),
                 'tablet': t, 'mobile': m}
 

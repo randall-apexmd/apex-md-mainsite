@@ -50,7 +50,18 @@ body {
 a { color: var(--apex-red); text-decoration: none; }
 a:hover { color: var(--apex-red-dark); }
 h1, h2, h3, h4 { line-height: 1.03; letter-spacing: -0.02em; }
-img { max-width: 100%; }
+/* height:auto is load-bearing. optimize.py stamps each image's intrinsic
+   width/height so the browser can reserve space before it loads — but where
+   a handoff sizes an image by width alone, the height attribute then wins
+   and squashes it (Dr. Bowen's portrait drew 459px wide at the file's full
+   918px height). height:auto keeps the reservation, from the attributes'
+   ratio, without letting them dictate size. Any class that sets a height
+   still wins over this, which is what the object-fit images rely on. */
+img { max-width: 100%; height: auto; }
+
+/* An image the design deliberately bleeds past its card (the dark texture in
+   Women's "Optimization Membership"). Tagged by build.py's MOBILE_FIX. */
+img.img-bleed { max-width: none; }
 ::selection { background: var(--apex-red); color: #fff; }
 
 :focus-visible { outline: 3px solid var(--apex-red); outline-offset: 2px; }
@@ -285,6 +296,9 @@ body.nav-open { overflow: hidden; }
 }
 .ftr-legal { display: flex; gap: 22px; flex-wrap: wrap; font-size: 13px; color: var(--apex-muted); }
 .ftr-legal a { color: var(--apex-muted); }
+
+/* a pinned product bar would otherwise sit over the legal line for good */
+body:has(.sticky-cta) .ftr { padding-bottom: 124px; }
 .ftr-legal a:hover { color: var(--apex-red); }
 
 /* -------------------------------------------------------- breakpoints */
@@ -297,8 +311,41 @@ body.nav-open { overflow: hidden; }
 @media (max-width: 760px) {
   :root { --apex-header-h: 64px; }
 
-  .hdr-nav, .hdr-cta { display: none; }
+  /* scoped to .hdr so a page's own .btn rules, which load later, cannot
+     bring the desktop CTA back into the phone header (Concierge did) */
+  .hdr .hdr-nav, .hdr .hdr-cta { display: none; }
   .hdr-burger { display: flex; }
+
+  /* Men's and Women's pin a product bar to the bottom of the screen; at this
+     width its title and price wrap it to 164px. Keep only the button. The
+     body prefix outranks the page's generated class on the same element. */
+  /* Named per-section fixes, tagged by MOBILE_FIX in build.py: side panels
+     and feature images that are absolutely positioned against a desktop-width
+     parent, and would otherwise land on top of the text. */
+  body .m-hide { display: none; }
+  body .m-autoheight { height: auto; }
+  body .m-panel {
+    position: relative; inset: auto;
+    height: 260px; margin: 24px 20px 0;
+  }
+  body .m-static {
+    position: relative; inset: auto; transform: none;
+    width: 100%; max-width: 100%; height: auto; margin: 20px 0 0;
+  }
+  body .m-pad-top-48 { padding-top: 48px; }
+
+  /* GLP-1's testimonial carousel sizes its cards for three across a desktop
+     row; on a phone that leaves ~80px columns of one word per line. Show
+     one card and the edge of the next, so the swipe is self-evident. */
+  body [data-carousel-track] > * { flex: 0 0 78%; min-width: 0; max-width: none; }
+  /* its arrows sit just outside the track on desktop — off-screen here */
+  body [data-carousel-prev] { left: 6px; right: auto; }
+  body [data-carousel-next] { right: 6px; left: auto; }
+
+  body .sticky-cta { padding: 10px 14px; gap: 0; }
+  body .sticky-cta > :not(a) { display: none; }
+  body .sticky-cta > a { flex: 1; text-align: center; padding: 15px 16px; }
+  body:has(.sticky-cta) .ftr { padding-bottom: 104px; }
   .brand-logo { height: 28px; }
   .brand-logo-ftr { height: 34px; }
 

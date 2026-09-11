@@ -16,8 +16,8 @@
 .x97870cc{font-size:13px;color:#555}
 
 @media (max-width:760px){
-  .x266d328{flex-wrap:wrap}
-  .x5c04803{flex-wrap:wrap}
-  .xbaa4688{flex-wrap:wrap}
-  .xa81f2e8{flex-wrap:wrap}
+  .x266d328:has(>a,>button),.x266d328:has(>:nth-child(3)){flex-wrap:wrap}
+  .x5c04803:has(>a,>button),.x5c04803:has(>:nth-child(3)){flex-wrap:wrap}
+  .xbaa4688:has(>a,>button),.xbaa4688:has(>:nth-child(3)){flex-wrap:wrap}
+  .xa81f2e8:has(>a,>button),.xa81f2e8:has(>:nth-child(3)){flex-wrap:wrap}
 }

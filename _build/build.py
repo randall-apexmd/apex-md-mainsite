@@ -15,6 +15,8 @@ a file in site/.
 import base64
 import datetime
 import hashlib
+import html as html_lib
+import json
 import os
 import re
 import shutil
@@ -98,6 +100,71 @@ CTA = {
 HEADING = {
     'apex-md-ai': 'Apex MD AI — One Platform. Complete Clarity.',
 }
+
+
+# Sections whose desktop layout is absolute positioning against a wide parent.
+# On a phone those images land on top of the text. The generic mobile layer
+# cannot unpick them safely — most absolute elements are badges and labels
+# that should stay exactly where they are — so each one is named here, by the
+# start of the handoff's own inline style, and given a class that the .m-*
+# rules in apex.css act on below 760px.
+#
+#   m-panel       a side image panel: made a normal block, 260px tall
+#   m-static      a feature image: dropped back into the flow, full width
+#   m-hide        a desktop-only mask or decorative layer
+#   m-autoheight  a fixed-height stage that must grow to fit stacked content
+#   m-pad-top-48  a card whose top padding is the landing space for a badge
+#                 overlapping it from above; the generic padding scale-down
+#                 removes that space and the badge lands on the heading
+#   img-bleed     (all widths) an image meant to bleed past its card, which
+#                 the house `img { max-width:100% }` reset would squash
+MOBILE_FIX = {
+    'glp-1-program': [
+        ('background:#f7f7f8;border-radius:18px;padding:48px 24px 0', 'm-pad-top-48'),
+    ],
+    'womens-optimal-health': [
+        ('position:absolute;top:0;right:-10%;height:100%;width:auto', 'img-bleed'),
+        ('position:relative;overflow:hidden;background:#ffffff;height:clamp(460px', 'm-autoheight'),
+        ('position:absolute;top:0;bottom:0;left:46%', 'm-panel'),
+        ('position:absolute;top:0;bottom:0;left:0;width:46%;background:#ffffff', 'm-hide'),
+        ('position:absolute;top:0;bottom:0;right:0;width:22%;background:linear-gradient', 'm-hide'),
+        ('position:absolute;top:44px;bottom:44px;left:calc(50% + 70px)', 'm-panel'),
+    ],
+    'apex-md-ai': [
+        ('position: absolute; left: 36%; top: -6%; width: 76%', 'm-hide'),
+        ('position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 60%', 'm-static'),
+        ('position: absolute; right: -53%; bottom: -6%', 'm-hide'),
+    ],
+}
+
+
+def tag_by_style(body, rules):
+    """Add a class to each tag whose inline style starts with a given prefix.
+
+    Merges into an existing class attribute rather than adding a second one —
+    a browser keeps only the first of two, which would silently drop the tag.
+    """
+    if not rules:
+        return body, 0
+    edits = []
+    for m in cssx._TAG.finditer(body):
+        attrs = m.group(2)
+        sm = re.search(r'\sstyle="([^"]*)"', attrs)
+        if not sm:
+            continue
+        add = [cls for prefix, cls in rules if sm.group(1).startswith(prefix)]
+        if not add:
+            continue
+        cm = re.search(r'\sclass="([^"]*)"', attrs)
+        if cm:
+            attrs = (attrs[:cm.start()] + ' class="%s %s"' % (cm.group(1), ' '.join(add))
+                     + attrs[cm.end():])
+        else:
+            attrs = ' class="%s"' % ' '.join(add) + attrs
+        edits.append((m.start(), m.end(), '<%s%s>' % (m.group(1), attrs)))
+    for start, end, repl in reversed(edits):
+        body = body[:start] + repl + body[end:]
+    return body, len(edits)
 
 
 # Title and description for the pages whose handoff shipped none (the three
@@ -199,40 +266,89 @@ def strip_chrome(body):
     return body, n
 
 
-def clean_design_tool(body):
-    """Strip the authoring tool's runtime scaffolding.
+def design_props(body):
+    """Default values of a canvas handoff's props, read from its data-props.
+
+    The `.dc.html` exports are templates: `{{ accent }}` is a live binding
+    that support.js fills from the component's declared defaults at runtime.
+    The defaults travel with the file as JSON on the `<x-dc data-props>`
+    element, so they can be resolved at build time instead.
+    """
+    m = re.search(r'data-props="([^"]*)"', body)
+    if not m:
+        return {}
+    try:
+        declared = json.loads(html_lib.unescape(m.group(1)))
+    except ValueError:
+        return {}
+    props = {k: v['default'] for k, v in declared.items()
+             if isinstance(v, dict) and 'default' in v}
+    # the GLP-1 canvas declares `accentColor` but its template reads `accent`
+    if 'accent' not in props and 'accentColor' in props:
+        props['accent'] = props['accentColor']
+    return props
+
+
+def clean_design_tool(body, slug):
+    """Resolve the authoring tool's template, then strip its scaffolding.
 
     Three of the handoffs are `.dc.html` canvas files that expect `support.js`
-    to render them. We ship static HTML instead, so the scaffolding has to go
-    or it leaks:
+    to render them. We ship static HTML instead, so:
 
+      {{ prop }}   filled from the component's declared default. An earlier
+                   version deleted these as leftovers. They are not: Apex AI
+                   uses `{{ accent }}` 62 times for button fills, icon
+                   strokes and section grounds, and GLP-1 sets its whole
+                   `--accent` from one. Deleting them left white-on-white
+                   buttons and icons that painted nothing.
+      <sc-if>      a conditional, kept or dropped by its prop's default
+      onClick/ref  the GLP-1 carousel's handlers, turned into data hooks
+                   that apex.js wires up
       <helmet>     holds the <link>/<style> the shell already provides
       <x-dc>       the canvas wrapper; an unknown element defaults to
                    display:inline, so it reports zero height and its
                    whitespace prints as stray inline text
-      <sc-if>      a conditional whose test never runs, so it renders its
-                   body unconditionally — this is what puts the literal
-                   "{{ announceText }}" on the Apex AI page
       <image-slot> a deliberate image placeholder the designer left unfilled
 
     image-slot becomes a visible dashed box captioned with its intended
     subject, so an unfinished image reads as unfinished instead of as an
     empty gap nobody notices.
     """
-    counts = {'helmet': 0, 'x-dc': 0, 'sc-if': 0, 'image-slot': 0}
+    counts = {'helmet': 0, 'x-dc': 0, 'sc-if': 0, 'image-slot': 0, 'props': 0}
+    props = design_props(body)
+
+    def truthy(v):
+        return v not in (None, False, 0, '', 'false', 'False')
+
+    def resolve_if(m):
+        cond = re.search(r'value="\{\{\s*(\w+)\s*\}\}"', m.group(1))
+        return m.group(2) if cond and truthy(props.get(cond.group(1))) else ''
+
+    body, n = re.subn(r'<sc-if\b([^>]*)>(.*?)</sc-if>', resolve_if, body,
+                      flags=re.S | re.I)
+    counts['sc-if'] = n
+
+    body = re.sub(r'\bref="\{\{\s*setTrack\s*\}\}"', 'data-carousel-track', body)
+    body = re.sub(r'\bonClick="\{\{\s*prev\s*\}\}"', 'data-carousel-prev', body,
+                  flags=re.I)
+    body = re.sub(r'\bonClick="\{\{\s*next\s*\}\}"', 'data-carousel-next', body,
+                  flags=re.I)
+
+    def fill(m):
+        val = props.get(m.group(1))
+        if val is None or isinstance(val, (dict, list)):
+            return m.group(0)
+        counts['props'] += 1
+        val = 'true' if val is True else 'false' if val is False else str(val)
+        return cssx.normalise(html_lib.escape(val, quote=True), slug)
+
+    body = re.sub(r'\{\{\s*(\w+)\s*\}\}', fill, body)
 
     body, n = re.subn(r'<helmet\b.*?</helmet>', '', body, flags=re.S | re.I)
     counts['helmet'] = n
 
     body, n = re.subn(r'</?x-dc\b[^>]*>', '', body, flags=re.I)
     counts['x-dc'] = n
-
-    # only the conditionals that never resolved; a filled one has no {{ }}
-    def drop_if(m):
-        return '' if '{{' in m.group(0) else m.group(0)
-
-    body, n = re.subn(r'<sc-if\b.*?</sc-if>', drop_if, body, flags=re.S | re.I)
-    counts['sc-if'] = n
 
     def slot(m):
         attrs = m.group(1)
@@ -246,7 +362,8 @@ def clean_design_tool(body):
     body = re.sub(r'<image-slot\b([^>]*)>', slot, body, flags=re.I)
     body = re.sub(r'</image-slot>', '</div>', body, flags=re.I)
 
-    # any template expression still standing would print as literal text
+    # Whatever is still standing has no declared default, so it is an
+    # expression rather than a prop, and would print as literal text.
     body = re.sub(r'\{\{[^{}]*\}\}', '', body)
 
     return body, counts
@@ -483,7 +600,17 @@ def build(slug):
     # these and every icon on the Homepage and Weight Loss pages keeps its
     # old red while the text around it turns house red.
     body = cssx.normalise(body, slug)
-    body, tool = clean_design_tool(body)
+    body, tool = clean_design_tool(body, slug)
+
+    # Men's and Women's pin a product bar to the bottom of the viewport. Tag it
+    # so apex.css can compact it on phones, where its title and price wrap it
+    # to 164px — a fifth of the screen, for the whole visit.
+    body, _ = tag_by_style(body, [('position:fixed;left:0;right:0;bottom:0;', 'sticky-cta')])
+    fixes = MOBILE_FIX.get(slug, [])
+    unmatched = [p for p, _ in fixes if 'style="%s' % p not in body]
+    body, _ = tag_by_style(body, fixes)
+    for p in unmatched:
+        print('    MOBILE_FIX rule no longer matches — handoff changed? %s…' % p[:60])
 
     body, links = relink(body, slug)
     body, inlined = extract_data_uris(body, handoff)

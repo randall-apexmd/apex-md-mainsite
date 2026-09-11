@@ -410,14 +410,14 @@
 @media (max-width:1024px){
   .xdd64dee{padding:12px 33px}
   .x508b61c{padding:44px 27px 42px 33px}
-  .x10dd440{grid-template-columns:repeat(2, 1fr)}
+  .x10dd440{grid-template-columns:repeat(2, minmax(0, 1fr))}
   .x92ca940{padding:54px 33px 60px}
   .x1382a03{margin-bottom:27px}
   .x4d2feee{padding:0 33px}
   .x4348e32{padding:38px 24px 38px 0}
   .x26f526f{padding:38px 22px}
   .x6d45bf3{padding:54px 33px}
-  .xffe7bb5{grid-template-columns:repeat(2, 1fr)}
+  .xffe7bb5{grid-template-columns:repeat(2, minmax(0, 1fr))}
   .xb5a0d63{margin-top:30px}
   .xcab929b{padding:60px 33px}
   .xc530725{gap:35px;margin-bottom:33px}
@@ -426,16 +426,16 @@
   .xfc0bf53{font-size:24px}
   .x6b9197e{font-size:28px}
   .x1f6c9a3{font-size:28px}
-  .x1756b40{padding:0 33px 27px;grid-template-columns:repeat(2, 1fr)}
+  .x1756b40{padding:0 33px 27px;grid-template-columns:repeat(2, minmax(0, 1fr))}
   .x624e799{font-size:25px}
   .x5a19f10{padding:30px 33px 57px}
   .x3b85116{padding:60px 33px}
   .x780fb47{padding:60px 33px 0}
   .x92731bf{gap:35px}
-  .xccdb385{grid-template-columns:repeat(2, 1fr)}
+  .xccdb385{grid-template-columns:repeat(2, minmax(0, 1fr))}
   .xfc27b5c{gap:38px}
   .x9e8d60d{gap:27px;margin-bottom:30px}
-  .x4536fa7{grid-template-columns:repeat(2, 1fr)}
+  .x4536fa7{grid-template-columns:repeat(2, minmax(0, 1fr))}
   .x6242eaf{padding:38px 33px}
   .x0ebeb8e{margin-top:75px}
   .xc9d5184{padding:49px 33px 54px}
@@ -444,7 +444,7 @@
   .xe21496a{padding:0 33px 49px}
   .x8874af5{padding:60px 33px 63px}
   .x7ac3686{margin-bottom:35px}
-  .x30dad76{grid-template-columns:repeat(2, 1fr)}
+  .x30dad76{grid-template-columns:repeat(2, minmax(0, 1fr))}
   .xccfbbe0{padding:30px 20px 23px}
   .x63e8129{font-size:25px}
   .xe47546d{padding:65px 33px}
@@ -454,116 +454,129 @@
 }
 
 @media (max-width:760px){
-  .xdd64dee{flex-wrap:wrap;padding:10px 20px}
-  .xf7da5fb{grid-template-columns:1fr}
+  .xdd64dee{padding:10px 20px}
+  .xdd64dee:has(>a,>button),.xdd64dee:has(>:nth-child(3)){flex-wrap:wrap}
+  .xf7da5fb{grid-template-columns:minmax(0, 1fr)}
   .x508b61c{padding:27px 17px 26px 20px}
-  .xcdd2acf{flex-wrap:wrap}
-  .x10dd440{grid-template-columns:repeat(1, 1fr)}
-  .x95fd837{flex-wrap:wrap}
-  .x8f09efe{flex-wrap:wrap}
-  .x3390f62{flex-wrap:wrap}
+  .xcdd2acf:has(>a,>button),.xcdd2acf:has(>:nth-child(3)){flex-wrap:wrap}
+  .x10dd440{grid-template-columns:repeat(1, minmax(0, 1fr))}
+  .x95fd837:has(>a,>button),.x95fd837:has(>:nth-child(3)){flex-wrap:wrap}
+  .x8f09efe:has(>a,>button),.x8f09efe:has(>:nth-child(3)){flex-wrap:wrap}
+  .x3390f62:has(>a,>button),.x3390f62:has(>:nth-child(3)){flex-wrap:wrap}
   .x36c347d{white-space:normal}
   .xeb29778{max-width:100%}
   .x92ca940{padding:34px 20px 37px}
   .x1382a03{margin-bottom:17px}
-  .x45144fb{grid-template-columns:repeat(1, 1fr)}
-  .xc02271c{flex-wrap:wrap}
-  .xeedabc7{flex-wrap:wrap}
-  .x859850d{flex-wrap:wrap}
-  .x2214a50{flex-wrap:wrap;white-space:normal}
-  .xa89de54{flex-wrap:wrap}
-  .x2cf0a61{flex-wrap:wrap;white-space:normal}
-  .x34c8537{flex-wrap:wrap}
-  .x59d9672{flex-wrap:wrap}
-  .x3890185{flex-wrap:wrap;white-space:normal}
-  .x61e2cd1{flex-wrap:wrap}
+  .x45144fb{grid-template-columns:repeat(1, minmax(0, 1fr))}
+  .xc02271c:has(>a,>button),.xc02271c:has(>:nth-child(3)){flex-wrap:wrap}
+  .xeedabc7:has(>a,>button),.xeedabc7:has(>:nth-child(3)){flex-wrap:wrap}
+  .x859850d:has(>a,>button),.x859850d:has(>:nth-child(3)){flex-wrap:wrap}
+  .x2214a50{white-space:normal}
+  .x2214a50:has(>a,>button),.x2214a50:has(>:nth-child(3)){flex-wrap:wrap}
+  .xa89de54:has(>a,>button),.xa89de54:has(>:nth-child(3)){flex-wrap:wrap}
+  .x2cf0a61{white-space:normal}
+  .x2cf0a61:has(>a,>button),.x2cf0a61:has(>:nth-child(3)){flex-wrap:wrap}
+  .x34c8537:has(>a,>button),.x34c8537:has(>:nth-child(3)){flex-wrap:wrap}
+  .x59d9672:has(>a,>button),.x59d9672:has(>:nth-child(3)){flex-wrap:wrap}
+  .x3890185{white-space:normal}
+  .x3890185:has(>a,>button),.x3890185:has(>:nth-child(3)){flex-wrap:wrap}
+  .x61e2cd1:has(>a,>button),.x61e2cd1:has(>:nth-child(3)){flex-wrap:wrap}
   .x10e6e60{white-space:normal}
   .x4d2feee{padding:0 20px}
   .x4348e32{padding:24px 15px 24px 0}
   .x26f526f{padding:24px 13px}
-  .xb87ca32{flex-wrap:wrap}
-  .xf1a3300{flex-wrap:wrap}
+  .xb87ca32:has(>a,>button),.xb87ca32:has(>:nth-child(3)){flex-wrap:wrap}
+  .xf1a3300:has(>a,>button),.xf1a3300:has(>:nth-child(3)){flex-wrap:wrap}
   .x6d45bf3{padding:34px 20px}
-  .xffe7bb5{grid-template-columns:repeat(1, 1fr)}
+  .xffe7bb5{grid-template-columns:repeat(1, minmax(0, 1fr))}
   .xb5a0d63{margin-top:18px}
-  .x503c9b2{flex-wrap:wrap}
-  .x949c4fe{flex-wrap:wrap}
-  .x0df7721{flex-wrap:wrap;white-space:normal}
-  .xcb6c042{flex-wrap:wrap;white-space:normal}
+  .x503c9b2:has(>a,>button),.x503c9b2:has(>:nth-child(3)){flex-wrap:wrap}
+  .x949c4fe{height:auto;min-height:74px}
+  .x0df7721{white-space:normal}
+  .x0df7721:has(>a,>button),.x0df7721:has(>:nth-child(3)){flex-wrap:wrap}
+  .xcb6c042{white-space:normal}
+  .xcb6c042:has(>a,>button),.xcb6c042:has(>:nth-child(3)){flex-wrap:wrap}
   .xcab929b{padding:37px 20px}
   .xc530725{gap:22px;margin-bottom:20px}
-  .xbe0fc63{flex-wrap:wrap}
-  .x7a6ed2b{flex-wrap:wrap}
+  .xbe0fc63:has(>a,>button),.xbe0fc63:has(>:nth-child(3)){flex-wrap:wrap}
+  .x7a6ed2b{height:auto;min-height:62px}
   .x922ccb5{gap:18px;margin-top:24px;padding-top:18px}
-  .x55e58ea{flex-wrap:wrap;white-space:normal}
-  .x2772b0f{flex-wrap:wrap;white-space:normal}
-  .xf802050{flex-wrap:wrap}
-  .x778f934{flex-wrap:wrap}
-  .xccdcd97{flex-wrap:wrap}
+  .x55e58ea{white-space:normal}
+  .x55e58ea:has(>a,>button),.x55e58ea:has(>:nth-child(3)){flex-wrap:wrap}
+  .x2772b0f{white-space:normal}
+  .x2772b0f:has(>a,>button),.x2772b0f:has(>:nth-child(3)){flex-wrap:wrap}
+  .xf802050:has(>a,>button),.xf802050:has(>:nth-child(3)){flex-wrap:wrap}
+  .xccdcd97:has(>a,>button),.xccdcd97:has(>:nth-child(3)){flex-wrap:wrap}
   .xb60d362{padding:24px 20px 26px;gap:18px}
-  .xd0ca1e3{flex-wrap:wrap}
-  .x7912667{flex-wrap:wrap}
+  .xd0ca1e3:has(>a,>button),.xd0ca1e3:has(>:nth-child(3)){flex-wrap:wrap}
+  .x7912667:has(>a,>button),.x7912667:has(>:nth-child(3)){flex-wrap:wrap}
   .xfc0bf53{font-size:20px}
   .x6b9197e{font-size:21px}
   .x1f6c9a3{font-size:21px}
-  .x1756b40{padding:0 20px 17px;grid-template-columns:repeat(1, 1fr)}
-  .x4f792dc{flex-wrap:wrap}
-  .x3dee9ac{flex-wrap:wrap}
-  .x9ec43e8{flex-wrap:wrap}
-  .xba31163{flex-wrap:wrap;white-space:normal}
-  .x6cf7f29{flex-wrap:wrap;white-space:normal}
-  .xa73ba67{flex-wrap:wrap}
+  .x1756b40{padding:0 20px 17px;grid-template-columns:repeat(1, minmax(0, 1fr))}
+  .x4f792dc:has(>a,>button),.x4f792dc:has(>:nth-child(3)){flex-wrap:wrap}
+  .x3dee9ac:has(>a,>button),.x3dee9ac:has(>:nth-child(3)){flex-wrap:wrap}
+  .x9ec43e8:has(>a,>button),.x9ec43e8:has(>:nth-child(3)){flex-wrap:wrap}
+  .xf177877{grid-column:auto}
+  .xba31163{white-space:normal}
+  .xba31163:has(>a,>button),.xba31163:has(>:nth-child(3)){flex-wrap:wrap}
+  .x6cf7f29{white-space:normal}
+  .x6cf7f29:has(>a,>button),.x6cf7f29:has(>:nth-child(3)){flex-wrap:wrap}
+  .xa73ba67:has(>a,>button),.xa73ba67:has(>:nth-child(3)){flex-wrap:wrap}
   .x624e799{font-size:20px}
-  .x5ec6264{flex-wrap:wrap}
+  .x5ec6264{height:auto;min-height:60px}
+  .x5ec6264:has(>a,>button),.x5ec6264:has(>:nth-child(3)){flex-wrap:wrap}
   .x5a19f10{padding:18px 20px 35px}
   .x3b85116{padding:37px 20px}
-  .xd7e31a6{flex-wrap:wrap}
-  .x8033093{flex-wrap:wrap}
-  .xb5a950f{flex-wrap:wrap}
-  .x31a824a{flex-wrap:wrap}
+  .xd7e31a6:has(>a,>button),.xd7e31a6:has(>:nth-child(3)){flex-wrap:wrap}
+  .x8033093:has(>a,>button),.x8033093:has(>:nth-child(3)){flex-wrap:wrap}
+  .xb5a950f:has(>a,>button),.xb5a950f:has(>:nth-child(3)){flex-wrap:wrap}
+  .x31a824a:has(>a,>button),.x31a824a:has(>:nth-child(3)){flex-wrap:wrap}
   .x780fb47{padding:37px 20px 0}
   .x92731bf{gap:22px}
-  .x681ddff{flex-wrap:wrap}
-  .xd15df80{flex-wrap:wrap}
-  .x43ae6b3{grid-template-columns:1fr}
+  .x681ddff:has(>a,>button),.x681ddff:has(>:nth-child(3)){flex-wrap:wrap}
+  .xd15df80:has(>a,>button),.xd15df80:has(>:nth-child(3)){flex-wrap:wrap}
+  .x43ae6b3{grid-template-columns:minmax(0, 1fr)}
   .xb06a563{transform:none}
-  .xccdb385{grid-template-columns:repeat(1, 1fr)}
+  .xccdb385{grid-template-columns:repeat(1, minmax(0, 1fr))}
   .xfc27b5c{gap:24px}
-  .x3fd6227{flex-wrap:wrap}
-  .x20eed9a{flex-wrap:wrap}
+  .x3fd6227:has(>a,>button),.x3fd6227:has(>:nth-child(3)){flex-wrap:wrap}
+  .x20eed9a:has(>a,>button),.x20eed9a:has(>:nth-child(3)){flex-wrap:wrap}
   .x9e8d60d{gap:17px;margin-bottom:18px}
-  .x9023cab{flex-wrap:wrap}
+  .x9023cab:has(>a,>button),.x9023cab:has(>:nth-child(3)){flex-wrap:wrap}
   .xf666f6d{white-space:normal}
   .xefcf1bc{white-space:normal}
-  .x4536fa7{grid-template-columns:repeat(1, 1fr)}
-  .xeec317d{flex-wrap:wrap}
-  .xa88ca91{flex-wrap:wrap}
+  .x4536fa7{grid-template-columns:repeat(1, minmax(0, 1fr))}
+  .xeec317d:has(>a,>button),.xeec317d:has(>:nth-child(3)){flex-wrap:wrap}
+  .xa88ca91:has(>a,>button),.xa88ca91:has(>:nth-child(3)){flex-wrap:wrap}
   .x6242eaf{padding:24px 20px}
-  .xc6fbc5a{flex-wrap:wrap}
-  .x28cd976{flex-wrap:wrap}
+  .xc6fbc5a:has(>a,>button),.xc6fbc5a:has(>:nth-child(3)){flex-wrap:wrap}
+  .x28cd976:has(>a,>button),.x28cd976:has(>:nth-child(3)){flex-wrap:wrap}
   .x0ebeb8e{margin-top:46px}
   .xac706e8{width:100%;max-width:100%}
   .xc9d5184{padding:30px 20px 34px}
-  .xbfd8279{grid-template-columns:repeat(1, 1fr)}
+  .xbfd8279{grid-template-columns:repeat(1, minmax(0, 1fr))}
   .x2311838{padding:18px 17px 17px}
-  .xf00680a{flex-wrap:wrap}
+  .xf00680a:has(>a,>button),.xf00680a:has(>:nth-child(3)){flex-wrap:wrap}
   .x7f7644d{padding:32px 20px 18px}
-  .x6d3301f{flex-wrap:wrap}
-  .x3a55102{flex-wrap:wrap}
+  .x6d3301f:has(>a,>button),.x6d3301f:has(>:nth-child(3)){flex-wrap:wrap}
+  .x3a55102:has(>a,>button),.x3a55102:has(>:nth-child(3)){flex-wrap:wrap}
   .xe21496a{padding:0 20px 30px}
-  .xd8e02bd{flex-wrap:wrap}
-  .x707f734{flex-wrap:wrap}
+  .xd8e02bd:has(>a,>button),.xd8e02bd:has(>:nth-child(3)){flex-wrap:wrap}
+  .x707f734:has(>a,>button),.x707f734:has(>:nth-child(3)){flex-wrap:wrap}
   .x8874af5{padding:37px 20px 39px}
   .x7ac3686{margin-bottom:22px}
-  .x30dad76{grid-template-columns:repeat(1, 1fr)}
-  .x897b92e{flex-wrap:wrap}
+  .x30dad76{grid-template-columns:repeat(1, minmax(0, 1fr))}
+  .x897b92e{height:auto;min-height:60px}
+  .x897b92e:has(>a,>button),.x897b92e:has(>:nth-child(3)){flex-wrap:wrap}
   .xccfbbe0{padding:18px 13px 14px}
   .x63e8129{font-size:20px}
-  .xc669116{flex-wrap:wrap}
+  .xc669116:has(>a,>button),.xc669116:has(>:nth-child(3)){flex-wrap:wrap}
   .xe47546d{padding:40px 20px}
-  .xed56406{grid-template-columns:1fr;gap:27px}
+  .xed56406{grid-template-columns:minmax(0, 1fr);gap:27px}
   .x8c32fcd{font-size:23px}
-  .xcab0269{flex-wrap:wrap}
-  .x4dddf88{flex-wrap:wrap;padding:10px 20px}
+  .xcab0269:has(>a,>button),.xcab0269:has(>:nth-child(3)){flex-wrap:wrap}
+  .x4dddf88{padding:10px 20px}
+  .x4dddf88:has(>a,>button),.x4dddf88:has(>:nth-child(3)){flex-wrap:wrap}
   .x70fd48e{white-space:normal}
 }

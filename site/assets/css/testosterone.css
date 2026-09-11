@@ -242,7 +242,7 @@
   .xc3503e1{font-size:25px}
   .xc27b36a{padding:54px 0}
   .xf6e63c4{font-size:36px}
-  .x8b3c920{grid-template-columns:repeat(2, 1fr)}
+  .x8b3c920{grid-template-columns:repeat(2, minmax(0, 1fr))}
   .xd563a7b{font-size:39px}
   .x943d40d{padding:52px clamp(24px,4vw,56px)}
   .x5698dc8{margin-top:29px}
@@ -250,29 +250,29 @@
   .x681027d{padding:16px 35px}
   .xf604920{padding:52px 22px}
   .xe5f44f9{font-size:34px}
-  .x7130fd7{grid-template-columns:repeat(2, 1fr);margin-top:30px}
+  .x7130fd7{grid-template-columns:repeat(2, minmax(0, 1fr));margin-top:30px}
   .xb6ff5c8{gap:27px}
   .x0f728b0{padding:49px 0}
   .xda8a7e9{gap:38px}
   .x51edb3d{font-size:31px}
   .x9e72eb4{padding:52px 0}
   .x1ec1208{font-size:36px}
-  .x806055e{grid-template-columns:repeat(2, 1fr);margin-top:30px}
+  .x806055e{grid-template-columns:repeat(2, minmax(0, 1fr));margin-top:30px}
   .x5beb0e9{gap:33px}
   .x6bd6053{font-size:31px}
   .xd73b8b4{font-size:27px}
-  .x51ca138{grid-template-columns:repeat(2, 1fr);margin-top:30px}
+  .x51ca138{grid-template-columns:repeat(2, minmax(0, 1fr));margin-top:30px}
   .xb643785{padding:38px;gap:33px}
   .xf1448ec{font-size:30px}
   .xe3b5966{padding:38px 22px 27px}
   .x58fc9d6{font-size:34px}
-  .x16021c8{grid-template-columns:repeat(2, 1fr);margin-top:30px}
+  .x16021c8{grid-template-columns:repeat(2, minmax(0, 1fr));margin-top:30px}
   .x3b5a66c{padding:27px 22px 52px}
   .x25cdd42{font-size:34px}
-  .xe87092c{grid-template-columns:repeat(2, 1fr)}
+  .xe87092c{grid-template-columns:repeat(2, minmax(0, 1fr))}
   .xc99c041{font-size:27px}
   .xf5197fd{font-size:41px}
-  .xc6bc663{grid-template-columns:repeat(2, 1fr);margin-top:29px}
+  .xc6bc663{grid-template-columns:repeat(2, minmax(0, 1fr));margin-top:29px}
   .xa2fc568{padding:38px 0}
   .xa74d79a{gap:38px}
   .x94aa15b{font-size:36px}
@@ -288,94 +288,99 @@
 @media (max-width:760px){
   .x9211054{min-width:auto}
   .x6f08e38{padding:24px 13px 18px}
-  .x3e78b22{grid-template-columns:1fr;gap:22px}
-  .x54e5d1d{flex-wrap:wrap;white-space:normal}
+  .x3e78b22{grid-template-columns:minmax(0, 1fr);gap:22px}
+  .x54e5d1d{white-space:normal}
+  .x54e5d1d:has(>a,>button),.x54e5d1d:has(>:nth-child(3)){flex-wrap:wrap}
   .x2ef8e9b{font-size:38px}
-  .x0fb87d9{flex-wrap:wrap}
-  .xe4a86cf{flex-wrap:wrap;white-space:normal}
-  .x2bd16cb{flex-wrap:wrap;gap:17px;padding-right:17px}
+  .x0fb87d9:has(>a,>button),.x0fb87d9:has(>:nth-child(3)){flex-wrap:wrap}
+  .xe4a86cf{white-space:normal}
+  .x2bd16cb{gap:17px;padding-right:17px}
+  .x2bd16cb:has(>a,>button),.x2bd16cb:has(>:nth-child(3)){flex-wrap:wrap}
   .xeff76aa{padding:18px 13px 22px}
-  .x8299ad6{flex-wrap:wrap}
+  .x8299ad6:has(>a,>button),.x8299ad6:has(>:nth-child(3)){flex-wrap:wrap}
   .x0ef20b4{font-size:20px}
   .x12ae7e6{font-size:20px}
   .xc3503e1{font-size:20px}
   .xc27b36a{padding:34px 0}
   .xf6e63c4{font-size:27px}
-  .x8b3c920{grid-template-columns:repeat(1, 1fr)}
-  .x447f9e0{flex-wrap:wrap}
+  .x8b3c920{grid-template-columns:repeat(1, minmax(0, 1fr))}
+  .x447f9e0:has(>a,>button),.x447f9e0:has(>:nth-child(3)){flex-wrap:wrap}
   .xd563a7b{font-size:29px}
   .x943d40d{padding:32px clamp(24px,4vw,56px)}
-  .x5698dc8{grid-template-columns:1fr;margin-top:18px}
-  .xb3402af{flex-wrap:wrap}
-  .xdaf3d4f{flex-wrap:wrap}
-  .x1ab93e6{grid-template-columns:1fr}
-  .x8317c8e{flex-wrap:wrap}
-  .x7ff26b7{flex-wrap:wrap}
-  .x64c122d{flex-wrap:wrap}
-  .x679df39{flex-wrap:wrap;margin-top:17px}
+  .x5698dc8{grid-template-columns:minmax(0, 1fr);margin-top:18px}
+  .xb3402af:has(>a,>button),.xb3402af:has(>:nth-child(3)){flex-wrap:wrap}
+  .xdaf3d4f:has(>a,>button),.xdaf3d4f:has(>:nth-child(3)){flex-wrap:wrap}
+  .x1ab93e6{grid-template-columns:minmax(0, 1fr)}
+  .x8317c8e:has(>a,>button),.x8317c8e:has(>:nth-child(3)){flex-wrap:wrap}
+  .x7ff26b7:has(>a,>button),.x7ff26b7:has(>:nth-child(3)){flex-wrap:wrap}
+  .x64c122d:has(>a,>button),.x64c122d:has(>:nth-child(3)){flex-wrap:wrap}
+  .x679df39{margin-top:17px}
+  .x679df39:has(>a,>button),.x679df39:has(>:nth-child(3)){flex-wrap:wrap}
   .x681027d{padding:10px 22px}
   .xf604920{padding:32px 13px}
   .xe5f44f9{font-size:26px}
-  .x7130fd7{grid-template-columns:repeat(1, 1fr);margin-top:18px}
-  .x78ae4fe{flex-wrap:wrap}
-  .x9796f5d{flex-wrap:wrap}
-  .xc6c23d0{flex-wrap:wrap}
-  .xb6ff5c8{flex-wrap:wrap;gap:17px}
-  .x015a5e7{flex-wrap:wrap}
+  .x7130fd7{grid-template-columns:repeat(1, minmax(0, 1fr));margin-top:18px}
+  .x78ae4fe:has(>a,>button),.x78ae4fe:has(>:nth-child(3)){flex-wrap:wrap}
+  .x9796f5d:has(>a,>button),.x9796f5d:has(>:nth-child(3)){flex-wrap:wrap}
+  .xc6c23d0:has(>a,>button),.xc6c23d0:has(>:nth-child(3)){flex-wrap:wrap}
+  .xb6ff5c8{gap:17px}
+  .xb6ff5c8:has(>a,>button),.xb6ff5c8:has(>:nth-child(3)){flex-wrap:wrap}
+  .x015a5e7:has(>a,>button),.x015a5e7:has(>:nth-child(3)){flex-wrap:wrap}
   .x0f728b0{padding:30px 0}
-  .xda8a7e9{grid-template-columns:1fr;gap:24px}
+  .xda8a7e9{grid-template-columns:minmax(0, 1fr);gap:24px}
   .x51edb3d{font-size:23px}
-  .x391bf89{flex-wrap:wrap}
-  .x16febaf{grid-template-columns:1fr}
-  .x637bddc{flex-wrap:wrap}
+  .x391bf89:has(>a,>button),.x391bf89:has(>:nth-child(3)){flex-wrap:wrap}
+  .x16febaf{grid-template-columns:minmax(0, 1fr)}
+  .x637bddc:has(>a,>button),.x637bddc:has(>:nth-child(3)){flex-wrap:wrap}
   .x9e72eb4{padding:32px 0}
   .x1ec1208{font-size:27px}
-  .x806055e{grid-template-columns:repeat(1, 1fr);margin-top:18px}
-  .xbcdd0df{flex-wrap:wrap}
-  .xdf2b45e{flex-wrap:wrap}
+  .x806055e{grid-template-columns:repeat(1, minmax(0, 1fr));margin-top:18px}
+  .xbcdd0df:has(>a,>button),.xbcdd0df:has(>:nth-child(3)){flex-wrap:wrap}
+  .xdf2b45e:has(>a,>button),.xdf2b45e:has(>:nth-child(3)){flex-wrap:wrap}
   .x938b7fd{width:100%;max-width:100%;margin-left:0}
-  .xae1d457{flex-wrap:wrap}
-  .x9ffad0c{flex-wrap:wrap}
-  .x5beb0e9{grid-template-columns:1fr;gap:20px}
-  .x2b8e582{flex-wrap:wrap}
-  .xa32cb9d{flex-wrap:wrap}
+  .xae1d457:has(>a,>button),.xae1d457:has(>:nth-child(3)){flex-wrap:wrap}
+  .x9ffad0c:has(>a,>button),.x9ffad0c:has(>:nth-child(3)){flex-wrap:wrap}
+  .x5beb0e9{grid-template-columns:minmax(0, 1fr);gap:20px}
+  .x2b8e582{height:auto;min-height:88px}
+  .x2b8e582:has(>a,>button),.x2b8e582:has(>:nth-child(3)){flex-wrap:wrap}
+  .xa32cb9d:has(>a,>button),.xa32cb9d:has(>:nth-child(3)){flex-wrap:wrap}
   .x6bd6053{font-size:23px}
   .xd73b8b4{font-size:20px}
-  .xcb32cb7{flex-wrap:wrap}
-  .x51ca138{grid-template-columns:repeat(1, 1fr);margin-top:18px}
-  .xb643785{padding:24px;grid-template-columns:1fr;gap:20px}
+  .xcb32cb7:has(>a,>button),.xcb32cb7:has(>:nth-child(3)){flex-wrap:wrap}
+  .x51ca138{grid-template-columns:repeat(1, minmax(0, 1fr));margin-top:18px}
+  .xb643785{padding:24px;grid-template-columns:minmax(0, 1fr);gap:20px}
   .xf1448ec{font-size:22px}
-  .xb6ca729{flex-wrap:wrap}
+  .xb6ca729:has(>a,>button),.xb6ca729:has(>:nth-child(3)){flex-wrap:wrap}
   .xe3b5966{padding:24px 13px 17px}
   .x58fc9d6{font-size:26px}
-  .x16021c8{grid-template-columns:repeat(1, 1fr);margin-top:18px}
-  .x2ad6d2d{grid-template-columns:1fr}
-  .x6d764e6{flex-wrap:wrap}
+  .x16021c8{grid-template-columns:repeat(1, minmax(0, 1fr));margin-top:18px}
+  .x2ad6d2d{grid-template-columns:minmax(0, 1fr)}
+  .x6d764e6:has(>a,>button),.x6d764e6:has(>:nth-child(3)){flex-wrap:wrap}
   .x3b5a66c{padding:17px 13px 32px}
   .x25cdd42{font-size:26px}
-  .x84c8c73{flex-wrap:wrap}
-  .xe87092c{grid-template-columns:repeat(1, 1fr)}
-  .x518d2fa{flex-wrap:wrap}
-  .xc9db460{flex-wrap:wrap}
+  .x84c8c73:has(>a,>button),.x84c8c73:has(>:nth-child(3)){flex-wrap:wrap}
+  .xe87092c{grid-template-columns:repeat(1, minmax(0, 1fr))}
+  .x518d2fa:has(>a,>button),.x518d2fa:has(>:nth-child(3)){flex-wrap:wrap}
+  .xc9db460:has(>a,>button),.xc9db460:has(>:nth-child(3)){flex-wrap:wrap}
   .xc99c041{font-size:20px}
-  .xf393de9{flex-wrap:wrap}
+  .xf393de9:has(>a,>button),.xf393de9:has(>:nth-child(3)){flex-wrap:wrap}
   .xf5197fd{font-size:30px}
-  .xc6bc663{grid-template-columns:repeat(1, 1fr);margin-top:18px}
-  .xb808e70{flex-wrap:wrap}
-  .xb39ec39{flex-wrap:wrap}
+  .xc6bc663{grid-template-columns:repeat(1, minmax(0, 1fr));margin-top:18px}
+  .xb808e70:has(>a,>button),.xb808e70:has(>:nth-child(3)){flex-wrap:wrap}
+  .xb39ec39:has(>a,>button),.xb39ec39:has(>:nth-child(3)){flex-wrap:wrap}
   .xa2fc568{padding:24px 0}
-  .xa74d79a{grid-template-columns:1fr;gap:24px}
+  .xa74d79a{grid-template-columns:minmax(0, 1fr);gap:24px}
   .x94aa15b{font-size:27px}
-  .xc79c150{flex-wrap:wrap}
-  .xe9aacce{flex-wrap:wrap}
-  .xdc03855{flex-wrap:wrap}
+  .xc79c150:has(>a,>button),.xc79c150:has(>:nth-child(3)){flex-wrap:wrap}
+  .xe9aacce:has(>a,>button),.xe9aacce:has(>:nth-child(3)){flex-wrap:wrap}
+  .xdc03855:has(>a,>button),.xdc03855:has(>:nth-child(3)){flex-wrap:wrap}
   .x3551694{padding:32px 13px}
   .x27dad54{font-size:27px;margin-bottom:18px}
-  .x87cbaf7{flex-wrap:wrap}
-  .xf81d87e{flex-wrap:wrap}
+  .x87cbaf7:has(>a,>button),.x87cbaf7:has(>:nth-child(3)){flex-wrap:wrap}
+  .xf81d87e:has(>a,>button),.xf81d87e:has(>:nth-child(3)){flex-wrap:wrap}
   .xe696820{padding:0 10px 10px 32px}
   .x6991de5{padding:0 10px 10px 32px}
-  .x9e3a1fe{flex-wrap:wrap}
+  .x9e3a1fe:has(>a,>button),.x9e3a1fe:has(>:nth-child(3)){flex-wrap:wrap}
   .xc178608{padding:10px 13px 38px}
   .x7fd00d7{padding:31px 24px}
   .x37b9bb2{font-size:31px}
