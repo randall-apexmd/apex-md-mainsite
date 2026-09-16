@@ -83,8 +83,10 @@ Patient Login goes to `ehr.apexmd.com/login` on every page.
 
 ## Also unfinished
 
-- **11 images were never supplied** — 9 on Men's Optimal Health, 2 on GLP-1.
-  They render as dashed "image needed" boxes so they are impossible to miss.
+- **7 images are still missing**, all on Men's Optimal Health (depression,
+  low libido, erectile dysfunction, heart disease, belly fat, low energy,
+  anxiety). They render as dashed "image needed" boxes so they cannot be
+  missed. The live site has no symptom photos to borrow — see NEXT.md.
 - **Copy has not cleared compliance.** The handoffs flag this themselves:
   testimonial names and case-study figures on Women's, the "300,000+ patients"
   and "4.8/5" claims on Testosterone, the "not a diagnostic test" language on

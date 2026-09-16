@@ -138,6 +138,80 @@ MOBILE_FIX = {
 }
 
 
+# Handoff markup replaced wholesale by a part from _build/parts at build time.
+# slug -> [(regex matching the handoff block, part filename)]
+PART_SWAPS = {
+    # the Tirzepatide comparison was a flat PNG, unreadable on a phone
+    'glp-1-program': [
+        (r'<div style="border-radius:20px;overflow:hidden;border:1px solid #ececed;'
+         r'background:#fff;">\s*<img src="assets/tirz-comparison\.png"[^>]*>\s*</div>',
+         'glp-comparison.html'),
+    ],
+}
+
+# Handoff blocks removed outright. Men's and Women's each carried a strip
+# ("HSA / FSA eligible · no membership required · Patient Login") above
+# their own header; with the shared header in place it only repeated Patient
+# Login, and on a phone it was a tall two-line block before any content.
+_HSA_STRIP = (r'<div style="background:#(?:d30704|c2185b);color:#fff;display:flex;'
+              r'justify-content:space-between;align-items:center;gap:24px;'
+              r'padding:9px 48px;[^"]*">.*?</div>')
+STRIP_BLOCKS = {
+    'mens-optimal-health':   [_HSA_STRIP],
+    'womens-optimal-health': [_HSA_STRIP],
+}
+
+# Placeholders the handoffs left unfilled, filled with the matching image from
+# the live apexmd.com page (pulled 2026-09-11, saved into _src/<handoff>/assets
+# as live-*.jpg). slug -> [(regex for the placeholder, replacement markup)].
+# An empty replacement removes the block.
+_COVER = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover'
+IMAGE_FILL = {
+    'glp-1-program': [
+        # Pablo Lopez's card: the slot plus its dashed "BEFORE / AFTER" label
+        (r'<image-slot id="trans-1"[^>]*></image-slot><span style="position:absolute;'
+         r'bottom:14px;left:14px;font-family:ui-monospace[^"]*">BEFORE / AFTER</span>',
+         '<img src="assets/live-pablo-lopez.jpg" alt="Pablo Lopez before and after" '
+         'style="width:100%;height:100%;object-fit:cover;display:block;">'),
+        # "Member Result" is a template card with no real patient behind it
+        # ("Add your patient's quote here"); no eighth photo exists live
+        (r'<div style="flex:0 0 calc\(\(100% - 44px\)/3\);[^"]*"><div style="position:'
+         r'relative;height:300px;"><image-slot id="trans-8".*?</div></div></div>', ''),
+    ],
+    'mens-optimal-health': [
+        # hero-dna.png shipped with the handoff and nothing referenced it; it
+        # is the red helix artwork this slot asks for. Framed on the helix,
+        # which sits in the right-hand third of a landscape image.
+        (r'<image-slot id="apex-moh-dna"[^>]*></image-slot>',
+         '<img src="assets/hero-dna.png" alt="DNA helix" style="width:100%;'
+         'height:100%;object-fit:cover;object-position:78% center;display:block">'),
+    ],
+    'genetics': [
+        (r'<div class="img-placeholder" id="di2"[^>]*>[^<]*</div>',
+         '<img src="assets/live-di-potential.jpg" alt="Member reviewing his genetic '
+         'results" style="%s">' % _COVER),
+        (r'<div class="img-placeholder"[^>]*>Member reading results on a tablet</div>',
+         '<img src="assets/live-ep-portal-results.jpg" alt="Member reading her results '
+         'on a tablet" style="%s">' % _COVER),
+        (r'<div class="img-placeholder"[^>]*>Member checking her action steps on her phone</div>',
+         '<img src="assets/live-ep-action-steps.jpg" alt="Member checking her action '
+         'steps on her phone" style="%s">' % _COVER),
+        (r'<div class="img-placeholder"[^>]*>Shield and padlock representing secure data</div>',
+         '<img src="assets/live-ep-hipaa.jpg" alt="Shield and padlock representing '
+         'secure data" style="%s">' % _COVER),
+    ],
+}
+
+# Page-scoped CSS appended after the handoff's own <style>, so it wins ties.
+EXTRA_CSS = {
+    # two physicians in a grid drawn for three left an empty third column;
+    # below 1025px the page's own two-column and slider rules take over
+    'concierge': '@media (min-width:1025px){.docs-grid{grid-template-columns:'
+                 'repeat(2,minmax(0,1fr));max-width:900px;margin-left:auto;'
+                 'margin-right:auto}}',
+}
+
+
 def tag_by_style(body, rules):
     """Add a class to each tag whose inline style starts with a given prefix.
 
@@ -314,7 +388,8 @@ def clean_design_tool(body, slug):
     subject, so an unfinished image reads as unfinished instead of as an
     empty gap nobody notices.
     """
-    counts = {'helmet': 0, 'x-dc': 0, 'sc-if': 0, 'image-slot': 0, 'props': 0}
+    counts = {'helmet': 0, 'x-dc': 0, 'sc-if': 0, 'image-slot': 0, 'props': 0,
+              'slot-img': 0}
     props = design_props(body)
 
     def truthy(v):
@@ -350,16 +425,45 @@ def clean_design_tool(body, slug):
     body, n = re.subn(r'</?x-dc\b[^>]*>', '', body, flags=re.I)
     counts['x-dc'] = n
 
-    def slot(m):
+    def slot(m, closed=True):
+        """Render one <image-slot>. `closed` means the match consumed the
+        closing tag too, so the replacement has to be a complete element."""
         attrs = m.group(1)
         cls = re.search(r'class="([^"]*)"', attrs)
         label = re.search(r'placeholder="([^"]*)"', attrs)
+        src = re.search(r'src="([^"]*)"', attrs)
+        # A slot can carry its image already — the Men's "Decreased muscle"
+        # card does. Treating every slot as empty threw that picture away and
+        # drew a dashed "image needed" box over a photo that shipped with the
+        # handoff.
+        if src:
+            counts['slot-img'] += 1
+            # the slot's own sizing, not absolute positioning: these
+            # containers are not all positioned, and an absolute image in an
+            # unpositioned parent escapes to the page and covers whatever it
+            # lands on (it covered the entire Men's hero)
+            return ('<img src="%s" alt="%s" class="%s" style="width:100%%;'
+                    'height:100%%;object-fit:cover;display:block">'
+                    % (src.group(1), label.group(1) if label else '',
+                       cls.group(1) if cls else ''))
         counts['image-slot'] += 1
-        return ('<div class="%s img-todo" data-todo="%s">'
+        # keep the slot's own sizing, or the box collapses to its min-height
+        # and leaves the rest of the card showing as bare grey
+        style = re.search(r'style="([^"]*)"', attrs)
+        return ('<div class="%s img-todo" data-todo="%s" style="%s">%s'
                 % (cls.group(1) if cls else '',
-                   label.group(1) if label else 'image'))
+                   label.group(1) if label else 'image',
+                   style.group(1) if style else 'width:100%;height:100%',
+                   '</div>' if closed else ''))
 
-    body = re.sub(r'<image-slot\b([^>]*)>', slot, body, flags=re.I)
+    # Replace the whole element, opening and closing tag together. Handling
+    # them separately broke the markup the moment a slot became an <img>: the
+    # orphaned </image-slot> still turned into a </div>, which closed the
+    # surrounding grid early and threw the following card out of it.
+    body = re.sub(r'<image-slot\b([^>]*)>\s*</image-slot>',
+                  lambda m: slot(m, True), body, flags=re.I)
+    body = re.sub(r'<image-slot\b([^>]*)>',
+                  lambda m: slot(m, False), body, flags=re.I)
     body = re.sub(r'</image-slot>', '</div>', body, flags=re.I)
 
     # Whatever is still standing has no declared default, so it is an
@@ -593,6 +697,20 @@ def build(slug):
     body = body_of(raw)
     body, dropped = strip_chrome(body)
 
+    for pat in STRIP_BLOCKS.get(slug, []):
+        body, k = re.subn(pat, '', body, count=1, flags=re.S)
+        if not k:
+            print('    STRIP_BLOCKS rule no longer matches: %s…' % pat[:60])
+    for pat, repl in IMAGE_FILL.get(slug, []):
+        body, k = re.subn(pat, lambda _m: repl, body, count=1, flags=re.S)
+        if not k:
+            print('    IMAGE_FILL rule no longer matches: %s…' % pat[:60])
+    for pat, part in PART_SWAPS.get(slug, []):
+        markup = re.sub(r'<!--.*?-->', '', read(os.path.join(PARTS, part)), flags=re.S)
+        body, k = re.subn(pat, lambda _m: markup, body, count=1, flags=re.S)
+        if not k:
+            print('    PART_SWAPS rule for %s no longer matches' % part)
+
     # Normalise the whole body, not just the style attributes. The handoffs
     # carry their accent in three more places cssx never sees: inline SVG
     # `fill=`/`stroke=` presentation attributes, `var(--accent,#e8232a)`
@@ -626,7 +744,7 @@ def build(slug):
     body, hoisted = cssx.rewrite(body, ex)
     write(os.path.join(SITE, 'assets', 'css', slug + '.css'), ex.stylesheet())
 
-    pcss = page_style(raw, slug)
+    pcss = page_style(raw, slug) + EXTRA_CSS.get(slug, '')
     pcss = '<style>\n%s\n</style>\n' % pcss if pcss else ''
 
     over_title, over_desc = META.get(slug, (None, None))

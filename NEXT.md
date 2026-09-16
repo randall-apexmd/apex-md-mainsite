@@ -33,30 +33,54 @@ overflow). The tools are in `_build/qa/`; rerun them after any layout change.
     It is now 69px.
   - Concierge's phone header showed the desktop CTA.
 
-**Open, and not a build problem.** Each needs an asset or a decision:
+**Open, and not a build problem.** All of these went to Blake; see the
+content pass below for what happened to each.
 
-- **Genetics has 4 grey image placeholders** left in the handoff: "Man
-  reviewing results", "Member reading results on a tablet", "Member checking
-  her action steps on her phone", and "Shield and padlock".
-- **Men's and Women's carry a second header strip** ("HSA / FSA eligible · no
-  membership required · Patient Login") under the shared header. It
-  duplicates Patient Login and is a tall two-line block on phones. Merge the
-  HSA line into the page, or drop the strip.
-- **GLP-1's Tirzepatide comparison table is an image** (`tirz-comparison`).
-  On a phone it shrinks to ~350px and cannot be read. It needs to be an HTML
-  table or have a phone-specific image.
-- **Apex AI's hero is one baked image.** On a phone its headline renders at
-  about 12px. It needs a phone hero, or a text hero over the art.
-- **Testosterone's "wrong form of testosterone" card** has its copy baked into
-  the photo, and the phone crop cuts it off.
-- **The "Apex specialists … have been used by" strip** (homepage,
-  Testosterone, Men's, Women's) is a single image of about 12 logos. At
-  phone width each logo is ~15px.
-- **Concierge lays out 2 doctor cards in a 3-column grid**, leaving an empty
-  third slot on desktop.
-- **Phone pages are long.** Women's is 41,676px on a phone, because every
-  card grid stacks one card per row. Symptom and benefit cards could go two
-  across on phones. This is a design call, not a defect.
+## Content pass — 2026-09-16
+
+- **Men's symptom images — 2 of 9 filled, 7 still needed.** The live
+  apexmd.com page has no symptom photos at all: its symptom list is plain
+  text and its 23 images are transformations, charts, products, doctors and
+  app screens. Two slots were filled from the handoff itself, which shipped
+  images nothing referenced — `symptom-decreased-muscle.png` (the slot even
+  carried the `src`) and `hero-dna.png` for the DNA artwork. **Still needed:**
+  depression, low libido, erectile dysfunction, heart disease, belly fat,
+  low energy, anxiety. Women's Optimal Health has the same grid fully
+  populated, so the house style is already set.
+- **GLP-1 comparison table — rebuilt as live HTML.** See
+  `_build/parts/glp-comparison.html`, swapped in by `PART_SWAPS`. Figures are
+  transcribed from `tirz-comparison.png`, which is no longer used; that file
+  is the only place they live. Adds a year-cost bar (Apex MD $4,788 fixed
+  against $5,376–$7,176) that counts up on scroll, and on phones a pill
+  switcher that shows Apex MD beside one competitor at a time. **Check the
+  "$588–$2,388 a year" line** — it is arithmetic on their own figures, but it
+  is a new claim on the page.
+- **Apex AI baked hero — left, flagged.** Still one image; its headline draws
+  at about 12px on a phone. It needs a phone hero, or a text hero over art.
+- **Duplicate header strip — removed** from Men's and Women's. The HSA/FSA
+  line still appears inside each page's pricing card, and Patient Login now
+  exists only in the shared header.
+- **Genetics placeholders — filled** from the live site: `di-potential`,
+  `ep-portal-results`, `ep-action-steps`, `ep-hipaa`.
+- **GLP-1 carousel — filled and trimmed.** Pablo Lopez's photo came from the
+  live site. The eighth card was a template ("Member Result" / "Add your
+  patient's quote here") with no real patient and no photo anywhere, so it
+  was removed.
+- **Concierge third doctor slot — removed.** Two columns, centred.
+- **Still open from that list:** Testosterone's "wrong form of testosterone"
+  photo has copy baked into it that the phone crop cuts off, and the "used
+  by" strip is a single image of about 12 logos, unreadable on a phone.
+
+Three more build bugs surfaced while doing the above, all fixed:
+
+- An `<image-slot>` carrying its own `src` was thrown away and drawn as an
+  "image needed" box on top of a photo that shipped with the handoff.
+- Replacing a slot's opening and closing tags separately unbalanced the
+  markup the moment one became an `<img>`: the stray `</image-slot>` still
+  became a `</div>`, closed the symptom grid early and threw the last card
+  out of it.
+- A fill image positioned `absolute` inside an unpositioned container escaped
+  to the page wrapper and covered the entire Men's hero.
 
 ## Pick up here
 

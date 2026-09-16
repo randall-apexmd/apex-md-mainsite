@@ -89,7 +89,7 @@
 .xb58040e{padding:34px 20px 22px}
 .x1a18f09{font-size:17px;font-weight:800;margin-bottom:8px}
 .x39d7111{font-size:14px;line-height:1.55;color:#5f5952}
-.xa9308df{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:#f3f0ec;border:1px dashed rgba(0,0,0,0.2);color:#8a837a;font-size:12px;text-align:center;padding:10px}
+.xb21a3b4{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .x54be250{width:100%;height:100%;object-fit:cover;object-position:center 12%;display:block}
 .x6713f68{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
 .x952eeb7{width:100%;height:100%;object-fit:cover;object-position:center 55%;display:block}
@@ -451,7 +451,6 @@
   .x44f7bab{font-size:27px}
   .xef67825{grid-template-columns:repeat(1, minmax(0, 1fr))}
   .x9197f7c:has(>a,>button),.x9197f7c:has(>:nth-child(3)){flex-wrap:wrap}
-  .xa9308df:has(>a,>button),.xa9308df:has(>:nth-child(3)){flex-wrap:wrap}
   .x14f884f{padding:17px 17px 32px}
   .xd196994{grid-template-columns:minmax(0, 1fr);margin-top:18px}
   .xe7629a2{grid-template-columns:minmax(0, 1fr)}
