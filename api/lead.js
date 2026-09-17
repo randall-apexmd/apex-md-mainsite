@@ -98,6 +98,8 @@ module.exports = async function handler(req, res) {
     return res.status(405).json({ ok: false, error: 'method-not-allowed' });
   }
 
+  const debug = /[?&]debug=1(&|$)/.test(req.url || '');
+
   let body;
   try {
     body = await readJson(req);
@@ -142,7 +144,7 @@ module.exports = async function handler(req, res) {
     // Never fail in front of the visitor over a missing key. The lead is in the
     // Vercel log and can be recovered.
     console.log(JSON.stringify({ event: 'lead_unsent', reason: 'no-resend-key', kind: kind, lead: body }));
-    return res.status(200).json({ ok: true, delivered: false });
+    return res.status(200).json({ ok: true, delivered: false, why: debug ? 'no-resend-key' : undefined });
   }
 
   let delivered = false;
@@ -182,5 +184,6 @@ module.exports = async function handler(req, res) {
 
   // 200 either way: the visitor did their part, and a delivery problem on our
   // side should not read to them as their submission failing.
-  return res.status(200).json({ ok: true, delivered: delivered });
+  return res.status(200).json({ ok: true, delivered: delivered,
+                               why: debug && !delivered ? detail : undefined });
 };
