@@ -89,6 +89,10 @@ HAND = {
                  'Apex MD combines licensed providers, advanced diagnostics and '
                  'personalized programs to help you optimize weight, hormones, '
                  'performance and longevity.'),
+    'bloodwork': ('bloodwork', 'products',
+                 'Bloodwork-First Program — Apex MD',
+                 'Comprehensive bloodwork, a physician consult and a '
+                 'personalized optimization plan, from $99.'),
     'contact':  ('contact', 'contact',
                  'Contact Apex MD — Sales and Patient Support',
                  'Reach the Apex MD sales team on (407) 890-1872 or patient '
@@ -104,6 +108,7 @@ CTA = {
     'apex-md-ai':            FORM,
     'genetics':              FORM + '?categoryId=bloodwork',
     'concierge':             FORM + '?categoryId=bloodwork',
+    'bloodwork':             FORM + '?categoryId=bloodwork',
     'testosterone':          FORM + '?categoryId=trt',
     'glp-1-program':         FORM + '?categoryId=weight-loss',
     'mens-optimal-health':   FORM + '?categoryId=bloodwork',

@@ -1,0 +1,182 @@
+/* Bloodwork. Only --apex-* tokens; no new colours or fonts (see _build/README). */
+
+.bw-sec { max-width: var(--apex-max); margin: 0 auto; padding: 88px var(--apex-gutter); }
+.bw-kicker { font: 800 12px/1 var(--apex-font-mono); letter-spacing: .16em;
+             text-transform: uppercase; color: var(--apex-red); }
+.bw-kicker-light { color: var(--apex-red-bright); }
+.bw-head { max-width: 760px; margin-bottom: 44px; }
+.bw-head h2, .bw-split h2 { margin: 18px 0 16px; font-size: clamp(28px, 3.3vw, 42px);
+                            font-weight: 900; line-height: 1.07; letter-spacing: -.02em; }
+.bw-lead { margin: 0; font-size: 17px; line-height: 1.6; color: var(--apex-body); }
+.bw-sec p { margin: 0 0 16px; font-size: 16.5px; line-height: 1.7; color: var(--apex-body); }
+.bw-sec p:last-child { margin-bottom: 0; }
+.bw-mid { max-width: 820px; margin: 28px 0 0 !important; }
+.bw-center { margin-top: 32px; }
+.btn-ghost, a.btn-ghost { background: transparent; color: var(--apex-ink);
+                          box-shadow: inset 0 0 0 1.5px var(--apex-rule); }
+.btn-ghost:hover, a.btn-ghost:hover { color: var(--apex-red);
+                          box-shadow: inset 0 0 0 1.5px var(--apex-red); }
+
+/* hero */
+.bw-hero { background: var(--apex-ink); }
+.bw-hero-in { max-width: var(--apex-max); margin: 0 auto; display: grid;
+              grid-template-columns: 1.1fr .9fr; gap: 56px; align-items: center;
+              padding: 104px var(--apex-gutter) 72px; }
+.bw-hero h1 { margin: 18px 0 12px; color: #fff; font-weight: 900;
+              font-size: clamp(32px, 4.4vw, 54px); line-height: 1.04;
+              letter-spacing: -.025em; }
+.bw-hero-sub { margin: 0 0 18px !important; color: var(--apex-red-bright);
+               font-size: 19px; font-weight: 700; }
+.bw-hero-in p { color: #d9d2ca; max-width: 58ch; }
+.bw-hero-cta { margin: 28px 0 18px; }
+.bw-hero-note { font-size: 14.5px !important; color: #b9b2a9 !important; }
+.bw-hero-fig { margin: 0; }
+.bw-hero-fig img { width: 100%; max-width: 663px; height: auto; display: block;
+                   border-radius: var(--apex-radius); }
+.bw-strip { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 40px;
+            padding: 18px var(--apex-gutter); border-top: 1px solid rgba(255,255,255,.14);
+            background: #0e0c09; }
+.bw-strip span { font: 800 11px/1.4 var(--apex-font-mono); letter-spacing: .14em;
+                 text-transform: uppercase; color: #cfc7be; }
+
+/* pricing tiers */
+.bw-tiers { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px;
+            align-items: start; }
+.bw-tier { display: flex; flex-direction: column; gap: 12px; height: 100%;
+           border: 1px solid var(--apex-rule); border-radius: var(--apex-radius);
+           padding: 26px 22px; background: var(--apex-bg); }
+.bw-tier-hero { border-color: var(--apex-red); box-shadow: 0 0 0 1px var(--apex-red); }
+.bw-tier-tag { align-self: flex-start; padding: 5px 10px; border-radius: 999px;
+               background: var(--apex-bg-alt); color: var(--apex-muted);
+               font: 800 10.5px/1 var(--apex-font-mono); letter-spacing: .14em;
+               text-transform: uppercase; }
+.bw-tier-tag-on { background: var(--apex-red); color: #fff; }
+.bw-tier h3 { margin: 4px 0 0; font-size: 18px; font-weight: 800; line-height: 1.25; }
+.bw-tier-sub { margin: 0 !important; font-size: 14.5px !important; }
+.bw-price { font-size: 38px; font-weight: 900; line-height: 1; letter-spacing: -.03em;
+            color: var(--apex-ink); }
+.bw-tier-fine { margin: -4px 0 0 !important; font-size: 13px !important;
+                color: var(--apex-muted) !important; }
+.bw-tier-plus { margin: 0 !important; font-size: 13.5px !important; font-weight: 700;
+                color: var(--apex-ink-soft) !important; }
+.bw-tier .btn { margin-top: auto; text-align: center; }
+.bw-lab-note { margin-top: 26px !important; font-size: 14.5px !important;
+               color: var(--apex-muted) !important; }
+
+/* lists */
+.bw-list { margin: 0; padding: 0; list-style: none; display: flex;
+           flex-direction: column; gap: 9px; }
+.bw-list li { position: relative; padding-left: 18px; font-size: 14.5px;
+              line-height: 1.5; color: var(--apex-body); }
+.bw-list li::before { content: ""; position: absolute; left: 0; top: 7px;
+                      width: 6px; height: 6px; border-radius: 50%;
+                      background: var(--apex-red); }
+.bw-list-wide { margin-top: 24px; gap: 12px; }
+.bw-list-wide li { font-size: 16px; }
+.bw-list-light li { color: #efe9e2; }
+.bw-list-light li::before { background: var(--apex-red-bright); }
+.bw-list-plain li::before { background: var(--apex-rule); }
+
+/* alternating / dark sections */
+.bw-alt { background: var(--apex-bg-alt); max-width: none; }
+.bw-alt > * { max-width: var(--apex-max); margin-left: auto; margin-right: auto; }
+.bw-dark { background: var(--apex-ink); max-width: none; color: #fff; }
+.bw-dark > * { max-width: var(--apex-max); margin-left: auto; margin-right: auto; }
+.bw-dark h2, .bw-dark h3 { color: #fff; }
+.bw-dark p { color: #d9d2ca; }
+
+.bw-split { display: grid; grid-template-columns: 1.1fr .9fr; gap: 56px;
+            align-items: center; }
+.bw-split-narrow { grid-template-columns: 1.25fr .75fr; align-items: start; }
+.bw-split-even { grid-template-columns: 1fr 1fr; align-items: start; }
+.bw-fig { margin: 0; }
+.bw-fig img { width: 100%; max-width: 502px; height: auto; display: block;
+              margin: 0 auto; }
+
+.bw-spans { margin: 24px 0; display: grid; grid-template-columns: auto 1fr;
+            gap: 10px 20px; }
+.bw-spans dt { font-size: 15px; font-weight: 800; color: var(--apex-ink-soft);
+               white-space: nowrap; }
+.bw-spans dd { margin: 0; font-size: 15px; color: var(--apex-body); }
+.bw-spans .is-on { color: var(--apex-red); }
+.bw-spans dd.is-on { color: var(--apex-ink); font-weight: 600; }
+
+.bw-two { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 20px 0 24px; }
+.bw-two-h { font: 800 11px/1 var(--apex-font-mono); letter-spacing: .14em;
+            text-transform: uppercase; color: var(--apex-muted); margin-bottom: 12px; }
+
+/* cards */
+.bw-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+.bw-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.bw-card { border: 1px solid var(--apex-rule); border-radius: var(--apex-radius);
+           padding: 24px 22px; background: var(--apex-bg); }
+.bw-card h3 { margin: 0 0 8px; font-size: 17px; font-weight: 800; line-height: 1.3; }
+.bw-card p { margin: 0 !important; font-size: 15px !important; }
+.bw-addon-price { margin-top: 16px; font-size: 22px; font-weight: 900;
+                  letter-spacing: -.02em; color: var(--apex-ink); }
+.bw-addon-price.is-ask { font: 700 13px/1.4 var(--apex-font-ui); color: var(--apex-muted); }
+
+/* steps */
+.bw-steps { margin: 0; padding: 0; list-style: none; display: grid;
+            grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.bw-steps > li { border-top: 3px solid var(--apex-red); padding-top: 20px; }
+.bw-step-n { font: 800 11px/1 var(--apex-font-mono); letter-spacing: .16em;
+             text-transform: uppercase; color: var(--apex-red); }
+.bw-steps h3 { margin: 12px 0 14px; font-size: 18px; font-weight: 800; line-height: 1.25; }
+
+/* comparison table */
+.bw-tablewrap { overflow-x: auto; -webkit-overflow-scrolling: touch;
+                border: 1px solid var(--apex-rule); border-radius: var(--apex-radius);
+                background: var(--apex-bg); }
+.bw-table { width: 100%; min-width: 860px; border-collapse: collapse; }
+.bw-table th, .bw-table td { padding: 14px 18px; text-align: left; font-size: 14.5px;
+                             line-height: 1.45; border-bottom: 1px solid var(--apex-rule);
+                             vertical-align: top; color: var(--apex-body); }
+.bw-table thead th { font: 800 12px/1.35 var(--apex-font-ui); letter-spacing: .01em;
+                     color: var(--apex-ink); background: var(--apex-bg-alt);
+                     white-space: normal; }
+.bw-table tbody th { font-weight: 700; color: var(--apex-ink-soft); white-space: nowrap; }
+.bw-table .is-on { background: var(--apex-red-tint); color: var(--apex-ink); }
+.bw-table thead .is-on { background: var(--apex-red); color: #fff; }
+.bw-table tbody tr:last-child th, .bw-table tbody tr:last-child td { border-bottom: 0; }
+
+/* guarantees */
+.bw-guarantees { border: 1px solid rgba(255,255,255,.18); border-radius: var(--apex-radius);
+                 padding: 26px 24px; background: rgba(255,255,255,.04); }
+.bw-guarantees h3 { margin: 0 0 18px; font-size: 16px; font-weight: 800; }
+.bw-guarantees dl { margin: 0; display: flex; flex-direction: column; gap: 16px; }
+.bw-guarantees dt { font-size: 14.5px; font-weight: 800; color: #fff; }
+.bw-guarantees dd { margin: 4px 0 0; font-size: 14px; line-height: 1.5; color: #b9b2a9; }
+.bw-trust { display: flex; flex-wrap: wrap; gap: 12px 36px; margin-top: 56px;
+            padding-top: 28px; border-top: 1px solid rgba(255,255,255,.14); }
+.bw-trust span { font: 800 11px/1.4 var(--apex-font-mono); letter-spacing: .14em;
+                 text-transform: uppercase; color: #cfc7be; }
+
+.bw-cost { border-left: 3px solid var(--apex-red); padding: 4px 0 4px 22px; }
+.bw-faq { max-width: 760px; }
+
+.bw-end { background: var(--apex-ink); padding: 80px var(--apex-gutter); text-align: center; }
+.bw-end h2 { margin: 0 0 12px; color: #fff; font-size: clamp(28px, 3.4vw, 42px);
+             font-weight: 900; letter-spacing: -.02em; }
+.bw-end p { margin: 0 0 28px; color: #d9d2ca; font-size: 17px; }
+
+@media (max-width: 1100px) {
+  .bw-tiers, .bw-grid-4, .bw-steps { grid-template-columns: 1fr 1fr; }
+  .bw-hero-in, .bw-split, .bw-split-narrow, .bw-split-even { grid-template-columns: 1fr;
+    gap: 36px; }
+  .bw-grid-3 { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 760px) {
+  .bw-sec { padding: 56px var(--apex-gutter); }
+  .bw-hero-in { padding: 88px var(--apex-gutter) 48px; }
+  .bw-tiers, .bw-grid-4, .bw-steps, .bw-two { grid-template-columns: 1fr; }
+  .bw-head { margin-bottom: 28px; }
+  /* apex.css sets .btn to white-space:nowrap; these labels are long enough to
+     push the whole hero past a 390px screen, so let them wrap on phones */
+  .bw-hero-cta .btn, .bw-tier .btn, .bw-center .btn { display: block; text-align: center;
+    white-space: normal; line-height: 1.35; }
+  .bw-strip { gap: 8px 20px; }
+  .bw-trust { gap: 10px 20px; margin-top: 36px; }
+  .bw-end { padding: 56px var(--apex-gutter); }
+}
