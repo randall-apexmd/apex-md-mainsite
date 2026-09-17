@@ -93,6 +93,10 @@ HAND = {
                  'Bloodwork-First Program — Apex MD',
                  'Comprehensive bloodwork, a physician consult and a '
                  'personalized optimization plan, from $99.'),
+    'hormone-therapy': ('hormone-therapy', 'programs',
+                 'Hormone Therapy for Women — Apex MD',
+                 'Bioidentical hormone therapy prescribed off your own '
+                 'bloodwork. Labs and a provider consult for $299.'),
     'contact':  ('contact', 'contact',
                  'Contact Apex MD — Sales and Patient Support',
                  'Reach the Apex MD sales team on (407) 890-1872 or patient '
@@ -109,6 +113,7 @@ CTA = {
     'genetics':              FORM + '?categoryId=bloodwork',
     'concierge':             FORM + '?categoryId=bloodwork',
     'bloodwork':             FORM + '?categoryId=bloodwork',
+    'hormone-therapy':       FORM + '?categoryId=hrt',
     'testosterone':          FORM + '?categoryId=trt',
     'glp-1-program':         FORM + '?categoryId=weight-loss',
     'mens-optimal-health':   FORM + '?categoryId=bloodwork',
