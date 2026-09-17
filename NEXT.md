@@ -223,3 +223,34 @@ page is real before building it.
 Nothing here is blocked on a bug. The build is in good shape; what remains is
 content and two decisions (the genetics SKU ids, and whether GTM-WJWTXMJ4
 carries over). See `CUTOVER.md` before pointing the domain anywhere.
+
+## Session 2026-09-17 — legal pages, About, Contact
+
+Built and deployed: `/privacy-policy`, `/terms-and-conditions` (verbatim, via
+`_build/legal.py`), `/about-us` and `/contact` (via the new `build_hand()` and
+`_build/pages/<slug>.html` + `.css`).
+
+Blake's direction this session:
+
+- **Pull page content from the live apexmd.com page of the same name**, not
+  from the SPENGA/DF360 partner builds. `/about-us` and `/contact-us` both
+  exist live; so do `/bloodwork`, `/hormone-therapy`, `/peptides`,
+  `/supplements`, `/advanced-diagnostics`, `/partner` — check the live page
+  first for every remaining route.
+- **"Go live" means push to Vercel.** The domain cutover happens once, at the
+  end, when he says so. Do not touch DNS.
+
+Open items:
+
+- **`RESEND_API_KEY` is not set in this Vercel project**, so contact form
+  submissions return 200 and land in the function log only. `LEAD_TO` defaults
+  to info@apexmd.com; Blake has not named a different inbox.
+- Phone numbers on `/contact` are confirmed; the live page's `(704) 625-1172`
+  is a leftover and is not used.
+- The About hero's two dropdown menus became two buttons, because their items
+  (Microdosing, Hormone Therapy, ...) are not built yet. Restore the dropdowns
+  once those pages exist.
+- Still dead in the nav/footer: `/bloodwork`, `/hormone-therapy`,
+  `/microdosing`, `/peptides`, `/supplements`, `/advanced-diagnostics`,
+  `/partner`. Plus the homepage's "Learn More" buttons, which point at
+  `#anchors` that were never added.
