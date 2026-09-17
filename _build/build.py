@@ -78,6 +78,20 @@ PAGES = {
 # UNMAPPED — sent to the generic form with no category preselected rather
 # than guessed into the wrong one. Better a visitor picks their own category
 # than lands in someone else's.
+# Pages written by hand in _build/pages/<slug>.html (+ .css), rather than
+# assembled from a design handoff. Their copy and photography come from the
+# live apexmd.com page of the same name.
+#
+#   slug -> (asset source dir under _src, nav section, title, description)
+HAND = {
+    'about-us': ('about', 'about',
+                 'About Apex MD — Physician-Led Medical Wellness',
+                 'Apex MD combines licensed providers, advanced diagnostics and '
+                 'personalized programs to help you optimize weight, hormones, '
+                 'performance and longevity.'),
+}
+
+
 FORM = 'https://form.apexmd.com/'
 LOGIN = 'https://ehr.apexmd.com/login'
 
@@ -827,6 +841,63 @@ def build_legal(slug):
     return True
 
 
+def build_hand(slug):
+    """Stamp a hand-authored page from _build/pages/ into site/."""
+    src_dir, active, page_title, page_desc = HAND[slug]
+    body = re.sub(r'^\s*<!--.*?-->\s*', '', read(os.path.join(BUILD, 'pages', slug + '.html')),
+                  flags=re.S)
+    body, links = relink(body, slug)
+
+    css_dst = os.path.join(SITE, 'assets', 'css', slug + '.css')
+    write(css_dst, read(os.path.join(BUILD, 'pages', slug + '.css')))
+
+    # copy the photography, then run it through the same optimiser the
+    # handoff pages use (resize, WebP, width/height, loading hints)
+    img_dir = os.path.join(SITE, 'assets', 'images', slug)
+    src_assets = os.path.join(SRC, src_dir, 'assets')
+    copied, before, after = 0, 0, 0
+    if os.path.isdir(src_assets):
+        if not os.path.isdir(img_dir):
+            os.makedirs(img_dir)
+        for name in sorted(os.listdir(src_assets)):
+            if name.startswith('.') or '/assets/images/%s/%s' % (slug, name) not in body:
+                continue
+            s_path = os.path.join(src_assets, name)
+            new_name, b, a = images.optimise(s_path, img_dir, name,
+                                             '%s/%s' % (slug, name))
+            before += b
+            after += a
+            if new_name != name:
+                body = body.replace('/assets/images/%s/%s' % (slug, name),
+                                    '/assets/images/%s/%s' % (slug, new_name))
+            copied += 1
+
+    missing = [m for m in re.findall(r'/assets/images/%s/([^"\s]+)' % slug, body)
+               if not os.path.isfile(os.path.join(img_dir, m))]
+
+    html = SHELL.format(
+        title=page_title,
+        desc=page_desc.replace('"', '&quot;'),
+        url_path='/' + slug,
+        fonts=S.GOOGLE_FONTS,
+        slug=slug,
+        page_css='',
+        header=chrome('header.html', active, slug),
+        footer=chrome('footer.html', None, slug),
+        body=body.strip(),
+    )
+    html = html.replace('/assets/og/%s.jpg' % slug, '/assets/og/index.jpg')
+    html = version_assets(html)
+    write(os.path.join(SITE, slug + '.html'), html)
+
+    print('  %-22s %3d links | %2d img %s -> %s'
+          % (slug, sum(links.values()), copied,
+             images.human(before), images.human(after)))
+    if missing:
+        print('    MISSING asset(s): %s' % ', '.join(sorted(set(missing))))
+    return True
+
+
 def asset_version(rel):
     """Short content hash for an asset under site/, or None if missing."""
     path = os.path.join(SITE, rel.lstrip('/'))
@@ -863,7 +934,7 @@ def sitemap():
     """
     today = datetime.date.today().isoformat()
     urls = []
-    for slug in sorted(list(PAGES) + list(legal.LEGAL)):
+    for slug in sorted(list(PAGES) + list(HAND) + list(legal.LEGAL)):
         if not os.path.isfile(os.path.join(SITE, slug + '.html')):
             continue
         loc = 'https://apexmd.com' + ('/' if slug == 'index' else '/' + slug)
@@ -878,7 +949,7 @@ def sitemap():
 
 
 def main(argv):
-    known = list(PAGES) + list(legal.LEGAL)
+    known = list(PAGES) + list(HAND) + list(legal.LEGAL)
     slugs = argv or known
     bad = [s for s in slugs if s not in known]
     if bad:
@@ -889,7 +960,10 @@ def main(argv):
     for s in slugs:
         if s in legal.LEGAL:
             build_legal(s)
+        elif s in HAND:
+            build_hand(s)
     built = [s for s in slugs if s in PAGES and build(s)]
+    built += [s for s in slugs if s in HAND]
 
     if built:
         try:
