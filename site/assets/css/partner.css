@@ -1,0 +1,73 @@
+/* Partner. House red; only --apex-* tokens. Form styling mirrors /contact. */
+
+.pt-kicker { font: 800 12px/1 var(--apex-font-mono); letter-spacing: .16em;
+             text-transform: uppercase; color: var(--apex-red); }
+.pt-hero { background: var(--apex-ink); }
+.pt-hero-in { max-width: var(--apex-max); margin: 0 auto; display: grid;
+              grid-template-columns: 1.02fr .98fr; gap: 56px; align-items: start;
+              padding: 100px var(--apex-gutter) 88px; }
+.pt-hero .pt-kicker { color: var(--apex-red-bright); }
+.pt-hero h1 { margin: 20px 0 20px; color: #fff; font-weight: 900;
+              font-size: clamp(34px, 4.4vw, 54px); line-height: 1.03;
+              letter-spacing: -.025em; }
+.pt-hero-copy p { margin: 0; color: #d9d2ca; font-size: 17.5px; line-height: 1.62;
+                  max-width: 54ch; }
+.pt-points { margin: 30px 0 0; padding: 0; list-style: none; display: flex;
+             flex-direction: column; gap: 16px; }
+.pt-points li { position: relative; padding-left: 22px; font-size: 15.5px;
+                line-height: 1.55; color: #cfc7be; }
+.pt-points li::before { content: ""; position: absolute; left: 0; top: 8px;
+                width: 8px; height: 8px; border-radius: 50%; background: var(--apex-red); }
+.pt-points strong { color: #fff; }
+
+/* form card */
+.pt-formwrap { background: var(--apex-bg); border-radius: var(--apex-radius);
+               padding: 32px; }
+.pt-formwrap h2 { margin: 14px 0 8px; font-size: 26px; font-weight: 900;
+                  letter-spacing: -.015em; }
+.pt-form-note { margin: 0 0 24px; font-size: 15px; line-height: 1.55;
+                color: var(--apex-body); }
+.pt-form { display: flex; flex-direction: column; gap: 16px; }
+.pt-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.pt-form label { display: flex; flex-direction: column; gap: 7px;
+                 font: 700 13px/1.3 var(--apex-font-ui); color: var(--apex-ink-soft); }
+.pt-form input[type="text"], .pt-form input[type="email"],
+.pt-form input[type="tel"], .pt-form textarea {
+  font: 400 16px/1.45 var(--apex-font-ui); color: var(--apex-ink);
+  background: var(--apex-bg); border: 1px solid var(--apex-rule);
+  border-radius: 10px; padding: 12px 14px; width: 100%;
+}
+.pt-form textarea { resize: vertical; min-height: 120px; }
+.pt-form input:focus-visible, .pt-form textarea:focus-visible {
+  outline: 3px solid var(--apex-red); outline-offset: 1px; border-color: var(--apex-red);
+}
+.pt-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.pt-submit { align-self: flex-start; border: 0; cursor: pointer; }
+.pt-submit[disabled] { opacity: .6; cursor: default; }
+.pt-status { margin: 0; font-size: 14.5px; line-height: 1.5; color: var(--apex-body); }
+.pt-status:empty { display: none; }
+.pt-status.is-good { color: var(--apex-ink); font-weight: 600; }
+.pt-status.is-bad { color: var(--apex-red-dark); font-weight: 600; }
+
+/* who it suits */
+.pt-sec { max-width: var(--apex-max); margin: 0 auto; padding: 88px var(--apex-gutter); }
+.pt-head { max-width: 760px; margin-bottom: 40px; }
+.pt-head h2 { margin: 18px 0 0; font-size: clamp(28px, 3.3vw, 42px); font-weight: 900;
+              line-height: 1.07; letter-spacing: -.02em; }
+.pt-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.pt-card { border: 1px solid var(--apex-rule); border-radius: var(--apex-radius);
+           padding: 26px 24px; background: var(--apex-bg); }
+.pt-card h3 { margin: 0 0 10px; font-size: 18px; font-weight: 800; line-height: 1.3; }
+.pt-card p { margin: 0; font-size: 15px; line-height: 1.6; color: var(--apex-body); }
+
+@media (max-width: 1024px) {
+  .pt-hero-in { grid-template-columns: 1fr; gap: 36px; }
+  .pt-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 760px) {
+  .pt-hero-in { padding: 88px var(--apex-gutter) 52px; }
+  .pt-sec { padding: 56px var(--apex-gutter); }
+  .pt-formwrap { padding: 24px 20px; }
+  .pt-row { grid-template-columns: 1fr; }
+  .pt-submit { align-self: stretch; text-align: center; }
+}

@@ -31,6 +31,8 @@ const MAX_BODY = 16 * 1024;
 const FIELD_LABELS = {
   first: 'First name',
   last: 'Last name',
+  name: 'Name',
+  business: 'Business entity',
   email: 'Email',
   phone: 'Phone',
   comment: 'Comment',
@@ -118,11 +120,15 @@ module.exports = async function handler(req, res) {
     return res.status(400).json({ ok: false, error: 'invalid-email' });
   }
 
-  const kind = body.kind === 'contact' ? 'contact' : 'lead';
-  const name = [body.first, body.last].filter(Boolean).join(' ').trim();
+  const kind = ['contact', 'partner'].indexOf(body.kind) >= 0 ? body.kind : 'lead';
+  const name = (body.name || [body.first, body.last].filter(Boolean).join(' ')).trim();
+  const who = name ? ' — ' + name : '';
   const subject = kind === 'contact'
-    ? 'Apex MD site — contact form' + (name ? ' — ' + name : '')
-    : 'Apex MD site — enquiry';
+    ? 'Apex MD site — contact form' + who
+    : kind === 'partner'
+      ? 'Apex MD site — PARTNER application' +
+        (body.business ? ' — ' + body.business : who)
+      : 'Apex MD site — enquiry';
 
   const attrRows = rows(body, ATTR_LABELS);
   const html =

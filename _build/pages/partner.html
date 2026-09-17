@@ -1,0 +1,152 @@
+<!-- Partner. The live apexmd.com/partner is two headings and an embedded
+     application form ("Interested in Adding Apex MD Medical Wellness to Your
+     Business" / "Apply Today!") with no other copy.
+
+     Blake asked 2026-09-17 for a real enquiry form: name, phone, email,
+     business entity and message, delivered by Resend. It POSTs to the same
+     /api/lead endpoint as /contact with kind: "partner", so partner enquiries
+     arrive in the same inbox and land in the Vercel log if Resend is down.
+
+     The supporting copy here (what partners get, who it suits) is Claude's,
+     written from what the partner microsites already do — Club 24, SPENGA,
+     EoS, 10 Fitness, DF360 all run co-branded Apex MD intake. FLAGGED: it is
+     not approved copy and no commercial terms are stated anywhere on it. -->
+
+<section class="pt-hero">
+  <div class="pt-hero-in">
+    <div class="pt-hero-copy">
+      <div class="pt-kicker">Partner with Apex MD</div>
+      <h1>Add medical wellness to your business</h1>
+      <p>Gyms, clinics and wellness brands partner with Apex MD to offer their
+         members physician-led weight loss, hormone optimization, bloodwork and
+         peptides &mdash; without hiring a medical team or holding a pharmacy
+         licence.</p>
+      <ul class="pt-points">
+        <li><strong>We bring the medicine.</strong> Licensed providers in all 50
+          states, labs, and US-based FDA-registered 503B pharmacies.</li>
+        <li><strong>You keep your brand.</strong> Co-branded intake, your logo,
+          your clubs, your members.</li>
+        <li><strong>Tracked from day one.</strong> Every partner gets their own
+          intake link and attribution, so you can see what your members
+          actually do.</li>
+      </ul>
+    </div>
+
+    <div class="pt-formwrap" id="apply">
+      <div class="pt-kicker">Apply today</div>
+      <h2>Tell us about your business</h2>
+      <p class="pt-form-note">Send this and someone from Apex MD will get back
+        to you, usually within one business day.</p>
+
+      <form class="pt-form" novalidate>
+        <label>Name
+          <input type="text" name="name" autocomplete="name" required>
+        </label>
+        <div class="pt-row">
+          <label>Phone number
+            <input type="tel" name="phone" autocomplete="tel" required>
+          </label>
+          <label>Email address
+            <input type="email" name="email" autocomplete="email" required>
+          </label>
+        </div>
+        <label>Business entity
+          <input type="text" name="business" autocomplete="organization" required
+                 placeholder="Company or club name">
+        </label>
+        <label>Message
+          <textarea name="comment" rows="5"
+                    placeholder="What are you looking to offer, and how many locations?"></textarea>
+        </label>
+
+        <!-- honeypot: hidden from people, filled by bots -->
+        <div class="pt-hp" aria-hidden="true">
+          <label>Website<input type="text" name="company" tabindex="-1"></label>
+        </div>
+
+        <button class="btn btn-red pt-submit" type="submit">Send Application</button>
+        <p class="pt-status" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section class="pt-sec">
+  <div class="pt-head">
+    <div class="pt-kicker">Who this suits</div>
+    <h2>Built for businesses that already have the members</h2>
+  </div>
+  <div class="pt-grid">
+    <div class="pt-card">
+      <h3>Gyms and studios</h3>
+      <p>Offer medical weight loss, hormones and bloodwork to the members you
+         already train, as a co-branded program.</p>
+    </div>
+    <div class="pt-card">
+      <h3>Clinics and med spas</h3>
+      <p>Extend your services with physician oversight, labs and compounded
+         medications you don&rsquo;t have to source yourself.</p>
+    </div>
+    <div class="pt-card">
+      <h3>Wellness brands</h3>
+      <p>Give your audience a clinical pathway with real providers behind it,
+         under your own brand.</p>
+    </div>
+  </div>
+</section>
+
+<script>
+/* Partner application -> /api/lead (kind: partner). If this never runs, the
+   page still explains the offer; the form simply will not submit. */
+(function () {
+  var form = document.querySelector('.pt-form');
+  if (!form) return;
+  var status = form.querySelector('.pt-status');
+  var button = form.querySelector('.pt-submit');
+
+  function fail(msg) {
+    status.textContent = msg;
+    status.className = 'pt-status is-bad';
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var data = {};
+    ['name', 'phone', 'email', 'business', 'comment', 'company'].forEach(function (k) {
+      var el = form.elements[k];
+      if (el) data[k] = el.value.trim();
+    });
+
+    if (!data.name) return fail('Please add your name.');
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(data.email)) {
+      return fail('Please check your email address.');
+    }
+    if (!data.phone) return fail('Please add a phone number.');
+    if (!data.business) return fail('Please add your business entity.');
+
+    data.kind = 'partner';
+    data.page = location.pathname;
+
+    button.disabled = true;
+    status.className = 'pt-status';
+    status.textContent = 'Sending…';
+
+    fetch('/api/lead', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    }).then(function (r) {
+      if (!r.ok) throw new Error('bad-status');
+      form.reset();
+      status.className = 'pt-status is-good';
+      status.textContent = 'Thank you — your application is on its way. '
+        + 'We usually reply within one business day.';
+    }).catch(function () {
+      fail('Something went wrong sending that. Please email info@apexmd.com '
+         + 'and we will pick it up from there.');
+    }).then(function () {
+      button.disabled = false;
+    });
+  });
+})();
+</script>

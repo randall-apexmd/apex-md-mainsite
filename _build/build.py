@@ -102,6 +102,21 @@ HAND = {
                  'Personalized GLP-1 microdosing for inflammation, brain, '
                  'heart and longevity markers. $249 a month, labs and '
                  'unlimited provider visits included.'),
+    'partner':  (None, 'partner',
+                 'Partner with Apex MD — Add Medical Wellness to Your Business',
+                 'Gyms, clinics and wellness brands partner with Apex MD to '
+                 'offer physician-led weight loss, hormones and bloodwork.'),
+    'peptides': (None, 'products',
+                 'Peptides — Coming Soon | Apex MD',
+                 'Targeted peptide therapy is coming soon to Apex MD.'),
+    'supplements': (None, 'products',
+                 'Supplements — Coming Soon | Apex MD',
+                 'Medical-grade supplements chosen from your labs are coming '
+                 'soon to Apex MD.'),
+    'advanced-diagnostics': (None, 'products',
+                 'Advanced Diagnostics — Coming Soon | Apex MD',
+                 'Genetics, microbiome, biological age and micronutrient '
+                 'testing are coming soon to Apex MD.'),
     'contact':  ('contact', 'contact',
                  'Contact Apex MD — Sales and Patient Support',
                  'Reach the Apex MD sales team on (407) 890-1872 or patient '
@@ -865,6 +880,11 @@ def build_legal(slug):
     return True
 
 
+# Placeholder pages: real routes so the nav has no dead links, but nothing for
+# search engines to index and nothing to advertise in the sitemap.
+COMING_SOON = {'peptides', 'supplements', 'advanced-diagnostics'}
+
+
 def build_hand(slug):
     """Stamp a hand-authored page from _build/pages/ into site/."""
     src_dir, active, page_title, page_desc = HAND[slug]
@@ -872,13 +892,15 @@ def build_hand(slug):
                   flags=re.S)
     body, links = relink(body, slug)
 
-    css_dst = os.path.join(SITE, 'assets', 'css', slug + '.css')
-    write(css_dst, read(os.path.join(BUILD, 'pages', slug + '.css')))
+    css_src = os.path.join(BUILD, 'pages', slug + '.css')
+    if not os.path.isfile(css_src):
+        css_src = os.path.join(BUILD, 'pages', 'coming.css')
+    write(os.path.join(SITE, 'assets', 'css', slug + '.css'), read(css_src))
 
     # copy the photography, then run it through the same optimiser the
     # handoff pages use (resize, WebP, width/height, loading hints)
     img_dir = os.path.join(SITE, 'assets', 'images', slug)
-    src_assets = os.path.join(SRC, src_dir, 'assets')
+    src_assets = os.path.join(SRC, src_dir, 'assets') if src_dir else ''
     copied, before, after = 0, 0, 0
     if os.path.isdir(src_assets):
         if not os.path.isdir(img_dir):
@@ -911,6 +933,10 @@ def build_hand(slug):
         body=body.strip(),
     )
     html = html.replace('/assets/og/%s.jpg' % slug, '/assets/og/index.jpg')
+    if slug in COMING_SOON:
+        html = html.replace('<meta name="theme-color"',
+                            '<meta name="robots" content="noindex, follow">\n'
+                            '<meta name="theme-color"', 1)
     html = version_assets(html)
     write(os.path.join(SITE, slug + '.html'), html)
 
@@ -959,6 +985,8 @@ def sitemap():
     today = datetime.date.today().isoformat()
     urls = []
     for slug in sorted(list(PAGES) + list(HAND) + list(legal.LEGAL)):
+        if slug in COMING_SOON:
+            continue
         if not os.path.isfile(os.path.join(SITE, slug + '.html')):
             continue
         loc = 'https://apexmd.com' + ('/' if slug == 'index' else '/' + slug)
