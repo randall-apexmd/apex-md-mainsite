@@ -1,0 +1,180 @@
+/* GLP-1 Microdosing. House red; only --apex-* tokens. */
+
+.md-sec { max-width: var(--apex-max); margin: 0 auto; padding: 88px var(--apex-gutter); }
+.md-kicker { font: 800 12px/1 var(--apex-font-mono); letter-spacing: .16em;
+             text-transform: uppercase; color: var(--apex-red); }
+.md-kicker-light { color: var(--apex-red-bright); }
+.md-head { max-width: 780px; margin-bottom: 44px; }
+.md-head-mid { max-width: 860px; margin-left: auto; margin-right: auto;
+               margin-bottom: 44px; text-align: center; }
+.md-sec h2, .md-split h2 { margin: 18px 0 16px; font-size: clamp(28px, 3.3vw, 42px);
+                           font-weight: 900; line-height: 1.07; letter-spacing: -.02em; }
+.md-lead { margin: 0; font-size: 17px; line-height: 1.6; color: var(--apex-body); }
+.md-sec p { margin: 0 0 16px; font-size: 16.5px; line-height: 1.7; color: var(--apex-body); }
+.md-sec p:last-child { margin-bottom: 0; }
+.md-fine { margin-top: 26px !important; font-size: 13.5px !important;
+           line-height: 1.6 !important; color: var(--apex-muted) !important;
+           max-width: 78ch; }
+.md-disclaim { margin-top: 30px !important; font-size: 13px !important;
+               line-height: 1.6 !important; color: #a49c93 !important;
+               max-width: 76ch; margin-left: auto !important; margin-right: auto !important;
+               text-align: center; }
+.btn-ghost, a.btn-ghost { background: transparent; color: var(--apex-ink);
+                          box-shadow: inset 0 0 0 1.5px var(--apex-rule); }
+.btn-ghost:hover, a.btn-ghost:hover { color: var(--apex-red);
+                          box-shadow: inset 0 0 0 1.5px var(--apex-red); }
+
+/* hero */
+.md-hero { background: var(--apex-ink); }
+.md-hero-in { max-width: var(--apex-max); margin: 0 auto; display: grid;
+              grid-template-columns: 1.08fr .92fr; gap: 48px; align-items: center;
+              padding: 100px var(--apex-gutter) 76px; }
+.md-hero h1 { margin: 18px 0 18px; color: #fff; font-weight: 900;
+              font-size: clamp(34px, 4.4vw, 56px); line-height: 1.03;
+              letter-spacing: -.025em; }
+.md-hero-sub { margin: 0 !important; color: #d9d2ca !important; font-size: 17.5px !important;
+               line-height: 1.62 !important; max-width: 54ch; }
+.md-hero-offer { display: flex; flex-wrap: wrap; align-items: center; gap: 18px 28px;
+                 max-width: 540px; margin: 30px 0 26px; padding: 20px 24px;
+                 border-radius: var(--apex-radius); background: rgba(255,255,255,.06);
+                 box-shadow: inset 0 0 0 1px rgba(255,255,255,.16); }
+.md-offer-price { font-size: 40px; font-weight: 900; line-height: 1; color: #fff;
+                  letter-spacing: -.03em; }
+.md-offer-price span { font-size: 17px; font-weight: 700; letter-spacing: 0;
+                       color: #b9b2a9; }
+.md-offer-what { margin-top: 6px; font: 800 11px/1.4 var(--apex-font-mono);
+                 letter-spacing: .14em; text-transform: uppercase;
+                 color: var(--apex-red-bright); }
+.md-hero-offer .btn { margin-left: auto; }
+.md-hero-trust { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 24px;
+                 max-width: 560px; margin: 0; padding: 0; list-style: none; }
+.md-hero-trust li { position: relative; padding-left: 20px; font-size: 14.5px;
+                    line-height: 1.45; color: #cfc7be; }
+.md-hero-trust li::before { content: ""; position: absolute; left: 0; top: 6px;
+                    width: 8px; height: 8px; border-radius: 50%;
+                    background: var(--apex-red); }
+.md-hero-fig { margin: 0; }
+.md-hero-fig img { width: 100%; max-width: 560px; height: auto; display: block;
+                   margin: 0 auto; }
+.md-strip { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 36px;
+            padding: 18px var(--apex-gutter); background: #0e0c09;
+            border-top: 1px solid rgba(255,255,255,.14); }
+.md-strip span { font: 800 11px/1.4 var(--apex-font-mono); letter-spacing: .14em;
+                 text-transform: uppercase; color: #cfc7be; }
+
+/* backgrounds */
+.md-alt { background: var(--apex-bg-alt); max-width: none; }
+.md-alt > * { max-width: var(--apex-max); margin-left: auto; margin-right: auto; }
+.md-dark { background: var(--apex-ink); max-width: none; color: #fff; }
+.md-dark > * { max-width: var(--apex-max); margin-left: auto; margin-right: auto; }
+.md-dark h2 { color: #fff; }
+
+/* cards */
+.md-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.md-card { border: 1px solid var(--apex-rule); border-radius: var(--apex-radius);
+           padding: 26px 24px; background: var(--apex-bg); }
+.md-card h3 { margin: 0 0 10px; font-size: 17px; font-weight: 800; line-height: 1.3; }
+.md-card p { margin: 0 !important; font-size: 15px !important; }
+
+/* product tiers */
+.md-tiers { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px;
+            align-items: stretch; }
+.md-tier { display: flex; flex-direction: column; gap: 12px;
+           border: 1px solid var(--apex-rule); border-radius: var(--apex-radius);
+           padding: 26px 22px; background: var(--apex-bg); }
+.md-tier-hero { border-color: var(--apex-red); box-shadow: 0 0 0 1px var(--apex-red); }
+.md-tier-tag { align-self: flex-start; padding: 5px 10px; border-radius: 999px;
+               font: 800 10.5px/1 var(--apex-font-mono); letter-spacing: .14em;
+               text-transform: uppercase; background: var(--apex-bg-alt);
+               color: var(--apex-muted); }
+.md-tier-tag-on { background: var(--apex-red); color: #fff; }
+.md-tier-kind { font: 800 10.5px/1.3 var(--apex-font-mono); letter-spacing: .14em;
+                text-transform: uppercase; color: var(--apex-muted); }
+.md-tier h3 { margin: 0; font-size: 17.5px; font-weight: 800; line-height: 1.25; }
+.md-tier-sub { margin: 0 !important; font-size: 14.5px !important; }
+.md-price { font-size: 36px; font-weight: 900; line-height: 1; letter-spacing: -.03em;
+            color: var(--apex-ink); }
+.md-price span { font-size: 15px; font-weight: 700; letter-spacing: 0;
+                 color: var(--apex-muted); }
+.md-tier .btn { margin-top: auto; text-align: center; }
+
+/* lists */
+.md-list { margin: 0; padding: 0; list-style: none; display: flex;
+           flex-direction: column; gap: 9px; }
+.md-list li { position: relative; padding-left: 18px; font-size: 14.5px;
+              line-height: 1.5; color: var(--apex-body); }
+.md-list li::before { content: ""; position: absolute; left: 0; top: 7px;
+              width: 6px; height: 6px; border-radius: 50%; background: var(--apex-red); }
+
+/* formulations */
+.md-formulas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.md-formula { border: 1px solid var(--apex-rule); border-top: 3px solid var(--apex-red);
+              border-radius: var(--apex-radius); padding: 26px 24px;
+              background: var(--apex-bg); }
+.md-formula h3 { margin: 0 0 10px; font-size: 19px; font-weight: 800; line-height: 1.25; }
+.md-formula-mix { margin-bottom: 14px; font: 700 12.5px/1.5 var(--apex-font-mono);
+                  color: var(--apex-red); }
+.md-formula p { margin: 0 !important; font-size: 15px !important; }
+
+/* additives */
+.md-split { display: grid; grid-template-columns: 1.15fr .85fr; gap: 56px;
+            align-items: center; margin-bottom: 44px; }
+.md-split-photo { grid-template-columns: .8fr 1.2fr; }
+.md-fig { margin: 0; }
+.md-fig img { width: 100%; max-width: 380px; height: auto; display: block; margin: 0 auto; }
+.md-portrait { margin: 0; }
+.md-portrait img { width: 100%; max-width: 440px; height: auto; display: block;
+                   border-radius: var(--apex-radius); }
+
+.md-additives { border-top: 1px solid var(--apex-rule); }
+.md-additives details { border-bottom: 1px solid var(--apex-rule); }
+.md-additives summary { list-style: none; cursor: pointer; position: relative;
+                        padding: 18px 48px 18px 0; font-size: 17px; font-weight: 800;
+                        color: var(--apex-ink); }
+.md-additives summary::-webkit-details-marker { display: none; }
+.md-additives summary::after { content: "+"; position: absolute; right: 10px; top: 14px;
+                        font: 700 24px/1 var(--apex-font-ui); color: var(--apex-red); }
+.md-additives details[open] summary::after { content: "\2013"; }
+.md-additives summary:hover { color: var(--apex-red); }
+.md-additives summary:focus-visible { outline: 3px solid var(--apex-red);
+                        outline-offset: 2px; }
+.md-additives details > div { padding: 0 48px 22px 0; }
+
+/* quotes */
+.md-quotes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.md-quotes blockquote { margin: 0; padding: 26px 24px; border-radius: var(--apex-radius);
+                        background: rgba(255,255,255,.05);
+                        box-shadow: inset 0 0 0 1px rgba(255,255,255,.14); }
+.md-quotes p { margin: 0 0 16px !important; font-size: 16.5px !important;
+               line-height: 1.6 !important; color: #efe9e2 !important; font-weight: 600; }
+.md-quotes cite { font: 800 11px/1 var(--apex-font-mono); letter-spacing: .14em;
+                  text-transform: uppercase; color: var(--apex-red-bright);
+                  font-style: normal; }
+
+/* end */
+.md-end { background: var(--apex-bg-alt); border-top: 1px solid var(--apex-rule);
+          padding: 80px var(--apex-gutter); }
+.md-end-in { max-width: 680px; margin: 0 auto; text-align: center; }
+.md-end h2 { margin: 0 0 14px; font-size: clamp(28px, 3.4vw, 42px); font-weight: 900;
+             letter-spacing: -.02em; }
+.md-end p { margin: 0 0 28px; font-size: 17px; line-height: 1.6; color: var(--apex-body); }
+
+@media (max-width: 1100px) {
+  .md-tiers { grid-template-columns: 1fr 1fr; }
+  .md-formulas, .md-grid-3, .md-quotes { grid-template-columns: 1fr 1fr; }
+  .md-hero-in, .md-split, .md-split-photo { grid-template-columns: 1fr; gap: 36px; }
+  .md-hero-fig img { max-width: 420px; }
+}
+
+@media (max-width: 760px) {
+  .md-sec { padding: 56px var(--apex-gutter); }
+  .md-hero-in { padding: 88px var(--apex-gutter) 52px; }
+  .md-tiers, .md-formulas, .md-grid-3, .md-quotes { grid-template-columns: 1fr; }
+  .md-head { margin-bottom: 28px; }
+  .md-hero-trust { grid-template-columns: 1fr; }
+  .md-hero-offer .btn, .md-tier .btn, .md-end .btn { display: block; width: 100%;
+                        text-align: center; white-space: normal; line-height: 1.35; }
+  .md-hero-offer { padding: 18px; }
+  .md-strip { gap: 8px 20px; }
+  .md-end { padding: 56px var(--apex-gutter); }
+}

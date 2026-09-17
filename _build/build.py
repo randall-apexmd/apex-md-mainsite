@@ -97,6 +97,11 @@ HAND = {
                  'Hormone Therapy for Women — Apex MD',
                  'Bioidentical hormone therapy prescribed off your own '
                  'bloodwork. Labs and a provider consult for $299.'),
+    'microdosing': ('microdosing', 'programs',
+                 'GLP-1 Microdosing — Apex MD',
+                 'Personalized GLP-1 microdosing for inflammation, brain, '
+                 'heart and longevity markers. $249 a month, labs and '
+                 'unlimited provider visits included.'),
     'contact':  ('contact', 'contact',
                  'Contact Apex MD — Sales and Patient Support',
                  'Reach the Apex MD sales team on (407) 890-1872 or patient '
@@ -114,6 +119,7 @@ CTA = {
     'concierge':             FORM + '?categoryId=bloodwork',
     'bloodwork':             FORM + '?categoryId=bloodwork',
     'hormone-therapy':       FORM + '?categoryId=hrt',
+    'microdosing':           FORM + '?categoryId=microdosing',
     'testosterone':          FORM + '?categoryId=trt',
     'glp-1-program':         FORM + '?categoryId=weight-loss',
     'mens-optimal-health':   FORM + '?categoryId=bloodwork',
@@ -539,8 +545,12 @@ def relink(body, slug):
     # component whose script carries `ctaHref: ... ?? 'https://labs.rupa...'`
     # as a runtime default, so an href-only rewrite leaves a live off-site CTA
     # that only fires once the component renders.
+    # A ?productid= link on form.apexmd.com is deliberate: a product card that
+    # sells one SKU should land on that SKU. Everything else — Rupa, the
+    # partner subdomains, a bare form URL — becomes this page's CTA.
     body, n = re.subn(
-        r'https://(?:labs\.rupahealth\.com|form[a-z0-9-]*\.apexmd\.com)[^"\'\s<>]*',
+        r'https://(?:labs\.rupahealth\.com|form[a-z0-9-]*\.apexmd\.com)'
+        r'(?!/?\?productid=)[^"\'\s<>]*',
         cta, body)
     counts['rupa'] = n
 
