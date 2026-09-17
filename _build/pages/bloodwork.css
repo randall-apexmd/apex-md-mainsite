@@ -116,6 +116,32 @@
                   letter-spacing: -.02em; color: var(--apex-ink); }
 .bw-addon-price.is-ask { font: 700 13px/1.4 var(--apex-font-ui); color: var(--apex-muted); }
 
+/* flip cards — mirrors the homepage's .flip component */
+.bw-flips { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+.bw-flip { perspective: 1200px; cursor: pointer; outline: none; }
+.bw-flip-in { position: relative; width: 100%; aspect-ratio: 287 / 320;
+              transform-style: preserve-3d;
+              transition: transform .6s cubic-bezier(.2,.7,.2,1); }
+.bw-flip.is-flipped .bw-flip-in { transform: rotateY(180deg); }
+.bw-flip-face { position: absolute; inset: 0; backface-visibility: hidden;
+                -webkit-backface-visibility: hidden; border-radius: var(--apex-radius);
+                overflow: hidden; box-shadow: 0 8px 24px rgba(0,0,0,.10); }
+.bw-flip-front img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.bw-flip-back { transform: rotateY(180deg); background: var(--apex-bg);
+                border: 3px solid var(--apex-red); display: flex;
+                flex-direction: column; padding: 24px; }
+.bw-flip-back h3 { margin: 0 0 10px; font-size: 17px; font-weight: 800; line-height: 1.25; }
+.bw-flip-back p { margin: 0 !important; font-size: 14.5px !important; line-height: 1.55; }
+.bw-flip-price { margin-top: 14px; font-size: 24px; font-weight: 900;
+                 letter-spacing: -.02em; color: var(--apex-ink); }
+.bw-flip-price.is-ask { font: 700 13px/1.4 var(--apex-font-ui); color: var(--apex-muted); }
+.bw-flip-hint { margin-top: auto; font: 800 10.5px/1.4 var(--apex-font-mono);
+                letter-spacing: .14em; text-transform: uppercase; color: var(--apex-red); }
+.bw-flip:focus-visible .bw-flip-face { box-shadow: 0 0 0 3px var(--apex-red); }
+@media (prefers-reduced-motion: reduce) {
+  .bw-flip-in { transition: none; }
+}
+
 /* steps */
 .bw-steps { margin: 0; padding: 0; list-style: none; display: grid;
             grid-template-columns: repeat(4, 1fr); gap: 20px; }
@@ -161,7 +187,7 @@
 .bw-end p { margin: 0 0 28px; color: #d9d2ca; font-size: 17px; }
 
 @media (max-width: 1100px) {
-  .bw-tiers, .bw-grid-4, .bw-steps { grid-template-columns: 1fr 1fr; }
+  .bw-tiers, .bw-grid-4, .bw-steps, .bw-flips { grid-template-columns: 1fr 1fr; }
   .bw-hero-in, .bw-split, .bw-split-narrow, .bw-split-even { grid-template-columns: 1fr;
     gap: 36px; }
   .bw-grid-3 { grid-template-columns: 1fr; }
@@ -171,6 +197,10 @@
   .bw-sec { padding: 56px var(--apex-gutter); }
   .bw-hero-in { padding: 88px var(--apex-gutter) 48px; }
   .bw-tiers, .bw-grid-4, .bw-steps, .bw-two { grid-template-columns: 1fr; }
+  .bw-flips { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .bw-flip-back { padding: 16px; }
+  .bw-flip-back h3 { font-size: 15px; }
+  .bw-flip-back p { font-size: 13px !important; }
   .bw-head { margin-bottom: 28px; }
   /* apex.css sets .btn to white-space:nowrap; these labels are long enough to
      push the whole hero past a 390px screen, so let them wrap on phones */

@@ -335,27 +335,71 @@
   <div class="bw-head">
     <div class="bw-kicker">Add-ons</div>
     <h2>Add individual tests to any program</h2>
+    <p class="bw-lead">Tap a card to see what each test tells you.</p>
   </div>
-  <div class="bw-grid-4">
-    <div class="bw-card">
-      <h3>Biological age test</h3>
-      <p>See how fast your body is actually aging, at a cellular level.</p>
-      <div class="bw-addon-price">$399</div>
+
+  <!-- Same flip-card treatment as the homepage's advanced diagnostics cards,
+       and the same four tests, so the two pages read as one site. Card art is
+       reused from site/assets/images/index via _src/bloodwork/assets. -->
+  <div class="bw-flips">
+    <div class="bw-flip" role="button" tabindex="0"
+         aria-label="Biological age test: activate to read what it measures">
+      <div class="bw-flip-in">
+        <div class="bw-flip-face bw-flip-front">
+          <img src="/assets/images/bloodwork/diag-bioage-v4.webp" alt="Biological age test">
+        </div>
+        <div class="bw-flip-face bw-flip-back">
+          <h3>Biological age test</h3>
+          <p>See how fast your body is actually aging, at a cellular level.</p>
+          <div class="bw-flip-price">$399</div>
+          <div class="bw-flip-hint">&larr; Tap to flip back</div>
+        </div>
+      </div>
     </div>
-    <div class="bw-card">
-      <h3>Micronutrient test</h3>
-      <p>Identify hidden deficiencies affecting your energy and metabolism.</p>
-      <div class="bw-addon-price is-ask">Price on request</div>
+
+    <div class="bw-flip" role="button" tabindex="0"
+         aria-label="Micronutrient test: activate to read what it measures">
+      <div class="bw-flip-in">
+        <div class="bw-flip-face bw-flip-front">
+          <img src="/assets/images/bloodwork/diag-micronutrient-v2.webp" alt="Micronutrient test">
+        </div>
+        <div class="bw-flip-face bw-flip-back">
+          <h3>Micronutrient test</h3>
+          <p>Identify hidden deficiencies affecting your energy and metabolism.</p>
+          <div class="bw-flip-price is-ask">Price on request</div>
+          <div class="bw-flip-hint">&larr; Tap to flip back</div>
+        </div>
+      </div>
     </div>
-    <div class="bw-card">
-      <h3>Genomics sequencing</h3>
-      <p>A one-time test that maps your genetic health blueprint for life.</p>
-      <div class="bw-addon-price is-ask">Price on request</div>
+
+    <div class="bw-flip" role="button" tabindex="0"
+         aria-label="Genomics sequencing: activate to read what it measures">
+      <div class="bw-flip-in">
+        <div class="bw-flip-face bw-flip-front">
+          <img src="/assets/images/bloodwork/diag-genetics-v2.webp" alt="Genomics sequencing">
+        </div>
+        <div class="bw-flip-face bw-flip-back">
+          <h3>Genomics sequencing</h3>
+          <p>A one-time test that maps your genetic health blueprint for life.</p>
+          <div class="bw-flip-price is-ask">Price on request</div>
+          <div class="bw-flip-hint">&larr; Tap to flip back</div>
+        </div>
+      </div>
     </div>
-    <div class="bw-card">
-      <h3>Microbiome gut test</h3>
-      <p>Understand the gut ecosystem driving your metabolism and mood.</p>
-      <div class="bw-addon-price is-ask">Price on request</div>
+
+    <div class="bw-flip" role="button" tabindex="0"
+         aria-label="Microbiome gut test: activate to read what it measures">
+      <div class="bw-flip-in">
+        <div class="bw-flip-face bw-flip-front">
+          <img src="/assets/images/bloodwork/diag-microbiome-v2.webp" alt="Microbiome gut test">
+        </div>
+        <div class="bw-flip-face bw-flip-back">
+          <h3>Microbiome gut test</h3>
+          <p>Understand the gut ecosystem driving your metabolism and mood.</p>
+          <div class="bw-flip-price is-ask">Price on request</div>
+          <div class="bw-flip-hint">&larr; Tap to flip back</div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -441,3 +485,25 @@
   <p>Start with your bloodwork. We&rsquo;ll handle the rest.</p>
   <a class="btn btn-red" href="/get-started">Start Your Assessment</a>
 </section>
+
+<script>
+/* Flip cards, same behaviour as the homepage's: click or Enter/Space turns a
+   card over. Cards render face-up and readable if this never runs. */
+(function () {
+  var cards = document.querySelectorAll('.bw-flip');
+  Array.prototype.forEach.call(cards, function (card) {
+    function toggle() {
+      var on = card.classList.toggle('is-flipped');
+      card.setAttribute('aria-pressed', on ? 'true' : 'false');
+    }
+    card.setAttribute('aria-pressed', 'false');
+    card.addEventListener('click', toggle);
+    card.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
+        e.preventDefault();
+        toggle();
+      }
+    });
+  });
+})();
+</script>
