@@ -30,13 +30,14 @@
 .hr-hero { position: relative; isolation: isolate; background: var(--apex-ink);
            overflow: hidden; min-height: 620px; display: flex; align-items: center; }
 .hr-hero-bg { position: absolute; inset: 0; z-index: -1; width: 100%; height: 100%;
-              object-fit: cover; object-position: 72% center; }
+              object-fit: cover; object-position: 72% center;
+              filter: brightness(1.1) saturate(1.04); }
 /* the generated art is near-black on its left third; this keeps the copy
    legible there at every width without washing out the subject */
 .hr-hero::after { content: ""; position: absolute; inset: 0; z-index: -1;
-                  background: linear-gradient(95deg, rgba(23,20,15,.95) 0%,
-                              rgba(23,20,15,.88) 34%, rgba(23,20,15,.45) 62%,
-                              rgba(23,20,15,.15) 100%); }
+                  background: linear-gradient(95deg, rgba(23,20,15,.94) 0%,
+                              rgba(23,20,15,.8) 30%, rgba(23,20,15,.22) 56%,
+                              rgba(23,20,15,0) 78%); }
 .hr-hero-in { max-width: var(--apex-max); margin: 0 auto; width: 100%;
               padding: 104px var(--apex-gutter); }
 .hr-hero-copy { max-width: 620px; }
@@ -214,8 +215,8 @@
   .hr-hero-in { padding: 88px var(--apex-gutter) 52px; }
   .hr-hero h1 { max-width: none; }
   /* on a phone the subject sits behind the copy, so darken the whole frame */
-  .hr-hero::after { background: linear-gradient(180deg, rgba(23,20,15,.86) 0%,
-                    rgba(23,20,15,.9) 55%, rgba(23,20,15,.96) 100%); }
+  .hr-hero::after { background: linear-gradient(180deg, rgba(23,20,15,.72) 0%,
+                    rgba(23,20,15,.8) 55%, rgba(23,20,15,.9) 100%); }
   .hr-hero-bg { object-position: 62% top; }
   .hr-hero-trust { grid-template-columns: 1fr; }
   .hr-hero-offer { padding: 18px; }
