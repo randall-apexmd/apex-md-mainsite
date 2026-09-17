@@ -1,0 +1,165 @@
+<!-- Contact. Copy, phone numbers and portal links from the live
+     apexmd.com/contact-us, pulled 2026-09-17.
+
+     PHONE NUMBERS — Blake confirmed 2026-09-17: sales (407) 890-1872,
+     support (432) 538-1257. The live page's phone rendering also shows a
+     third number, (704) 625-1172, with no support number at all; that one is
+     a leftover and is deliberately not used here.
+
+     The form POSTs JSON to /api/lead (Resend). It needs RESEND_API_KEY in the
+     Vercel project or submissions only reach the function log. -->
+
+<section class="ct-head">
+  <div class="ct-head-in">
+    <div class="ct-kicker">Contact Us</div>
+    <h1>Talk to Apex MD</h1>
+    <p>Whether you are choosing a program or already a patient, there is a
+       person on the other end of this page.</p>
+  </div>
+</section>
+
+<section class="ct-sec">
+  <div class="ct-cols">
+    <div class="ct-lines">
+
+      <div class="ct-card">
+        <div class="ct-card-k">Sales</div>
+        <h2>Talk to a member of our sales team</h2>
+        <p>We&rsquo;ll help you find the right product and pricing for your needs.</p>
+        <dl class="ct-dl">
+          <dt>Phone</dt>
+          <dd><a href="tel:+14078901872">(407) 890-1872</a></dd>
+          <dt>E-mail</dt>
+          <dd><a href="mailto:info@apexmd.com">info@apexmd.com</a></dd>
+        </dl>
+        <a class="btn btn-red" href="/get-started">Get Started</a>
+      </div>
+
+      <div class="ct-card">
+        <div class="ct-card-k">Support</div>
+        <h2>Talk to a member of our support team</h2>
+        <p>For those already Apex MD patients, our support team is here to
+           answer your questions.</p>
+        <dl class="ct-dl">
+          <dt>Phone</dt>
+          <dd><a href="tel:+14325381257">(432) 538-1257</a></dd>
+          <dt>Portal</dt>
+          <dd>Message us directly in your patient portal.</dd>
+        </dl>
+        <div class="ct-portals">
+          <a class="btn btn-ghost" href="/patient-login">Log in to the Apex MD Portal</a>
+          <a class="ct-portal-old" href="https://apexmd.portal.tellescope.com/">
+            Previous Apex MD portal</a>
+        </div>
+      </div>
+
+      <figure class="ct-photo">
+        <img src="/assets/images/contact/doctor-portrait.png"
+             alt="An Apex MD physician">
+        <figcaption>If you&rsquo;re ready to invest in your health, now is the
+          time to take action. Contact Apex MD today to schedule a free
+          consultation and discover how our personalized approach can help you
+          achieve your best results. Your transformation starts here.</figcaption>
+      </figure>
+
+    </div>
+
+    <div class="ct-formwrap" id="get-in-touch">
+      <div class="ct-kicker">Get in touch</div>
+      <h2>Send us a message</h2>
+      <p class="ct-form-note">We answer every message. For anything urgent,
+        call the numbers on this page.</p>
+
+      <form class="ct-form" novalidate>
+        <div class="ct-row">
+          <label>First name
+            <input type="text" name="first" autocomplete="given-name" required>
+          </label>
+          <label>Last name
+            <input type="text" name="last" autocomplete="family-name" required>
+          </label>
+        </div>
+        <label>Email address
+          <input type="email" name="email" autocomplete="email" required>
+        </label>
+        <label>Phone number
+          <input type="tel" name="phone" autocomplete="tel">
+        </label>
+        <label>Message
+          <textarea name="comment" rows="5"></textarea>
+        </label>
+
+        <!-- honeypot: hidden from people, filled by bots -->
+        <div class="ct-hp" aria-hidden="true">
+          <label>Company<input type="text" name="company" tabindex="-1"></label>
+        </div>
+
+        <label class="ct-check">
+          <input type="checkbox" name="consent" required>
+          <span>I agree to the <a href="/terms-and-conditions">Terms and
+            Conditions</a> and opt-in to receiving messages from Apex MD.</span>
+        </label>
+
+        <button class="btn btn-red ct-submit" type="submit">Submit</button>
+        <p class="ct-status" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script>
+/* Contact form -> /api/lead. Progressive: if this script fails the page still
+   shows both phone numbers and the email address. */
+(function () {
+  var form = document.querySelector('.ct-form');
+  if (!form) return;
+  var status = form.querySelector('.ct-status');
+  var button = form.querySelector('.ct-submit');
+
+  function fail(msg) {
+    status.textContent = msg;
+    status.className = 'ct-status is-bad';
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var data = {};
+    ['first', 'last', 'email', 'phone', 'comment', 'company'].forEach(function (k) {
+      var el = form.elements[k];
+      if (el) data[k] = el.value.trim();
+    });
+
+    if (!data.first || !data.last) return fail('Please add your name.');
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(data.email)) {
+      return fail('Please check your email address.');
+    }
+    if (!form.elements.consent.checked) {
+      return fail('Please accept the terms to send your message.');
+    }
+
+    data.kind = 'contact';
+    data.page = location.pathname;
+
+    button.disabled = true;
+    status.className = 'ct-status';
+    status.textContent = 'Sending…';
+
+    fetch('/api/lead', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    }).then(function (r) {
+      if (!r.ok) throw new Error('bad-status');
+      form.reset();
+      status.className = 'ct-status is-good';
+      status.textContent = 'Thank you — your message is on its way. '
+        + 'We usually reply within one business day.';
+    }).catch(function () {
+      fail('Something went wrong sending that. Please call (407) 890-1872 '
+         + 'or email info@apexmd.com.');
+    }).then(function () {
+      button.disabled = false;
+    });
+  });
+})();
+</script>

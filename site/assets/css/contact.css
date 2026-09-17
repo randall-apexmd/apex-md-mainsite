@@ -1,0 +1,104 @@
+/* Contact. Only --apex-* tokens; no new colours or fonts (see _build/README). */
+
+.ct-kicker { font: 800 12px/1 var(--apex-font-mono); letter-spacing: .16em;
+             text-transform: uppercase; color: var(--apex-red); }
+
+.ct-head { background: var(--apex-ink); }
+.ct-head-in { max-width: var(--apex-max); margin: 0 auto;
+              padding: 104px var(--apex-gutter) 72px; }
+.ct-head .ct-kicker { color: var(--apex-red-bright); }
+.ct-head h1 { margin: 18px 0 16px; color: #fff; font-weight: 900;
+              font-size: clamp(34px, 4.6vw, 56px); line-height: 1.03;
+              letter-spacing: -.025em; }
+.ct-head p { margin: 0; max-width: 54ch; color: #d9d2ca; font-size: 17px;
+             line-height: 1.6; }
+
+.ct-sec { max-width: var(--apex-max); margin: 0 auto;
+          padding: 72px var(--apex-gutter) 96px; }
+.ct-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 56px;
+           align-items: start; }
+.ct-lines { display: flex; flex-direction: column; gap: 20px; }
+
+.ct-card { border: 1px solid var(--apex-rule); border-radius: var(--apex-radius);
+           padding: 28px; background: var(--apex-bg); }
+.ct-card-k { font: 800 12px/1 var(--apex-font-mono); letter-spacing: .16em;
+             text-transform: uppercase; color: var(--apex-red); }
+.ct-card h2 { margin: 14px 0 10px; font-size: 21px; font-weight: 800;
+              line-height: 1.22; letter-spacing: -.01em; }
+.ct-card p { margin: 0; font-size: 15.5px; line-height: 1.6;
+             color: var(--apex-body); }
+.ct-dl { display: grid; grid-template-columns: auto 1fr; gap: 8px 18px;
+         margin: 20px 0 22px; }
+.ct-dl dt { font: 800 11px/1.5 var(--apex-font-mono); letter-spacing: .14em;
+            text-transform: uppercase; color: var(--apex-muted); }
+.ct-dl dd { margin: 0; font-size: 16px; color: var(--apex-ink); }
+.ct-dl a { font-weight: 700; }
+.ct-portals { display: flex; flex-direction: column; align-items: flex-start;
+              gap: 12px; }
+.ct-portal-old { font-size: 14px; color: var(--apex-muted);
+                 text-decoration: underline; text-underline-offset: 2px; }
+.ct-portal-old:hover { color: var(--apex-red); }
+
+.ct-photo { margin: 0; border: 1px solid var(--apex-rule);
+            border-radius: var(--apex-radius); overflow: hidden;
+            background: var(--apex-bg-alt); }
+.ct-photo img { width: 100%; max-width: 675px; height: auto; display: block;
+                margin: 0 auto; }
+.ct-photo figcaption { padding: 22px 26px 26px; font-size: 15px; line-height: 1.6;
+                       color: var(--apex-body); border-top: 1px solid var(--apex-rule); }
+
+/* form */
+.ct-formwrap { position: sticky; top: calc(var(--apex-header-h) + 24px);
+               border: 1px solid var(--apex-rule); border-radius: var(--apex-radius);
+               background: var(--apex-bg-alt); padding: 32px; }
+.ct-formwrap h2 { margin: 14px 0 8px; font-size: 26px; font-weight: 900;
+                  letter-spacing: -.015em; }
+.ct-form-note { margin: 0 0 24px; font-size: 15px; line-height: 1.55;
+                color: var(--apex-body); }
+.ct-form { display: flex; flex-direction: column; gap: 16px; }
+.ct-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.ct-form label { display: flex; flex-direction: column; gap: 7px;
+                 font: 700 13px/1.3 var(--apex-font-ui); color: var(--apex-ink-soft); }
+.ct-form input[type="text"], .ct-form input[type="email"],
+.ct-form input[type="tel"], .ct-form textarea {
+  font: 400 16px/1.45 var(--apex-font-ui); color: var(--apex-ink);
+  background: var(--apex-bg); border: 1px solid var(--apex-rule);
+  border-radius: 10px; padding: 12px 14px; width: 100%;
+}
+.ct-form textarea { resize: vertical; min-height: 120px; }
+.ct-form input:focus-visible, .ct-form textarea:focus-visible {
+  outline: 3px solid var(--apex-red); outline-offset: 1px; border-color: var(--apex-red);
+}
+.ct-hp { position: absolute; left: -9999px; width: 1px; height: 1px;
+         overflow: hidden; }
+.ct-check { flex-direction: row; align-items: flex-start; gap: 10px;
+            font-weight: 400; font-size: 14px; line-height: 1.5;
+            color: var(--apex-body); }
+.ct-check input { width: 18px; height: 18px; margin-top: 1px; flex: none;
+                  accent-color: var(--apex-red); }
+.ct-check a { text-decoration: underline; text-underline-offset: 2px; }
+.ct-submit { align-self: flex-start; border: 0; cursor: pointer; }
+.ct-submit[disabled] { opacity: .6; cursor: default; }
+.ct-status { margin: 0; font-size: 14.5px; line-height: 1.5;
+             color: var(--apex-body); }
+.ct-status:empty { display: none; }
+.ct-status.is-good { color: var(--apex-ink); font-weight: 600; }
+.ct-status.is-bad { color: var(--apex-red-dark); font-weight: 600; }
+
+.btn-ghost, a.btn-ghost { background: transparent; color: var(--apex-ink);
+                          box-shadow: inset 0 0 0 1.5px var(--apex-rule); }
+.btn-ghost:hover, a.btn-ghost:hover { color: var(--apex-red);
+                          box-shadow: inset 0 0 0 1.5px var(--apex-red); }
+
+@media (max-width: 1024px) {
+  .ct-cols { grid-template-columns: 1fr; gap: 28px; }
+  .ct-formwrap { position: static; }
+}
+
+@media (max-width: 760px) {
+  .ct-head-in { padding: 88px var(--apex-gutter) 52px; }
+  .ct-sec { padding: 44px var(--apex-gutter) 64px; }
+  .ct-card, .ct-formwrap { padding: 24px 20px; }
+  .ct-row { grid-template-columns: 1fr; }
+  .ct-submit { align-self: stretch; text-align: center; }
+}

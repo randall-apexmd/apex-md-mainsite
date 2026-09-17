@@ -89,6 +89,10 @@ HAND = {
                  'Apex MD combines licensed providers, advanced diagnostics and '
                  'personalized programs to help you optimize weight, hormones, '
                  'performance and longevity.'),
+    'contact':  ('contact', 'contact',
+                 'Contact Apex MD — Sales and Patient Support',
+                 'Reach the Apex MD sales team on (407) 890-1872 or patient '
+                 'support on (432) 538-1257, or send us a message.'),
 }
 
 
