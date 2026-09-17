@@ -1,0 +1,40 @@
+.lg { max-width: 760px; margin: 0 auto; padding: 72px var(--apex-gutter) 112px; }
+.lg-kicker { font: 800 12px/1 var(--apex-font-mono); letter-spacing: .16em;
+             text-transform: uppercase; color: var(--apex-red); }
+.lg h1 { margin: 16px 0 14px; font-size: clamp(36px, 6vw, 56px); font-weight: 900;
+         line-height: 1.02; letter-spacing: -.02em; }
+.lg-meta { margin: 0; font: 500 15px/1.5 var(--apex-font-ui); color: var(--apex-muted); }
+.lg-meta span + span::before { content: "·"; margin: 0 10px; color: var(--apex-rule); }
+.lg-body { margin-top: 40px; padding-top: 40px; border-top: 1px solid var(--apex-rule);
+           font-size: 16px; line-height: 1.7; color: var(--apex-body); }
+.lg-body p { margin: 0 0 18px; overflow-wrap: anywhere; }
+.lg-body strong { color: var(--apex-ink-soft); }
+.lg-body a { text-decoration: underline; text-underline-offset: 2px; }
+.lg-body h2 { margin: 52px 0 16px; font-size: 24px; line-height: 1.25; font-weight: 800;
+              color: var(--apex-ink); letter-spacing: -.01em; }
+.lg-body h3 { margin: 32px 0 12px; font-size: 18px; line-height: 1.35; font-weight: 700;
+              color: var(--apex-ink); }
+.lg-body ol { margin: 32px 0 12px; padding: 0; list-style: none; font-size: 18px;
+              font-weight: 700; line-height: 1.35; color: var(--apex-ink); }
+/* each of these is its own one-item <ol> on the live page, so the browser
+   numbered every one "1." — the numbers were never part of the copy */
+.lg-body > :first-child { margin-top: 0; }
+.lg-alert { padding: 16px 20px; border-left: 3px solid var(--apex-red);
+            background: var(--apex-red-tint); color: var(--apex-ink); font-weight: 600;
+            border-radius: 0 8px 8px 0; }
+
+/* Terms is an outline: I / A / 1 markers, each its own paragraph on the live page */
+.lg-sec { margin: 52px 0 18px; padding-top: 28px; border-top: 1px solid var(--apex-rule); }
+.lg-sec .lg-mark { display: block; margin-bottom: 10px; font: 800 12px/1 var(--apex-font-mono);
+                   letter-spacing: .16em; color: var(--apex-red); }
+.lg-sec p { margin: 0; color: var(--apex-ink-soft); }
+.lg-item { display: grid; grid-template-columns: 28px 1fr; gap: 0 8px; margin: 0 0 18px; }
+.lg-item .lg-mark { font: 700 13px/1.75 var(--apex-font-mono); color: var(--apex-red); }
+.lg-item > p { margin: 0; }
+.lg-l3 { margin-left: 36px; }
+@media (max-width: 760px) {
+  .lg { padding-top: 48px; padding-bottom: 80px; }
+  .lg-body { font-size: 15.5px; }
+  .lg-body h2 { font-size: 21px; }
+  .lg-l3 { margin-left: 16px; }
+}

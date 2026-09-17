@@ -26,6 +26,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 import cssx
 import images
+import legal
 import style as S
 
 BUILD = os.path.dirname(os.path.abspath(__file__))
@@ -794,6 +795,38 @@ def build(slug):
     return st
 
 
+def build_legal(slug):
+    """A legal page: verbatim copy from legal/<slug>.html in a plain long-form
+    template, with the same header and footer as every other page."""
+    title_, desc, _heading = legal.LEGAL[slug]
+    source = read(os.path.join(BUILD, 'legal', slug + '.html'))
+    head, body, warnings = legal.render(slug, source)
+
+    write(os.path.join(SITE, 'assets', 'css', 'legal.css'), legal.CSS.lstrip())
+    html = SHELL.format(
+        title=title_,
+        desc=desc.replace('"', '&quot;'),
+        url_path='/' + slug,
+        fonts=S.GOOGLE_FONTS,
+        slug=slug,
+        page_css='',
+        header=chrome('header.html', None, slug),
+        footer=chrome('footer.html', None, slug),
+        body='<article class="lg">\n%s\n<div class="lg-body">\n%s\n</div>\n</article>'
+             % (head, body),
+    )
+    html = html.replace('/assets/css/%s.css' % slug, '/assets/css/legal.css')
+    # no social card of its own; share the homepage's
+    html = html.replace('/assets/og/%s.jpg' % slug, '/assets/og/index.jpg')
+    html = version_assets(html)
+    write(os.path.join(SITE, slug + '.html'), html)
+
+    print('  %-22s %d words, verbatim' % (slug, len(legal.words(source))))
+    for w in warnings:
+        print('    ' + w)
+    return True
+
+
 def asset_version(rel):
     """Short content hash for an asset under site/, or None if missing."""
     path = os.path.join(SITE, rel.lstrip('/'))
@@ -830,7 +863,7 @@ def sitemap():
     """
     today = datetime.date.today().isoformat()
     urls = []
-    for slug in sorted(PAGES):
+    for slug in sorted(list(PAGES) + list(legal.LEGAL)):
         if not os.path.isfile(os.path.join(SITE, slug + '.html')):
             continue
         loc = 'https://apexmd.com' + ('/' if slug == 'index' else '/' + slug)
@@ -845,14 +878,18 @@ def sitemap():
 
 
 def main(argv):
-    slugs = argv or list(PAGES)
-    bad = [s for s in slugs if s not in PAGES]
+    known = list(PAGES) + list(legal.LEGAL)
+    slugs = argv or known
+    bad = [s for s in slugs if s not in known]
     if bad:
         sys.exit('unknown page(s): %s\nknown: %s'
-                 % (', '.join(bad), ', '.join(PAGES)))
+                 % (', '.join(bad), ', '.join(known)))
 
     print('building %d page(s)' % len(slugs))
-    built = [s for s in slugs if build(s)]
+    for s in slugs:
+        if s in legal.LEGAL:
+            build_legal(s)
+    built = [s for s in slugs if s in PAGES and build(s)]
 
     if built:
         try:
