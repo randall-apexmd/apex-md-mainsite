@@ -106,9 +106,11 @@ HAND = {
                  'Partner with Apex MD — Add Medical Wellness to Your Business',
                  'Gyms, clinics and wellness brands partner with Apex MD to '
                  'offer physician-led weight loss, hormones and bloodwork.'),
-    'peptides': (None, 'products',
-                 'Peptides — Coming Soon | Apex MD',
-                 'Targeted peptide therapy is coming soon to Apex MD.'),
+    'peptides': ('peptides', 'products',
+                 'Longevity Peptides — NAD+, Sermorelin & B12-MIC | Apex MD',
+                 'NAD+, Sermorelin and B12-MIC, prescribed by an Apex MD '
+                 'provider and made in an FDA-regulated pharmacy. From $149 '
+                 'a month.'),
     'supplements': (None, 'products',
                  'Supplements — Coming Soon | Apex MD',
                  'Medical-grade supplements chosen from your labs are coming '
@@ -882,7 +884,7 @@ def build_legal(slug):
 
 # Placeholder pages: real routes so the nav has no dead links, but nothing for
 # search engines to index and nothing to advertise in the sitemap.
-COMING_SOON = {'peptides', 'supplements', 'advanced-diagnostics'}
+COMING_SOON = {'supplements', 'advanced-diagnostics'}
 
 
 def build_hand(slug):
