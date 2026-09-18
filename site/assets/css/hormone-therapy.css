@@ -34,21 +34,26 @@
    and the photo meet with no visible seam. */
 .hr-hero { --hr-ground: #f1f1f1;
            position: relative; isolation: isolate; background: var(--hr-ground);
-           overflow: hidden; min-height: 640px; display: flex; align-items: center; }
-/* Sized to the hero's HEIGHT and pinned right, not stretched to its width:
-   on a wide screen, width-fitting blew her face up and cropped her chin. Any
-   gap on the left is the section's own cream, which matches the photo's. */
-.hr-hero-bg { position: absolute; top: 0; right: 0; bottom: 0; left: auto; z-index: -1;
+           overflow: hidden; min-height: 760px; display: flex; align-items: center; }
+/* Placed relative to the COPY, not the screen edge. --hr-col is where the
+   content column starts at any width; the photo starts 40px before it. At the
+   hero's ~836px height the photo is ~1,545px wide, so her near arm (41% in)
+   lands just past the copy block and her face (68% in) stays fully on screen
+   from 1,280px up to 2,000px+. Checked at 1280/1440/1680/2000. The photo was mirrored and outpainted with fabric around
+   her (Higgsfield, 2026-09-18), so both edges it fades on are fabric. */
+.hr-hero { --hr-col: max(var(--apex-gutter), calc((100% - var(--apex-max)) / 2 + var(--apex-gutter))); }
+.hr-hero-bg { position: absolute; top: 0; bottom: 0; z-index: -1;
+              left: calc(var(--hr-col) - 40px); right: auto;
               height: 100%; width: auto; max-width: none;
-              object-fit: cover; object-position: right top; }
-/* Her hair starts 6% below the top of the frame, so the crop always comes off
-   the bottom, never the top. The wash only reinforces the cream behind the
-   copy; it clears before it reaches her. */
+              -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 22%, #000 95%, transparent 100%);
+                      mask-image: linear-gradient(90deg, transparent 0%, #000 22%, #000 95%, transparent 100%); }
+/* the wash only backs the copy block and stops before her arm begins */
 .hr-hero::after { content: ""; position: absolute; inset: 0; z-index: -1;
-                  background: linear-gradient(90deg, rgba(241,241,241,.92) 0%,
-                              rgba(241,241,241,.78) 30%, rgba(241,241,241,0) 52%); }
+                  background: linear-gradient(90deg, rgba(241,241,241,.94) 0%,
+                              rgba(241,241,241,.8) calc(var(--hr-col) + 420px),
+                              rgba(241,241,241,0) calc(var(--hr-col) + 600px)); }
 .hr-hero-in { max-width: var(--apex-max); margin: 0 auto; width: 100%;
-              padding: 96px var(--apex-gutter); }
+              padding: 72px var(--apex-gutter); }
 .hr-hero-copy { max-width: 580px; }
 .hr-hero h1 { margin: 18px 0 18px; color: var(--apex-ink); font-weight: 900;
               font-size: clamp(32px, 4vw, 52px); line-height: 1.05;
@@ -227,9 +232,10 @@
   /* Below 1100px the copy would run across her face. Stack instead: the photo
      is its own band (cropped in on her), the copy follows on the same ground. */
   .hr-hero { display: block; min-height: 0; }
-  .hr-hero-bg { position: relative; inset: auto; z-index: 0; display: block;
+  .hr-hero-bg { position: relative; inset: auto; left: auto; z-index: 0; display: block;
                 width: 100%; height: auto; max-width: 100%;
-                aspect-ratio: 2 / 1; object-position: 86% 12%; }
+                aspect-ratio: 2 / 1; object-position: 76% top;
+                -webkit-mask-image: none; mask-image: none; }
   .hr-hero::after { display: none; }
   .hr-hero-in { padding: 36px var(--apex-gutter) 64px; }
   .hr-hero-copy { max-width: 680px; }
@@ -245,7 +251,7 @@
   .hr-benefits, .hr-timeline { grid-template-columns: 1fr; }
   .hr-benefit-figs { grid-template-columns: 1fr; }
   /* phone: a squarer crop so her face fills the band */
-  .hr-hero-bg { aspect-ratio: 1 / 1; object-position: 80% top; }
+  .hr-hero-bg { aspect-ratio: 1 / 1; object-position: 70% top; }
   .hr-hero-in { padding: 28px var(--apex-gutter) 52px; }
   .hr-hero-trust { grid-template-columns: 1fr; }
   .hr-hero-offer { padding: 18px; }
