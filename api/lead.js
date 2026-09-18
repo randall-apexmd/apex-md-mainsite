@@ -13,7 +13,9 @@
  * REQUIRED ENV VARS (Vercel > Project > Settings > Environment Variables)
  *   RESEND_API_KEY   re_...   from resend.com/api-keys
  * OPTIONAL
- *   LEAD_TO          default info@apexmd.com  (comma-separated for several)
+ *   LEAD_TO          customer messages (/contact). default info@apexmd.com
+ *   LEAD_TO_PARTNER  partner applications (/partner). default blake@apexmd.com
+ *                    Both take a comma-separated list.
  *   LEAD_FROM        default "Apex MD Website <noreply@contact.apexmd.com>"
  *                    contact.apexmd.com is the domain verified in Resend
  *                    (2026-09-18): DKIM at resend._domainkey.contact, SPF and
@@ -153,7 +155,13 @@ module.exports = async function handler(req, res) {
       '<p style="margin:22px 0 0;font-size:12px;color:#8C8C8C">Reply directly to this email to reach the person who submitted it.</p>' +
     '</div>';
 
-  const to = (process.env.LEAD_TO || 'info@apexmd.com').split(',').map(function (s) { return s.trim(); }).filter(Boolean);
+  // Routing (Blake, 2026-09-18): partner applications go to Blake, customer
+  // messages go to the shared info@ inbox. Each can be overridden in Vercel
+  // (comma-separated for several) without a code change.
+  const route = kind === 'partner'
+    ? (process.env.LEAD_TO_PARTNER || 'blake@apexmd.com')
+    : (process.env.LEAD_TO || 'info@apexmd.com');
+  const to = route.split(',').map(function (s) { return s.trim(); }).filter(Boolean);
   const from = process.env.LEAD_FROM || 'Apex MD Website <noreply@contact.apexmd.com>';
 
   if (!process.env.RESEND_API_KEY) {
