@@ -303,6 +303,16 @@ body:has(.sticky-cta) .ftr { padding-bottom: 124px; }
 
 /* -------------------------------------------------------- breakpoints */
 
+/* The full nav (7 items + Patient Login + Get Started) needs ~1,210px. Measured
+   2026-09-18: it overlapped the CTA from 1,200px down to 1,025px, and again from
+   ~980px to 761px, because the menu button only arrived at 760px. Below 1,220px
+   the inline nav gives way to the menu button (whose drawer carries every link
+   and Patient Login); Get Started stays in the bar until phone width. */
+@media (max-width: 1220px) {
+  .hdr .hdr-nav, .hdr .hdr-login { display: none; }
+  .hdr-burger { display: flex; }
+}
+
 @media (max-width: 1024px) {
   .hdr-login { display: none; }
   .ftr-grid { grid-template-columns: 1fr 1fr; gap: 40px; }

@@ -27,42 +27,49 @@
                       box-shadow: inset 0 0 0 1.5px #fff; }
 
 /* ---------------------------------------------------------------- hero */
-.hr-hero { position: relative; isolation: isolate; background: var(--apex-ink);
-           overflow: hidden; min-height: 620px; display: flex; align-items: center; }
-.hr-hero-bg { position: absolute; inset: 0; z-index: -1; width: 100%; height: 100%;
-              object-fit: cover; object-position: 72% center;
-              filter: brightness(1.1) saturate(1.04); }
-/* the generated art is near-black on its left third; this keeps the copy
-   legible there at every width without washing out the subject */
+/* A light hero, built around Blake's photograph ("pretty woman grey
+   background", flipped left-to-right so she faces into the page): pale grey
+   fabric fills the left of the frame and the copy sits on it in ink.
+   --hr-ground is sampled from the photo itself (#f1f1f1) so the section edge
+   and the photo meet with no visible seam. */
+.hr-hero { --hr-ground: #f1f1f1;
+           position: relative; isolation: isolate; background: var(--hr-ground);
+           overflow: hidden; min-height: 640px; display: flex; align-items: center; }
+/* Sized to the hero's HEIGHT and pinned right, not stretched to its width:
+   on a wide screen, width-fitting blew her face up and cropped her chin. Any
+   gap on the left is the section's own cream, which matches the photo's. */
+.hr-hero-bg { position: absolute; top: 0; right: 0; bottom: 0; left: auto; z-index: -1;
+              height: 100%; width: auto; max-width: none;
+              object-fit: cover; object-position: right top; }
+/* Her hair starts 6% below the top of the frame, so the crop always comes off
+   the bottom, never the top. The wash only reinforces the cream behind the
+   copy; it clears before it reaches her. */
 .hr-hero::after { content: ""; position: absolute; inset: 0; z-index: -1;
-                  background: linear-gradient(95deg, rgba(23,20,15,.94) 0%,
-                              rgba(23,20,15,.8) 30%, rgba(23,20,15,.22) 56%,
-                              rgba(23,20,15,0) 78%); }
+                  background: linear-gradient(90deg, rgba(241,241,241,.92) 0%,
+                              rgba(241,241,241,.78) 30%, rgba(241,241,241,0) 52%); }
 .hr-hero-in { max-width: var(--apex-max); margin: 0 auto; width: 100%;
-              padding: 104px var(--apex-gutter); }
-.hr-hero-copy { max-width: 620px; }
-.hr-hero h1 { margin: 18px 0 18px; color: #fff; font-weight: 900;
-              font-size: clamp(32px, 4.2vw, 52px); line-height: 1.05;
-              letter-spacing: -.025em; max-width: 20ch;
-              text-shadow: 0 2px 24px rgba(0,0,0,.45); }
-.hr-hero-sub { margin: 0 !important; color: #e4ded7 !important; font-size: 17.5px !important;
-               line-height: 1.6 !important; max-width: 46ch; }
+              padding: 96px var(--apex-gutter); }
+.hr-hero-copy { max-width: 580px; }
+.hr-hero h1 { margin: 18px 0 18px; color: var(--apex-ink); font-weight: 900;
+              font-size: clamp(32px, 4vw, 52px); line-height: 1.05;
+              letter-spacing: -.025em; max-width: 19ch; }
+.hr-hero-sub { margin: 0 !important; color: var(--apex-ink-soft) !important;
+               font-size: 17.5px !important; line-height: 1.6 !important; max-width: 44ch; }
 
-.hr-hero-offer { display: flex; flex-wrap: wrap; align-items: center; gap: 20px 28px;
-                 max-width: 520px;
-                 margin: 30px 0 26px; padding: 20px 24px; border-radius: var(--apex-radius);
-                 background: rgba(23,20,15,.55); backdrop-filter: blur(6px);
-                 box-shadow: inset 0 0 0 1px rgba(255,255,255,.18); }
-.hr-offer-price { font-size: 40px; font-weight: 900; line-height: 1; color: #fff;
+.hr-hero-offer { display: flex; flex-wrap: wrap; align-items: center; gap: 18px 28px;
+                 max-width: 520px; margin: 30px 0 24px; padding: 20px 24px;
+                 border-radius: var(--apex-radius); background: rgba(255,255,255,.86);
+                 box-shadow: 0 10px 30px rgba(23,20,15,.08), inset 0 0 0 1px rgba(23,20,15,.06); }
+.hr-offer-price { font-size: 40px; font-weight: 900; line-height: 1; color: var(--apex-ink);
                   letter-spacing: -.03em; }
 .hr-offer-what { margin-top: 6px; font: 800 11px/1.4 var(--apex-font-mono);
-                 letter-spacing: .14em; text-transform: uppercase; color: #f08ab4; }
+                 letter-spacing: .14em; text-transform: uppercase; color: var(--apex-pink); }
 .hr-hero-offer .btn { margin-left: auto; }
 
 .hr-hero-trust { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 24px;
-                 max-width: 560px; margin: 0; padding: 0; list-style: none; }
+                 max-width: 540px; margin: 0; padding: 0; list-style: none; }
 .hr-hero-trust li { position: relative; padding-left: 20px; font-size: 14.5px;
-                    line-height: 1.45; color: #d7cfc6; }
+                    line-height: 1.45; color: var(--apex-ink-soft); font-weight: 600; }
 .hr-hero-trust li::before { content: ""; position: absolute; left: 0; top: 6px;
                     width: 8px; height: 8px; border-radius: 50%;
                     background: var(--apex-pink); }
@@ -76,12 +83,23 @@
 .hr-symgrid img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; display: block; }
 .hr-symgrid span { padding: 14px 16px; font-size: 14.5px; font-weight: 700;
                    line-height: 1.35; color: var(--apex-ink); }
+.hr-also { margin: 22px 0 0 !important; font-size: 15px !important;
+           color: var(--apex-ink-soft) !important; }
 
 /* --------------------------------------------------------------- cause */
 .hr-alt { background: var(--apex-bg-alt); max-width: none; }
-.hr-alt > * { max-width: var(--apex-max); margin-left: auto; margin-right: auto; }
+
 .hr-dark { background: var(--apex-ink); max-width: none; color: #fff; }
-.hr-dark > * { max-width: var(--apex-max); margin-left: auto; margin-right: auto; }
+/* Full-bleed sections: the background runs edge to edge, the content sits in
+   the same column as every other section. Done with padding on the section,
+   not auto margins on its children, because any child that sets margin: 0
+   (lists, grids, paragraphs) silently cancelled the centering and drifted
+   left on screens wider than --apex-max. */
+.hr-alt, .hr-dark {
+  padding-left:  max(var(--apex-gutter), calc((100% - var(--apex-max)) / 2 + var(--apex-gutter)));
+  padding-right: max(var(--apex-gutter), calc((100% - var(--apex-max)) / 2 + var(--apex-gutter)));
+}
+
 .hr-dark h2 { color: #fff; }
 .hr-dark p { color: #d9d2ca; }
 
@@ -192,6 +210,13 @@
 .hr-end p { margin: 0 0 30px; color: #d9d2ca; font-size: 17px; line-height: 1.6; }
 .hr-end-cta { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
 
+/* Laptop widths: the photo's shoulder reaches ~45% across, so keep the copy
+   column narrower than that until the layout stacks. */
+@media (min-width: 1101px) and (max-width: 1360px) {
+  .hr-hero-copy { max-width: 500px; }
+  .hr-hero-trust li { font-size: 13.5px; }
+}
+
 @media (max-width: 1100px) {
   .hr-symgrid { grid-template-columns: repeat(3, 1fr); }
   .hr-benefits { grid-template-columns: repeat(3, 1fr); }
@@ -199,8 +224,16 @@
   .hr-timeline { grid-template-columns: 1fr 1fr; }
   .hr-steps { grid-template-columns: 1fr; }
   .hr-split, .hr-split-wide, .hr-split-photo { grid-template-columns: 1fr; gap: 36px; }
-  .hr-hero { min-height: 560px; }
-  .hr-hero-bg { object-position: 78% center; }
+  /* Below 1100px the copy would run across her face. Stack instead: the photo
+     is its own band (cropped in on her), the copy follows on the same ground. */
+  .hr-hero { display: block; min-height: 0; }
+  .hr-hero-bg { position: relative; inset: auto; z-index: 0; display: block;
+                width: 100%; height: auto; max-width: 100%;
+                aspect-ratio: 2 / 1; object-position: 86% 12%; }
+  .hr-hero::after { display: none; }
+  .hr-hero-in { padding: 36px var(--apex-gutter) 64px; }
+  .hr-hero-copy { max-width: 680px; }
+  .hr-hero h1 { max-width: none; }
   .hr-videos, .hr-quotes { grid-template-columns: 1fr; }
 }
 
@@ -211,13 +244,9 @@
   .hr-symgrid span { padding: 12px; font-size: 13.5px; }
   .hr-benefits, .hr-timeline { grid-template-columns: 1fr; }
   .hr-benefit-figs { grid-template-columns: 1fr; }
-  .hr-hero { min-height: 0; }
-  .hr-hero-in { padding: 88px var(--apex-gutter) 52px; }
-  .hr-hero h1 { max-width: none; }
-  /* on a phone the subject sits behind the copy, so darken the whole frame */
-  .hr-hero::after { background: linear-gradient(180deg, rgba(23,20,15,.72) 0%,
-                    rgba(23,20,15,.8) 55%, rgba(23,20,15,.9) 100%); }
-  .hr-hero-bg { object-position: 62% top; }
+  /* phone: a squarer crop so her face fills the band */
+  .hr-hero-bg { aspect-ratio: 1 / 1; object-position: 80% top; }
+  .hr-hero-in { padding: 28px var(--apex-gutter) 52px; }
   .hr-hero-trust { grid-template-columns: 1fr; }
   .hr-hero-offer { padding: 18px; }
   .hr-hero-offer .btn { margin-left: 0; width: 100%; text-align: center;

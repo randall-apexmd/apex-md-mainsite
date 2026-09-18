@@ -60,7 +60,7 @@
 
 /* cards */
 .ab-alt { background: var(--apex-bg-alt); max-width: none; }
-.ab-alt > * { max-width: var(--apex-max); margin-left: auto; margin-right: auto; }
+
 .ab-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
 .ab-card { background: var(--apex-bg); border: 1px solid var(--apex-rule);
            border-radius: var(--apex-radius); padding: 28px 24px; }
@@ -70,7 +70,16 @@
 
 /* Dr. Bowen + metrics */
 .ab-dark { background: var(--apex-ink); max-width: none; color: #fff; }
-.ab-dark > * { max-width: var(--apex-max); margin-left: auto; margin-right: auto; }
+/* Full-bleed sections: the background runs edge to edge, the content sits in
+   the same column as every other section. Done with padding on the section,
+   not auto margins on its children, because any child that sets margin: 0
+   (lists, grids, paragraphs) silently cancelled the centering and drifted
+   left on screens wider than --apex-max. */
+.ab-alt, .ab-dark {
+  padding-left:  max(var(--apex-gutter), calc((100% - var(--apex-max)) / 2 + var(--apex-gutter)));
+  padding-right: max(var(--apex-gutter), calc((100% - var(--apex-max)) / 2 + var(--apex-gutter)));
+}
+
 .ab-dark h2 { color: #fff; }
 .ab-dark .ab-lead { color: #d9d2ca; }
 .ab-creds { margin: 26px 0 0; padding: 0; list-style: none; display: grid;

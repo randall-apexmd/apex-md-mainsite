@@ -64,9 +64,18 @@
 
 /* backgrounds */
 .md-alt { background: var(--apex-bg-alt); max-width: none; }
-.md-alt > * { max-width: var(--apex-max); margin-left: auto; margin-right: auto; }
+
 .md-dark { background: var(--apex-ink); max-width: none; color: #fff; }
-.md-dark > * { max-width: var(--apex-max); margin-left: auto; margin-right: auto; }
+/* Full-bleed sections: the background runs edge to edge, the content sits in
+   the same column as every other section. Done with padding on the section,
+   not auto margins on its children, because any child that sets margin: 0
+   (lists, grids, paragraphs) silently cancelled the centering and drifted
+   left on screens wider than --apex-max. */
+.md-alt, .md-dark {
+  padding-left:  max(var(--apex-gutter), calc((100% - var(--apex-max)) / 2 + var(--apex-gutter)));
+  padding-right: max(var(--apex-gutter), calc((100% - var(--apex-max)) / 2 + var(--apex-gutter)));
+}
+
 .md-dark h2 { color: #fff; }
 
 /* cards */
