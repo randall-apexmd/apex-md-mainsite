@@ -156,6 +156,7 @@ module.exports = async function handler(req, res) {
 
   let delivered = false;
   let detail = '';
+  let resendId = '';
   try {
     const controller = new AbortController();
     const timer = setTimeout(function () { controller.abort(); }, 8000);
@@ -177,7 +178,12 @@ module.exports = async function handler(req, res) {
     });
     clearTimeout(timer);
     delivered = r.ok;
-    if (!r.ok) detail = 'resend-' + r.status + ' ' + (await r.text()).slice(0, 300);
+    const text = await r.text();
+    if (r.ok) {
+      try { resendId = JSON.parse(text).id || ''; } catch (e) {}
+    } else {
+      detail = 'resend-' + r.status + ' ' + text.slice(0, 300);
+    }
   } catch (err) {
     detail = 'error:' + (err && err.name ? err.name : 'unknown');
   }
@@ -185,12 +191,17 @@ module.exports = async function handler(req, res) {
   // Always log the lead itself: if Resend is down or misconfigured the capture
   // is still recoverable from the Vercel dashboard rather than lost.
   console.log(JSON.stringify({
-    event: 'lead', kind: kind, delivered: delivered, detail: detail,
+    event: 'lead', kind: kind, delivered: delivered, detail: detail, resend_id: resendId,
     email: body.email, page: body.page, lead: delivered ? undefined : body
   }));
 
   // 200 either way: the visitor did their part, and a delivery problem on our
   // side should not read to them as their submission failing.
-  return res.status(200).json({ ok: true, delivered: delivered,
-                               why: debug && !delivered ? detail : undefined });
+  // ?debug=1 also names the sender, the recipients and Resend's message id,
+  // so "it said delivered but I don't see it" can be traced in Resend's logs.
+  // Addresses only — never the key.
+  return res.status(200).json(debug
+    ? { ok: true, delivered: delivered, why: detail || undefined,
+        from: from, to: to, resend_id: resendId || undefined }
+    : { ok: true, delivered: delivered });
 };
