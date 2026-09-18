@@ -21,6 +21,10 @@
  *                    purpose — the root apexmd.com carries Google Workspace MX
  *                    and SPF, which Resend's records must never touch.
  *
+ *   LEAD_DEBUG_TOKEN  optional, 16+ chars. When set, POST /api/lead?debug=<token>
+ *                    reports sender, recipients and Resend's message id. When
+ *                    unset (the normal state), diagnostics are disabled.
+ *
  * If RESEND_API_KEY is missing the function still returns 200 and logs the lead
  * to the Vercel function log, so a misconfiguration never shows the visitor an
  * error or loses the capture silently to the browser console.
@@ -101,7 +105,12 @@ module.exports = async function handler(req, res) {
     return res.status(405).json({ ok: false, error: 'method-not-allowed' });
   }
 
-  const debug = /[?&]debug=1(&|$)/.test(req.url || '');
+  // Diagnostics are OFF unless LEAD_DEBUG_TOKEN is set in Vercel AND the
+  // request carries it as ?debug=<token>. The debug reply names the sender and
+  // every recipient, so it must never answer an anonymous visitor.
+  const debugToken = process.env.LEAD_DEBUG_TOKEN || '';
+  const debugParam = (/[?&]debug=([^&]+)/.exec(req.url || '') || [])[1] || '';
+  const debug = debugToken.length >= 16 && debugParam === debugToken;
 
   let body;
   try {
