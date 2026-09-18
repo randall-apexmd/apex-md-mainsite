@@ -14,11 +14,12 @@
  *   RESEND_API_KEY   re_...   from resend.com/api-keys
  * OPTIONAL
  *   LEAD_TO          default info@apexmd.com  (comma-separated for several)
- *   LEAD_FROM        default onboarding@resend.dev
- *                    Resend only lets you send FROM a domain you have verified.
- *                    Until apexmd.com is verified in Resend, leave this unset
- *                    and mail arrives from their shared sender; once verified,
- *                    set it to something like "SPENGA Site <noreply@apexmd.com>".
+ *   LEAD_FROM        default "Apex MD Website <noreply@contact.apexmd.com>"
+ *                    contact.apexmd.com is the domain verified in Resend
+ *                    (2026-09-18): DKIM at resend._domainkey.contact, SPF and
+ *                    return-path MX at send.contact. It is a subdomain on
+ *                    purpose — the root apexmd.com carries Google Workspace MX
+ *                    and SPF, which Resend's records must never touch.
  *
  * If RESEND_API_KEY is missing the function still returns 200 and logs the lead
  * to the Vercel function log, so a misconfiguration never shows the visitor an
@@ -144,7 +145,7 @@ module.exports = async function handler(req, res) {
     '</div>';
 
   const to = (process.env.LEAD_TO || 'info@apexmd.com').split(',').map(function (s) { return s.trim(); }).filter(Boolean);
-  const from = process.env.LEAD_FROM || 'Apex MD Site <onboarding@resend.dev>';
+  const from = process.env.LEAD_FROM || 'Apex MD Website <noreply@contact.apexmd.com>';
 
   if (!process.env.RESEND_API_KEY) {
     // Never fail in front of the visitor over a missing key. The lead is in the
